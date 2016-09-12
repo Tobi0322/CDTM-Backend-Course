@@ -19,7 +19,8 @@ We want to give you an overview what is planned for the next days. We are trying
 ### Preparation
 We designed this course for students with limited programming skills. With this in mind, we want to avoid repeating the 'Basics of Programming' lecture from the Trend Seminar. Therefore we would ask you to complete the introductory python tutorial below **before the start of the course** to get you up and running.
 
-> **Codecademy Learn Python** 
+#### Codecademy Learn Python 
+Link: https://www.codecademy.com/learn/python
 > * Get's you up to speed :-)
 > * You should be comfortable with the following concepts aftwards 
 >     * variables 
@@ -32,16 +33,13 @@ We designed this course for students with limited programming skills. With this 
 >     * dictionaries
 >     * tuples 
 >     * Object Orientation (Classes, methods) 
-> * Link: https://www.codecademy.com/learn/python
 
-> **Learn Python the Hard Way** 
+
+#### Learn Python the Hard Way 
+Link: https://learnpythonthehardway.org/book/
 > * The best beginner programmer’s guide to Python, which covers everything from “hello world” to the console to the web.
 > * **NOTE**: You don't have to do this as preparation, but it might come in handy when you are having trouble with some concepts.
-> * Link: https://learnpythonthehardway.org/book/
-
-
-> **TODO** 
-> - [ ] Link to python tutorial
+ 
 
 ### Friday (17:00 - 21.00)
 On Friday we will kick off the course with a short lecture introducing the concept of *Backend / Frontend*. After that we will setup your systems to run all the needed frameworks and libraries. And finally each of you will implement their very own web-server.
