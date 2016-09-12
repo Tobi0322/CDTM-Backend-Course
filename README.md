@@ -37,7 +37,7 @@ Link: https://www.codecademy.com/learn/python
 
 #### Other Resources
 *You don't have to do this as preparation, but this might come in handy when you are having trouble with some concepts or want to dive in a little bit deeper.*
-* Python [Cheatsheet](../slides/cheatsheet_slim.pdf "click me hard!!")
+* Python [Cheatsheet](../slides/cheatsheet_python_slim.pdf "click me hard!!")
 * Learn Python the Hard Way (https://learnpythonthehardway.org/book/)
     * The best beginner programmer’s guide to Python, which covers everything from “hello world” to the console to the web.
 * Python Crash Course (https://www.nostarch.com/pythoncrashcourse)
