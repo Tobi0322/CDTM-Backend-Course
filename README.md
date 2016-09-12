@@ -76,11 +76,14 @@ After today your server should be capable of the following things:
 
 
 ### Sunday
+Up to now everything could have been done on the client directly. One advantage of having a centralized backend is that we can access and manipulate the same information with multiple clients. Today's goal is to implement user authentication and allow to share TodoItems.
 
-
-## TODOs
-### 0. Preparation
-
-### 1. Setup
-
-### 2. ...
+> **TODO** 
+> - [ ] Lectures
+>   - [ ] User Authentication Basics
+> - [ ] Tutorial & Demo Code  
+>   - [ ] 1. User: Register User
+>   - [ ] 2. User: Login / Logout
+>   - [ ] 3. Public / Private Todo-Items
+>   - [ ] 4. Direct Sharing
+>   - [ ] 5. Todo-Groups
