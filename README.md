@@ -35,10 +35,13 @@ Link: https://www.codecademy.com/learn/python
 >     * Object Orientation (Classes, methods) 
 
 
-#### Learn Python the Hard Way 
-Link: https://learnpythonthehardway.org/book/
-> * The best beginner programmer’s guide to Python, which covers everything from “hello world” to the console to the web.
-> * **NOTE**: You don't have to do this as preparation, but it might come in handy when you are having trouble with some concepts.
+#### Other Resources
+*You don't have to do this as preparation, but this might come in handy when you are having trouble with some concepts or want to dive in a little bit deeper.*
+* Python [Cheatsheet](../slides/cheatsheet_python "click me hard!!")
+* Learn Python the Hard Way (https://learnpythonthehardway.org/book/)
+    * The best beginner programmer’s guide to Python, which covers everything from “hello world” to the console to the web.
+* Python Crash Course (https://www.nostarch.com/pythoncrashcourse)
+    * A book (~ 30 € ) giving a hands-On, project-based introduction to programming in Python.
  
 
 ### Friday (17:00 - 21.00)
