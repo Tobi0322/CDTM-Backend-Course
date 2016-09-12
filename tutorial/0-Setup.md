@@ -2,7 +2,7 @@
 
 *The goal of this tutorial is to get you up and running for the rest of the course. Especially the following things should be working after completinging it:*
 * Chrome 
-* A text editor 
+* IDE / text editor 
 * Python 2.7.x
 * Flask
 * Git
@@ -13,7 +13,7 @@
 Install the latest version from the official website: https://www.google.de/chrome/browser/desktop/
 
 ### 1.2 Text Editor
-Feel free to use a text editor or python IDE of your choice. I recommend Atom, which can be downloaded from https://atom.io/.
+Feel free to use a python IDE or text editor of your choice. As python IDE I recommend PyCharm, which as a student you can get for free (https://www.jetbrains.com/student/). If you prefer a text editor I recommend Atom (https://atom.io/).
 
 ### 1.3 Python
 1. Check whether you have python installed. There should be a folder ```C:\Python27```. 
@@ -42,7 +42,7 @@ Git is a  *Version Control System'  used for software development. It's  a bit l
 Install the latest version from the official website: https://www.google.de/chrome/browser/desktop/
 
 ### 2.2 Text Editor
-Feel free to use a text editor or python IDE of your choice. I recommend Atom, which can be downloaded from https://atom.io/.
+Feel free to use a python IDE or text editor of your choice. As python IDE I recommend PyCharm, which as a student you can get for free (https://www.jetbrains.com/student/). If you prefer a text editor I recommend Atom (https://atom.io/).
 
 ### 2.3 Python
 MacOS shipes with python. However, since MacOS ElCapitan a feature called *System Integrity Protection* conflicts with pip, a python packages manager we need. Therefore we have to reinstall python using homebrew.
@@ -83,8 +83,16 @@ sudo apt-get install chromium-browser chromium-browser-l10n chromium-codecs-ffmp
 ```
 
 ### 3.2 Text Editor
-Feel free to use a text editor or python IDE of your choice. I recommend Atom, which can be downloaded from https://atom.io/.
+Feel free to use a python IDE or text editor of your choice. As python IDE I recommend PyCharm, which as a student you can get for free (https://www.jetbrains.com/student/). If you prefer a text editor I recommend Atom (https://atom.io/).
 
+#### Install pyCharm
+```
+sudo add-apt-repository ppa:mystic-mirage/pycharm
+sudo apt-get update
+sudo apt-get install pycharm
+```
+
+#### Install Atom
 ```
 sudo add-apt-repository ppa:webupd8team/atom
 sudo apt-get update
