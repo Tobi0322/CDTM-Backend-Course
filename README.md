@@ -75,7 +75,7 @@ After today your server should be capable of the following things:
 >   - [ ] 10. Functionality: Files
 
 
-### Sunday
+### Sunday (09:00 -17:00)
 Up to now everything could have been done on the client directly. One advantage of having a centralized backend is that we can access and manipulate the same information with multiple clients. Today's goal is to implement user authentication and allow to share TodoItems.
 
 > **TODO** 
