@@ -22,11 +22,19 @@ Feel free to use a text editor or python IDE of your choice. I recommend Atom, w
 2. Check whether you can run python from the terminal. Open CMD and type ```python --version```. If you get an error message be sure to add python to your PATH. Close CMD and run it 'as administrator'. Type the following command: ```setx /M PATH "%PATH%;C:\Python27"```. Close CMD and open it again. You should now be able to run python from command line.
 3. Next make sure pip, a package manager for python packages was installed properly. From the command line run ```pip --version```. If you get an error restart CMD as administrator and run ```setx /M PATH "%PATH%;C:\Python27\Scripts"```. Reopen CMD and it should work.
 
-**NOTE:** Working with CMD or Powershell on Windows can be quite cumbersome at times. There is a nice console emulator for Windows called 'cmder' that brings bash syntax to windows. I recommend using it instead of CMD. Just install the latest release from http://cmder.net/ and add it to your PATH as well ``setx /M PATH "%PATH%;`C:\Program Files\cmder"```.
+**NOTE:** Working with CMD or Powershell on Windows can be quite cumbersome at times. There is a nice console emulator for Windows called 'cmder' that brings bash syntax to windows. I recommend using it instead of CMD. Just install the latest release from http://cmder.net/ and add it to your PATH as well ```setx /M PATH "%PATH%;`C:\Program Files\cmder"```.
 
 ### 1.4 Flask
 Now you should be able to install flask, a microframework for web-development by running ```pip install flask```. 
 Verify it by launching the python interactive shell (run ```python```) and type ```import flask```. You are good to go, if there is no error message.
+
+### 1.5 Git
+Git is a  *Version Control System'  used for software development. It's  a bit like Dropbox, only that files get synchronised only if you say so explicitly and you can easily revert to any previously synchronised state of a file. More on this later.
+
+1. Install the latest stable release from https://git-scm.com/download/win and verify the installation by running ```git --version```. If you get an error open CDM as administratotr and run ```setx /M PATH "%PATH%;`C:\Program Files\Git\cmd"```. Restart CMD and run ```git --version``` again.
+2. Register an account on https://github.com/ and add your email (the same you registered with) to you local git installation. ```git config --global user.email "your@email.com"```. (Replace *your@email.com*)
+3. Fork this repository (button in the  upper right). 
+4. Clone your repository running ```git clone https://github.com/[YourGithubHandle]/CDTM-Backend-Course.git```. (Replace *[YourGithubHandle]*) 
 
 ## 2 MacOS
 
@@ -47,6 +55,14 @@ MacOS shipes with python. However, since MacOS ElCapitan a feature called *Syste
 ### 2.4 Flask
 Now you should be able to install flask, a microframework for web-development by running ```pip install flask```. 
 Verify it by launching the python interactive shell (run ```python```) and type ```import flask```. You are good to go, if there is no error message.
+
+### 2.5 Git
+Git is a  *Version Control System'  used for software development. It's  a bit like Dropbox, only that files get synchronised only if you say so explicitly and you can easily revert to any previously synchronised state of a file. More on this later.
+
+1. Install the latest stable release from https://git-scm.com/download/mac and verify the installation by running ```git --version```.
+2. Register an account on https://github.com/ and add your email (the same you registered with) to you local git installation. ```git config --global user.email "your@email.com"```. (Replace *your@email.com*)
+3. Fork this repository (button in the  upper right). 
+4. Clone your repository running ```git clone https://github.com/[YourGithubHandle]/CDTM-Backend-Course.git```. (Replace *[YourGithubHandle]*) 
 
 ## 3 Linux (Ubuntu) 
 (If your are running a different distro, I assume you are familiar with the built in package manager ;-) )
@@ -82,3 +98,11 @@ sudo apt-get install atom
 ### 3.4 Flask
 Now you should be able to install flask, a microframework for web-development by running ```pip install flask```. 
 Verify it by launching the python interactive shell (run ```python```) and type ```import flask```. You are good to go, if there is no error message.
+
+### 3.5 Git
+Git is a  *Version Control System'  used for software development. It's  a bit like Dropbox, only that files get synchronised only if you say so explicitly and you can easily revert to any previously synchronised state of a file. More on this later.
+
+1. On Linux git should be preinstalled out-of-the-box. Run ```git --version``` to verify and install it using ```sudo apt-get install git``` otherwise.
+2. Register an account on https://github.com/ and add your email (the same you registered with) to you local git installation. ```git config --global user.email "your@email.com"```. (Replace *your@email.com*)
+3. Fork this repository (button in the  upper right). 
+4. Clone your repository running ```git clone https://github.com/[YourGithubHandle]/CDTM-Backend-Course.git```. (Replace *[YourGithubHandle]*) 
