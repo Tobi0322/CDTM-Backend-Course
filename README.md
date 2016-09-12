@@ -19,14 +19,20 @@ We want to give you an overview what is planned for the next days. We are trying
 ### Preparation
 We designed this course for students with limited programming skills. With this in mind, we want to avoid repeating the 'Basics of Programming' lecture from the Trend Seminar. Therefore we would ask you to complete the introductory python tutorial below **before the start of the course** to get you up and running.
 
-> **Tutorial Name** (3 hours)
-> * Get's you up to speed in **three hours**
-> * You should be comfortable with the following concepts aftwards
->     * Variables 
->     * Variables 
->     * Variables 
->     * Variables >     * Variables 
-> * Link: 
+> **Codecademy Learn Python** 
+> * Get's you up to speed :-)
+> * You should be comfortable with the following concepts aftwards 
+>     * variables 
+>     * strings 
+>     * functions 
+>     * parameters 
+>     * control flow (if, elif, else) 
+>     * loops (while, for)
+>     * lists  
+>     * dictionaries
+>     * tuples 
+>     * Object Orientation (Classes, methods) 
+> * Link: https://www.codecademy.com/learn/python
 
 > **Learn Python the Hard Way** 
 > * The best beginner programmer’s guide to Python, which covers everything from “hello world” to the console to the web.
