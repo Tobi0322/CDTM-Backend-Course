@@ -63,12 +63,16 @@ After today your server should be capable of the following things:
 >   - [ ] Postman
 >   - [ ] SQLite
 > - [ ] Tutorial & Demo Code  
->   - [ ] 1. Todo-Item Object
+>   - [ ] 1. Todo-Item Object (ID / State / Name)
 >   - [ ] 2. Routing: get all Todo-Items
 >   - [ ] 3. Routing: create new Todo-Item
 >   - [ ] 4. Routing: delete Todo-Item
 >   - [ ] 5. Routing: update Todo-Item
->   - [ ] 5. DB: SQLlite setup & Todo-Schema
+>   - [ ] 6. DB: SQLlite, Todo-Item-Schema
+>   - [ ] 7. DB: Connect API with DB
+>   - [ ] 8. DB: Sanitize Input
+>   - [ ] 9. Functionality: Date & Description
+>   - [ ] 10. Functionality: Files
 
 
 ### Sunday
