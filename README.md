@@ -34,7 +34,30 @@ On Friday we will kick off the course with a short lecture introducing the conce
 >   - [ ] Flask
 > - [ ] Demo Code Hello-World-Server
 
-### Saturday
+### Saturday (09:00 - 17:00)
+Today we will concentrate on implementing the basic application logic of our application. In short lectures you will be introduced to the basics of *HTTP*, *REST*, *Databases* and *SQL*.
+After today your server should be capable of the following things:
+* Having a data modell for Todo-Items
+* Handling CRUD (Create, Read, Update, Destroy) requests for Todo-Items over a RESTful API
+* Storing Todo-Items persistently in a database
+
+> **TODO** 
+> - [ ] Lectures
+>   - [ ] Objects: Object Orientation 
+>   - [ ] Routing: HTTP, REST and JSON
+>   - [ ] Persistent Storage: Databases and SQL
+> - [ ] Introduction Tools / Frameworks
+>   - [ ] Postman
+>   - [ ] SQLite
+> - [ ] Tutorial & Demo Code  
+>   - [ ] 1. Todo-Item Object
+>   - [ ] 2. Routing: get all Todo-Items
+>   - [ ] 3. Routing: create new Todo-Item
+>   - [ ] 4. Routing: delete Todo-Item
+>   - [ ] 5. Routing: update Todo-Item
+>   - [ ] 5. DB: SQLlite setup & Todo-Schema
+
+
 ### Sunday
 
 
