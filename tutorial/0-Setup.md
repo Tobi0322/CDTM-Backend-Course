@@ -24,6 +24,10 @@ Feel free to use a text editor or python IDE of your choice. I recommend Atom, w
 
 **NOTE:** Working with CMD or Powershell on Windows can be quite cumbersome at times. There is a nice console emulator for Windows called 'cmder' that brings bash syntax to windows. I recommend using it instead of CMD. Just install the latest release from http://cmder.net/ and add it to your PATH as well ``setx /M PATH "%PATH%;`C:\Program Files\cmder"```.
 
+### 1.4 Flask
+Now you should be able to install flask, a microframework for web-development by running ```pip install flask```. 
+Verify it by launching the python interactive shell (run ```python```) and type ```import flask```. You are good to go, if there is no error message.
+
 ## 2 MacOS
 
 ### 2.1 Chrome
@@ -39,6 +43,10 @@ MacOS shipes with python. However, since MacOS ElCapitan a feature called *Syste
   ```/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"```.
 2. Install python using homebrew by running ```brew install python```.
 3. Check whether python ```python --version``` and pip ```pip --version``` were successfully installed.
+
+### 2.4 Flask
+Now you should be able to install flask, a microframework for web-development by running ```pip install flask```. 
+Verify it by launching the python interactive shell (run ```python```) and type ```import flask```. You are good to go, if there is no error message.
 
 ## 3 Linux (Ubuntu) 
 (If your are running a different distro, I assume you are familiar with the built in package manager ;-) )
@@ -71,4 +79,6 @@ sudo apt-get install atom
 1. Open a terminal and check your version of python ```python --version```. If it is < 2.7.12 run ```sudo apt-get upgrade python```.
 2. Check whether pip is installed ```pip --version```. If it is not installed run ```sudo apt-get install python-pip```.
 
-
+### 3.4 Flask
+Now you should be able to install flask, a microframework for web-development by running ```pip install flask```. 
+Verify it by launching the python interactive shell (run ```python```) and type ```import flask```. You are good to go, if there is no error message.
