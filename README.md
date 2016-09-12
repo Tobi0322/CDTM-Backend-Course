@@ -58,8 +58,8 @@ On Friday we will kick off the course with a short lecture introducing the conce
 >   - [X] Setup Python
 >   - [X] Setup Flask
 >   - [X] Setup Git
-> - [ ] Python Cheatsheet
-> - [ ] Bash / CMD Cheatsheet
+> - [X] Python Cheatsheet
+> - [X] Bash / CMD Cheatsheet
 > - [ ] Introduction Tools / Frameworks
 >   - [ ] Chrome Developer Tools  
 >   - [ ] Bash / CMD (basics)
