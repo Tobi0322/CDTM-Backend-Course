@@ -11,10 +11,17 @@
 ### 1.1 Chrome
 Install the latest version from the official website: https://www.google.de/chrome/browser/desktop/
 
+### 1.2 Text Editor
+Feel free to use a text editor or python IDE of your choice. I recommend Atom, which can be downloaded from https://atom.io/.
+
 ## 2 MacOS
 
 ### 2.1 Chrome
 Install the latest version from the official website: https://www.google.de/chrome/browser/desktop/
+
+### 2.2 Text Editor
+Feel free to use a text editor or python IDE of your choice. I recommend Atom, which can be downloaded from https://atom.io/.
+
 
 ## 3 Linux (Ubuntu) 
 (If your are running a different distro, I assume you are familiar with the built in package manager ;-) )
@@ -34,6 +41,13 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 sudo apt-get install chromium-browser chromium-browser-l10n chromium-codecs-ffmpeg 
 ```
 
+### 3.2 Text Editor
+Feel free to use a text editor or python IDE of your choice. I recommend Atom, which can be downloaded from https://atom.io/.
 
+```
+sudo add-apt-repository ppa:webupd8team/atom
+sudo apt-get update
+sudo apt-get install atom
+```
 
 
