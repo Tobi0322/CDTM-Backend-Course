@@ -1,5 +1,18 @@
 # CDTM Backend Course
 
+## Repository Structure
+```
+. 
++-- README.md 
++-- demo/               (demo code goes here)
+|   +-- step01/         (tutorial step x)
+    |   +-- frontend/   (demo frontend)
+    |   +-- backend/    (sample solution)
++-- src/                (your code goes here)
++-- tutorials/          (tutorials)
++-- slides/             (lecture slides and cheatsheets)
+```
+
 ## Agenda
 We want to give you an overview what is planned for the next days. We are trying to stick to the agenda, but as we are doing this course for the first time we might reschedule a little bit on the fly.
 
