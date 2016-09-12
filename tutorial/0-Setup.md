@@ -85,7 +85,7 @@ sudo apt-get install chromium-browser chromium-browser-l10n chromium-codecs-ffmp
 ### 3.2 Text Editor
 Feel free to use a python IDE or text editor of your choice. As python IDE I recommend PyCharm, which as a student you can get for free (https://www.jetbrains.com/student/). If you prefer a text editor I recommend Atom (https://atom.io/).
 
-#### Install pyCharm
+#### Install PyCharm
 ```
 sudo add-apt-repository ppa:mystic-mirage/pycharm
 sudo apt-get update
