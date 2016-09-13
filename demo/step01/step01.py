@@ -18,7 +18,7 @@ def demo_html():
 def demo_json():
     centerling = {
         "name": "Michael",
-        "class": "Spring 2016",
+        "term": "Spring 2016",
         "courses": {
             "trend": "Fighting Hunger",
             "mpd": "Counting Cells",
