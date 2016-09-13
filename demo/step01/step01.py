@@ -1,14 +1,38 @@
-from flask import Flask
+from flask import Flask, render_template, jsonify
 
-
+# create a new app
 app = Flask(__name__)
 
-# say hello
+# returns a string
 @app.route('/')
 def hello_world():
     return 'Hello World!'
 
-# will trigger an error
+# returns an html template
+@app.route('/html')
+def demo_html():
+    return render_template('hello.html')
+
+# returns some json
+@app.route('/json')
+def demo_json():
+    centerling = {
+        "name": "Michael",
+        "class": "Spring 2016",
+        "courses": {
+            "trend": "Fighting Hunger",
+            "mpd": "Counting Cells",
+            "elab": "",
+            "electives": [
+                "Autonomous Drones",
+                "Neuroscience",
+                "Self Leadership"
+            ]
+        }
+    }
+    return jsonify(centerling)
+
+# this will trigger an error
 @app.route('/err')
 def err():
     assert app.debug == False
