@@ -85,7 +85,7 @@ After today your server should be capable of the following things:
 > - [ ] Tutorial & Demo Code  
 >   - [X] 1. Todo-Item Object (State, Name) + Routing: get all Todo-Items
 >   - [X] 2. Routing: create new Todo-Item
->   - [ ] 3. Routing: delete Todo-Item
+>   - [X] 3. Routing: delete Todo-Item
 >   - [ ] 4. Routing: update Todo-Item
 >   - [ ] 5. DB: SQLlite, Todo-Item-Schema
 >   - [ ] 6. DB: Connect API with DB
