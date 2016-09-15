@@ -1,46 +1,30 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, jsonify, redirect
+from task import Task
 
-# create a new app
-app = Flask(__name__)
+#tell the front end which version we are currently running.
+response = {
+    'version': '02'
+}
 
-# returns a string
+# have some predefined samples
+myTasks = [
+    Task('Play foosball'),
+    Task('Catch \'em all', status=Task.NORMAL),
+    Task('Learn to code', status=Task.COMPLETED)
+]
+
+# set the project root directory as the static folder, you can set others.
+app = Flask(__name__, static_url_path='')
+
 @app.route('/')
-def hello_world():
-    return 'Hello World!'
+def frontEnd():
+    return redirect("/index.html", code=302)
 
-# returns an html template
-@app.route('/html')
-def demo_html():
-    return render_template('hello.html')
-
-# returns some json
-@app.route('/json')
-def demo_json():
-    centerling = {
-        "name": "Michael",
-        "term": "Spring 2016",
-        "courses": {
-            "trend": "Fighting Hunger",
-            "mpd": "Counting Cells",
-            "elab": "",
-            "electives": [
-                "Autonomous Drones",
-                "Neuroscience",
-                "Self Leadership"
-            ]
-        }
-    }
-    return jsonify(centerling)
-
-# this will trigger an error
-@app.route('/err')
-def err():
-    assert app.debug == False
-    return 'Oops!'
+@app.route('/api/tasks')
+def get_tasks():
+    response['data'] = [t.__dict__ for t in myTasks]
+    return jsonify(response)
 
 
 if __name__ == '__main__':
-    addr = "localhost"         # the same as 127.0.0.1
-    port = int("20000")        # between 3000 and 65535
-    debug = True               # activates the [1] debugger, [2] automatic reloader
-    app.run(host=addr, port=port, debug=debug)
+    app.run(host='127.0.0.1', port=int('20002'), debug=True)
