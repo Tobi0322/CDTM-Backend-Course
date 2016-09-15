@@ -31,7 +31,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location) {
   ]
 
   $rootScope.HOST ='localhost';
-  $rootScope.PORT = '20004';
+  $rootScope.PORT = '20005';
 
   $rootScope.hostString = function() {
     return 'http://' + $scope.HOST + ':' + $scope.PORT
@@ -52,7 +52,6 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location) {
   };
 
   $scope.loadTasks = function() {
-    console.log('GET: ' + $rootScope.hostString() + '/api/tasks');
     $scope.loading = true;
     $http.get($rootScope.hostString() + '/api/tasks')
      .then(
@@ -90,6 +89,22 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location) {
       );
   }
 
+  $scope.updateTask = function(task) {
+    $http.put($rootScope.hostString() + '/api/tasks/' + task.id,  JSON.stringify(task))
+     .then(
+         function(response){
+           // success callback
+           console.log(response);
+           task = response.data;
+         },
+         function(response){
+           // failure callback
+           console.log(response)
+           shake(document.getElementById(task.id));
+         }
+      );
+  }
+
   $scope.removeTask = function(task) {
     $http.delete($rootScope.hostString() + '/api/tasks/' + task.id)
      .then(
@@ -113,6 +128,7 @@ app.controller('taskCtrl', function($scope, $rootScope, $http) {
     } else {
       $scope.task.status = 'normal';
     }
+    $scope.$parent.updateTask($scope.task)
   }
 
   $scope.deleteTask = function() {

@@ -10,3 +10,12 @@ class Task:
         self.id = id
         self.title =  title
         self.status = status
+
+    def setTitle(self, title):
+        self.title = title
+
+    def setStatus(self, status):
+        if status == self.COMPLETED:
+            self.status = self.COMPLETED
+        else:
+            self.status = self.NORMAL

@@ -3,7 +3,7 @@ from task import Task
 
 #tell the front end which version we are currently running.
 response = {
-    'version': '04'
+    'version': '05'
 }
 
 # have some predefined samples
@@ -35,6 +35,18 @@ def create_task():
     myTasks.append(newTask)
     return jsonify(newTask.__dict__)
 
+# UPDATE ROUTE
+@app.route('/api/tasks/<string:task_id>', methods=['PUT'])
+def update_task(task_id):
+    task = [task for task in myTasks if task.id == task_id]
+    print task
+    if len(task) == 0:
+        abort(404)
+    task[0].setTitle(request.json['title'])
+    task[0].setStatus(request.json['status'])
+    return jsonify(task[0].__dict__)
+
+
 # DESTROY ROUTE
 @app.route('/api/tasks/<string:task_id>', methods=['DELETE'])
 def remove_task(task_id):
@@ -46,4 +58,4 @@ def remove_task(task_id):
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=int('20004'), debug=True)
+    app.run(host='127.0.0.1', port=int('20005'), debug=True)
