@@ -3,7 +3,7 @@ from task import Task
 
 #tell the front end which version we are currently running.
 response = {
-    'version': '03'
+    'version': '04'
 }
 
 # have some predefined samples
@@ -37,4 +37,4 @@ def create_task():
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=int('20003'), debug=True)
+    app.run(host='127.0.0.1', port=int('20004'), debug=True)

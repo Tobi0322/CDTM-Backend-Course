@@ -1,0 +1,125 @@
+html, body {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.unselectable {
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.subtle, .subtle:active, .subtle:focus {
+  border-style: none !important;
+  box-shadow: 0 0 0 0 white;
+}
+
+input[type=text]:focus:not([readonly]).subtle {
+  background: rgba(0, 0, 0, 0.05);
+  border-style: none !important;
+  border-width: 0 !important;
+  box-shadow: 0 0 0 0 white;
+}
+
+nav ul li a{
+  color: #153d77;
+}
+
+nav a i{
+  color: #153d77;
+}
+
+nav .nav-wrapper .brand-logo {
+  color: rgba(0, 0, 0, 0.8);
+  height: 64px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+nav .nav-wrapper .brand-logo > span {
+  display: inline-block;
+  height: 95%;
+  margin-bottom: 5%;
+  vertical-align: middle;
+  font-size: 0.8em;
+  color: #153d77;
+}
+
+nav .nav-wrapper .brand-logo img {
+    height: 50px;
+    margin: 8px 8px 8px 8px;
+    vertical-align: middle;
+}
+
+@media (max-width: 600px) {
+  nav .nav-wrapper .brand-logo {
+    height: 56px;
+  }
+
+  nav .nav-wrapper .brand-logo img {
+    height: 40px;
+  }
+}
+
+.input-card {
+  height: 70px;
+  margin: 0 0 1px 0;
+}
+
+.input-card input {
+  box-sizing: border-box;
+  font-size: inherit;
+  height: 70px;
+  padding: 0 20px;
+}
+
+.task-card {
+  font-size: 1.3em;
+  min-height: 70px;
+  margin: 0 0 1px 0;
+}
+
+.task-card.completed {
+  color: rgba(0,0,0,0.4);
+  text-decoration: line-through;
+}
+
+.task-card .checkbox {
+  width: 40px;
+  height: 40px;
+  margin: 0.75rem;
+  padding: 0;
+  border-color: red;
+  background: url("/assets/icons/circle.svg");
+}
+
+.task-card .checkbox img {
+  display: none;
+  margin: auto auto;
+  padding: 0.5rem;
+}
+
+.task-card.completed .checkbox img {
+  display: block;
+}
+
+/* ANIMATIONS  */
+.animated {
+    animation-duration: 0.9s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% {transform: translateX(0);}
+    10%, 30%, 50%, 70%, 90% {transform: translateX(-10px);}
+    20%, 40%, 60%, 80% {transform: translateX(10px);}
+}
+.shake {
+    animation-name: shake;
+}
