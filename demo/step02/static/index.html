@@ -33,6 +33,11 @@
     </ul>
   </div>
   </nav>
+
+  <div hide ng-show="loading" class="progress" style="margin-top:0;">
+    <div class="indeterminate"></div>
+  </div>
+
   <div class="row">
     <div class="col s6 left-align">
       <span>Host: {{HOST}}</span> |
@@ -45,6 +50,9 @@
       <span>app: v2.0</span>
     </div>
   </div>
+
+
+
 
 
   <body>

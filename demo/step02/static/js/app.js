@@ -9,8 +9,9 @@ app.config(function($locationProvider) {
 
 app.controller('mainCtrl', function($scope, $http, $location) {
 
-  $scope.HOST ='localhost'
-  $scope.PORT = '20002'
+  $scope.HOST ='localhost';
+  $scope.PORT = '20002';
+  $scope.loading = false;
 
   $scope.$watch('$viewContentLoaded', function(){
     $('.button-collapse').sideNav();
@@ -20,12 +21,14 @@ app.controller('mainCtrl', function($scope, $http, $location) {
 
   $scope.loadTasks = function() {
     console.log('GET: ' + 'http://' + $scope.HOST + ':' + $scope.PORT + '/api/tasks');
+    $scope.loading = true;
     $http.get('http://' + $scope.HOST + ':' + $scope.PORT + '/api/tasks')
      .then(
          function(response){
            // success callback
            $scope.api_version = response.data.version;
            $scope.tasks = response.data.data;
+           $scope.loading = false;
          },
          function(response){
            // failure callback
@@ -33,6 +36,7 @@ app.controller('mainCtrl', function($scope, $http, $location) {
            $scope.tasks = ""
            console.log("Response: ");
            console.log( response);
+           $scope.loading = false;
          }
       );
   };
