@@ -2,6 +2,10 @@ html, body {
   color: rgba(0, 0, 0, 0.8);
 }
 
+.hidden {
+  display: none !important;
+}
+
 .unselectable {
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
@@ -62,10 +66,22 @@ nav .nav-wrapper .brand-logo img {
   }
 }
 
+.input-card {
+  height: 70px;
+  margin: 0 0 1px 0;
+}
+
+.input-card input {
+  box-sizing: border-box;
+  font-size: inherit;
+  height: 70px;
+  padding: 0 20px;
+}
+
 .task-card {
   font-size: 1.3em;
   min-height: 70px;
-  margin: 0 0 1px 0;*/
+  margin: 0 0 1px 0;
 }
 
 .task-card.completed {

@@ -9,15 +9,29 @@ app.config(function($locationProvider) {
 
 app.controller('mainCtrl', function($scope, $http, $location) {
 
+  var placeholders = [
+    "What needs to be done?",
+    "Anything else to do?",
+    "Remind me about ...",
+    "Don't forget about ...",
+    "Remind me about ...",
+    "What's on your agenda?",
+  ]
+
   $scope.HOST ='localhost';
   $scope.PORT = '20003';
   $scope.loading = false;
+  $scope.placeholder = placeholders[Math.floor(Math.random(1337)*placeholders.length)];
 
   $scope.$watch('$viewContentLoaded', function(){
     $('.button-collapse').sideNav();
     $scope.HOST = $location.host()
     $scope.loadTasks()
   });
+
+  $scope.changePort = function() {
+    $scope.loadTasks()
+  };
 
   $scope.loadTasks = function() {
     console.log('GET: ' + 'http://' + $scope.HOST + ':' + $scope.PORT + '/api/tasks');
@@ -41,9 +55,17 @@ app.controller('mainCtrl', function($scope, $http, $location) {
       );
   };
 
-  $scope.changePort = function() {
-    $scope.loadTasks()
-  };
+  $scope.addTask = function () {
+    // TODO: POST to server
+    console.log($scope.newTask);
+    var task = {
+      title: $scope.newTask,
+      status: 'normal'
+    }
+    $scope.tasks.push(task);
+    $scope.placeholder = placeholders[Math.floor(Math.random(1337)*placeholders.length)];
+    $scope.newTask = "";
+  }
 
 });
 

@@ -39,7 +39,7 @@
   <div class="row">
     <div class="col s6 left-align">
       <span>Host: {{HOST}}</span> |
-      <span>Port:
+      <span  ng-submit="changePort()">Port:
         <input style="height:25px; width:40px; text-align: right; padding: 0 5px;" class="subtle" type="text" ng-model="PORT" ng-blur="changePort()"/>
       </span>
     </div>
@@ -49,15 +49,17 @@
     </div>
   </div>
 
-
-
-
-
-  <body>
+  <body ng-cloak>
     <div class="container row">
       <h1 class="center-align">Tasks</h1>
       <div class="col s0 m2"></div>
       <div class="col s12 m8">
+        <div class="card hoverable input-card row">
+          <form ng-submit="addTask()">
+            <input class="subtle card-title" type="text" autocomplete="off" ng-model="newTask" placeholder="{{placeholder}}">
+            <input type="submit" class="hidden">
+          </form>
+        </div>
         <div ng-repeat="t in tasks">
           <one-task task="t"></one-task>
         </div>
