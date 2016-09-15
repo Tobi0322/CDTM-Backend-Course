@@ -107,3 +107,19 @@ nav .nav-wrapper .brand-logo img {
 .task-card.completed .checkbox img {
   display: block;
 }
+
+/* ANIMATIONS  */
+.animated {
+    animation-duration: 0.9s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% {transform: translateX(0);}
+    10%, 30%, 50%, 70%, 90% {transform: translateX(-10px);}
+    20%, 40%, 60%, 80% {transform: translateX(10px);}
+}
+.shake {
+    animation-name: shake;
+}

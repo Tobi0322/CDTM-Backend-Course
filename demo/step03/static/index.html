@@ -54,9 +54,9 @@
       <h1 class="center-align">Tasks</h1>
       <div class="col s0 m2"></div>
       <div class="col s12 m8">
-        <div class="card hoverable input-card row">
+        <div id="input-card" class="card hoverable input-card row">
           <form ng-submit="addTask()">
-            <input class="subtle card-title" type="text" autocomplete="off" ng-model="newTask" placeholder="{{placeholder}}">
+            <input class="subtle card-title" type="text" autocomplete="off" ng-model="newTask.title" placeholder="{{placeholder}}">
             <input type="submit" class="hidden">
           </form>
         </div>

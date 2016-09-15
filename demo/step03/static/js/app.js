@@ -7,7 +7,7 @@ app.config(function($locationProvider) {
 });
 
 
-app.controller('mainCtrl', function($scope, $http, $location) {
+app.controller('mainCtrl', function($scope, $http, $location, $timeout) {
 
   var placeholders = [
     "What needs to be done?",
@@ -18,10 +18,15 @@ app.controller('mainCtrl', function($scope, $http, $location) {
     "What's on your agenda?",
   ]
 
+  var hostString = function() {
+    return 'http://' + $scope.HOST + ':' + $scope.PORT
+  }
+
   $scope.HOST ='localhost';
   $scope.PORT = '20003';
   $scope.loading = false;
   $scope.placeholder = placeholders[Math.floor(Math.random(1337)*placeholders.length)];
+  $scope.newTask = {}
 
   $scope.$watch('$viewContentLoaded', function(){
     $('.button-collapse').sideNav();
@@ -34,9 +39,9 @@ app.controller('mainCtrl', function($scope, $http, $location) {
   };
 
   $scope.loadTasks = function() {
-    console.log('GET: ' + 'http://' + $scope.HOST + ':' + $scope.PORT + '/api/tasks');
+    console.log('GET: ' + hostString() + '/api/tasks');
     $scope.loading = true;
-    $http.get('http://' + $scope.HOST + ':' + $scope.PORT + '/api/tasks')
+    $http.get(hostString() + '/api/tasks')
      .then(
          function(response){
            // success callback
@@ -46,8 +51,8 @@ app.controller('mainCtrl', function($scope, $http, $location) {
          },
          function(response){
            // failure callback
-           $scope.api_version = "N/A"
-           $scope.tasks = ""
+           $scope.api_version = "N/A";
+           $scope.tasks = [];
            console.log("Response: ");
            console.log( response);
            $scope.loading = false;
@@ -56,17 +61,28 @@ app.controller('mainCtrl', function($scope, $http, $location) {
   };
 
   $scope.addTask = function () {
-    // TODO: POST to server
-    console.log($scope.newTask);
-    var task = {
-      title: $scope.newTask,
-      status: 'normal'
-    }
-    $scope.tasks.push(task);
-    $scope.placeholder = placeholders[Math.floor(Math.random(1337)*placeholders.length)];
-    $scope.newTask = "";
+    console.log(JSON.stringify($scope.newTask))
+    $http.post(hostString() + '/api/tasks', JSON.stringify($scope.newTask))
+     .then(
+         function(response){
+           // success callback
+           $scope.tasks.push(response.data);
+           $scope.placeholder = placeholders[Math.floor(Math.random(1337)*placeholders.length)];
+           $scope.newTask = {};
+         },
+         function(response){
+           // failure callback
+           console.log(response)
+           var element = document.getElementById('input-card');
+           element.classList.add('shake');
+           element.classList.add('animated');
+           $timeout(function () {
+             element.classList.remove('shake');
+             element.classList.remove('animated');
+           }, 1000);
+         }
+      );
   }
-
 });
 
 app.controller('taskCtrl', function($scope, $http) {
