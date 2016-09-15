@@ -14,6 +14,11 @@ html, body {
     user-select: none;
 }
 
+svg {
+  color: inherit;
+  fill: currentColor;
+}
+
 .subtle, .subtle:active, .subtle:focus {
   border-style: none !important;
   box-shadow: 0 0 0 0 white;
@@ -94,19 +99,49 @@ nav .nav-wrapper .brand-logo img {
   height: 40px;
   margin: 0.75rem;
   padding: 0;
-  border-color: red;
   background: url("/assets/icons/circle.svg");
+}
+
+.task-card .delete {
+  display: none;
+  width: 24px;
+  height: 24px;
+  margin: 0.75rem;
+  padding: 0;
+  background: url("/assets/icons/delete.svg");
+}
+
+.task-card .delete:hover {
+  width: 24px;
+  height: 24px;
+  margin: 0.75rem;
+  padding: 0;
+  background: url("/assets/icons/delete_now.svg");
+}
+
+.task-card:hover .delete {
+  display:block;
+}
+
+.task-card img  {
+  margin: auto auto;
+  padding: 0.5rem;
 }
 
 .task-card .checkbox img {
   display: none;
-  margin: auto auto;
-  padding: 0.5rem;
 }
 
 .task-card.completed .checkbox img {
   display: block;
 }
+
+.task-card .card-title {
+  width: calc(100% - 2.5rem - 64px);
+  width: -webkit-calc(100% - 2.5rem - 64px);
+  width: -moz-calc(100% - 2.5rem - 64px);
+}
+
 
 /* ANIMATIONS  */
 .animated {

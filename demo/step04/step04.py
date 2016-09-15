@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, redirect, request
+from flask import Flask, jsonify, redirect, request, abort
 from task import Task
 
 #tell the front end which version we are currently running.
@@ -8,9 +8,9 @@ response = {
 
 # have some predefined samples
 myTasks = [
-    Task('Play foosball'),
-    Task('Catch \'em all', status=Task.NORMAL),
-    Task('Learn to code', status=Task.COMPLETED)
+    Task('Play foosball', id="001"),
+    Task('Catch \'em all', id="002", status=Task.NORMAL),
+    Task('Learn to code', id="003", status=Task.COMPLETED)
 ]
 
 # set the project root directory as the static folder, you can set others.
@@ -31,9 +31,18 @@ def get_tasks():
 @app.route('/api/tasks', methods=['POST'])
 def create_task():
     title = request.json['title']
-    newTask = Task(title)
+    newTask = Task(title, id="{0:0>3}".format(len(myTasks)+1))
     myTasks.append(newTask)
     return jsonify(newTask.__dict__)
+
+# DESTROY ROUTE
+@app.route('/api/tasks/<string:task_id>', methods=['DELETE'])
+def remove_task(task_id):
+    task = [task for task in myTasks if task.id == task_id]
+    if len(task) == 0:
+        abort(404)
+    myTasks.remove(task[0])
+    return jsonify({'result': True})
 
 
 if __name__ == '__main__':

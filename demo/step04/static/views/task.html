@@ -1,8 +1,9 @@
-<div ng-class="{completed: task.status=='completed'}" class="card hoverable row valign-wrapper task-card">
+<div id="{{task.id}}" ng-class="{completed: task.status=='completed'}" class="card hoverable row valign-wrapper task-card">
   <a class="col checkbox unselectable" href ng-click="toggleTask()">
     <img src="/assets/icons/check.svg">
   </a>
   <div class="card-title col">
     {{task.title}}
   </div>
+  <a class="col delete unselectable" href ng-click="deleteTask()"></a>
 </div>
