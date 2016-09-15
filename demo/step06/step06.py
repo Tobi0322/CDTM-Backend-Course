@@ -3,7 +3,7 @@ from task import Task
 
 #tell the front end which version we are currently running.
 response = {
-    'version': '06'
+    'version': '05'
 }
 
 # have some predefined samples
@@ -58,4 +58,4 @@ def remove_task(task_id):
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=int('20006'), debug=True)
+    app.run(host='127.0.0.1', port=int('20005'), debug=True)
