@@ -31,7 +31,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location) {
   ]
 
   $rootScope.HOST ='localhost';
-  $rootScope.PORT = '20006';
+  $rootScope.PORT = '20007';
 
   $rootScope.hostString = function() {
     return 'http://' + $scope.HOST + ':' + $scope.PORT

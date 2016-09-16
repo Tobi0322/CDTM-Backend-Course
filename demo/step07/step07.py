@@ -4,7 +4,7 @@ from task import Task
 
 # tell the front end which version we are currently running.
 response = {
-    'version': '06'
+    'version': '07'
 }
 
 # have some predefined samples
@@ -49,6 +49,21 @@ def db_get_tasks():
         cur.execute('select * from tasks')
         return [Task.fromDict(dict_from_row(row)) for row in cur]
 
+def db_create_task(title):
+    ''' Inserts a new task and returns it '''
+    query = '''
+        INSERT INTO Tasks(title, status)
+        Values ('{}', 'normal');
+    '''.format(title)
+
+    db = get_db()
+    cur = db.cursor()
+    cur.execute(query)
+    db.commit()
+
+    cur.execute('select * from tasks where id = {}'.format(cur.lastrowid))
+    return Task.fromDict(dict_from_row(cur.fetchone()))
+
 # --------------------------
 # -----     ROUTES     -----
 # --------------------------
@@ -68,8 +83,7 @@ def get_tasks():
 @app.route('/api/tasks', methods=['POST'])
 def create_task():
     title = request.json['title']
-    newTask = Task(title, id="{0:0>3}".format(len(myTasks)+1))
-    myTasks.append(newTask)
+    newTask = db_create_task(title)
     return jsonify(newTask.__dict__)
 
 # UPDATE ROUTE
@@ -95,4 +109,4 @@ def remove_task(task_id):
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=int('20006'), debug=True)
+    app.run(host='127.0.0.1', port=int('20007'), debug=True)
