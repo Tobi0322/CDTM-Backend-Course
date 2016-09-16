@@ -51,9 +51,15 @@ def db_get_tasks():
 
 def db_get_task(id):
     ''' Queries the db for a task with the specified id'''
+    query = '''
+        SELECT id, title, status
+        FROM tasks
+        WHERE id = {}
+    '''.format(id)
+
     with app.app_context():
         cur = get_db().cursor()
-        cur.execute('select * from tasks where id = {}'.format(id))
+        cur.execute(query)
         return Task.fromDict(dict_from_row(cur.fetchone()))
 
 def db_create_task(title):
@@ -86,6 +92,22 @@ def db_upate_task(task):
         db.commit()
 
     return db_get_task(task.id)
+
+def db_delete_task(id):
+    ''' Deletes the task with the specified id '''
+    query = '''
+        DELETE
+        FROM tasks
+        WHERE id = {}
+    '''.format(id)
+
+    print query
+
+    with app.app_context():
+        db = get_db()
+        cur = db.cursor()
+        cur.execute(query)
+        db.commit()
 
 # --------------------------
 # -----     ROUTES     -----
@@ -128,10 +150,7 @@ def update_task(task_id):
 # DESTROY ROUTE
 @app.route('/api/tasks/<string:task_id>', methods=['DELETE'])
 def remove_task(task_id):
-    task = [task for task in myTasks if task.id == task_id]
-    if len(task) == 0:
-        abort(404)
-    myTasks.remove(task[0])
+    db_delete_task(task_id)
     return jsonify({'result': True})
 
 
