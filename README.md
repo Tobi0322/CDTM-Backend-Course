@@ -92,6 +92,7 @@ After today your server should be capable of the following things:
 >   - [X] 7. DB: Sanitize Input
 >       - DELETE: http://127.0.0.1:20007/api/tasks/20%20or%201=1
 >   - [ ] 8. Functionality: Date & Description
+>       - STATUS: Description done, date missing
 >   - [ ] 9. Functionality: Files
 
 
