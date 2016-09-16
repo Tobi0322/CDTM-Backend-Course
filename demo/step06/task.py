@@ -6,6 +6,15 @@ class Task:
     NORMAL = 'normal'
     COMPLETED = 'completed'
 
+    @staticmethod
+    def fromDict(dict):
+        task = Task(
+            dict['title'],
+            id = dict['id']
+        )
+        task.setStatus(dict['status'])
+        return task
+
     def __init__(self, title, id="", status = NORMAL):
         self.id = id
         self.title =  title

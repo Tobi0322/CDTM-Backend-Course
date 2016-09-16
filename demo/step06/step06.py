@@ -1,9 +1,10 @@
-from flask import Flask, jsonify, redirect, request, abort
+from flask import Flask, jsonify, redirect, request, abort, g
+import sqlite3
 from task import Task
 
-#tell the front end which version we are currently running.
+# tell the front end which version we are currently running.
 response = {
-    'version': '05'
+    'version': '06'
 }
 
 # have some predefined samples
@@ -13,8 +14,44 @@ myTasks = [
     Task('Learn to code', id="003", status=Task.COMPLETED)
 ]
 
+
 # set the project root directory as the static folder, you can set others.
 app = Flask(__name__, static_url_path='')
+
+# --------------------------
+# -----    DATABASE    -----
+# --------------------------
+
+# make sure to use this  only within app.app_context()
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect('task.db')
+        db.row_factory = sqlite3.Row
+    return db
+
+def init_db():
+    ''' Inititalizes the database '''
+    with app.app_context():
+        db = get_db()
+        with app.open_resource('schema.sql', mode='r') as f:
+            db.cursor().executescript(f.read())
+        db.commit()
+
+def dict_from_row(row):
+    ''' Converts a query result into a dict '''
+    return dict(zip(row.keys(), row))
+
+def db_get_tasks():
+    ''' Returns all tasks from the database '''
+    with app.app_context():
+        cur = get_db().cursor()
+        cur.execute('select * from tasks')
+        return [Task.fromDict(dict_from_row(row)) for row in cur]
+
+# --------------------------
+# -----     ROUTES     -----
+# --------------------------
 
 # serve static files
 @app.route('/')
@@ -24,7 +61,7 @@ def frontEnd():
 # INDEX ROUTE
 @app.route('/api/tasks')
 def get_tasks():
-    response['data'] = [t.__dict__ for t in myTasks]
+    response['data'] = [t.__dict__ for t in db_get_tasks()]
     return jsonify(response)
 
 # CREATE ROUTE
@@ -58,4 +95,4 @@ def remove_task(task_id):
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=int('20005'), debug=True)
+    app.run(host='127.0.0.1', port=int('20006'), debug=True)
