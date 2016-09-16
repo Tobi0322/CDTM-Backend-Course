@@ -17,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body ng-app="taskApp">
-<div  ng-controller="mainCtrl">
+<div  ng-controller="mainCtrl" class="ng-cloak">
   <!-- Navbar -->
   <nav>
   <div class="nav-wrapper grey lighten-5 black-text">
@@ -39,8 +39,8 @@
   <div class="row">
     <div class="col s6 left-align">
       <span>Host: {{HOST}}</span> |
-      <span  ng-submit="changePort()">Port:
-        <input style="height:25px; width:40px; text-align: right; padding: 0 5px;" class="subtle" type="text" ng-model="PORT" ng-blur="changePort()"/>
+      <span ng-submit="changePort()">Port:
+        <input id="port" class="subtle" type="text" ng-model="PORT" ng-blur="changePort()"/>
       </span>
     </div>
     <div class="col s6 right-align">
@@ -49,8 +49,8 @@
     </div>
   </div>
 
-  <body ng-cloak>
     <div class="container row">
+
       <h1 class="center-align">Tasks</h1>
       <div class="col s0 m2"></div>
       <div class="col s12 m8">
@@ -75,7 +75,7 @@
 
   <!--Import Angular-->
   <script type="text/javascript" src="js/angular.js"></script>
-  <script type="text/javascript" src="js/angular-route.js"></script>
+  <script type="text/javascript" src="js/angular-aria.js"></script>
 
   <!--Import Angular app-->
   <script type="text/javascript" src="js/app.js"></script>

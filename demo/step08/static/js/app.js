@@ -1,6 +1,6 @@
 var app = angular.module('taskApp', []);
 
-var shake = function(element) {
+function shake(element) {
   try {
     element.classList.add('shake');
     element.classList.add('animated');
@@ -12,6 +12,15 @@ var shake = function(element) {
   catch(err) {
     // ignore
   }
+}
+
+function clearSelection() {
+    if(document.selection && document.selection.empty) {
+        document.selection.empty();
+    } else if(window.getSelection) {
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+    }
 }
 
 app.config(function($locationProvider) {
@@ -43,6 +52,14 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location) {
 
   $scope.$watch('$viewContentLoaded', function(){
     $('.button-collapse').sideNav();
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal-trigger').leanModal();
+
+    $('.datepicker').pickadate({
+      selectMonths: true, // Creates a dropdown to control month
+      selectYears: 15 // Creates a dropdown of 15 years to control year
+    });
+
     $scope.HOST = $location.host()
     $scope.loadTasks()
   });
@@ -72,7 +89,6 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location) {
   };
 
   $scope.addTask = function () {
-    console.log(JSON.stringify($scope.newTask))
     $http.post($rootScope.hostString() + '/api/tasks', JSON.stringify($scope.newTask))
      .then(
          function(response){
@@ -94,7 +110,6 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location) {
      .then(
          function(response){
            // success callback
-           console.log(response);
            task = response.data;
          },
          function(response){
@@ -134,6 +149,26 @@ app.controller('taskCtrl', function($scope, $rootScope, $http) {
   $scope.deleteTask = function() {
     $scope.$parent.removeTask($scope.task);
   }
+
+  $scope.deleteTaskModally = function() {
+    $('#modal' + $scope.task.id).closeModal();
+    $scope.$parent.removeTask($scope.task);
+  }
+
+  $scope.updateTask = function() {
+    console.log("Update task " + $scope.task);
+    $('#modal' + $scope.task.id).closeModal();
+    $scope.$parent.updateTask($scope.task);
+  }
+
+  $scope.showDetails = function() {
+    clearSelection()
+     $('#modal' + $scope.task.id).openModal();
+     $('.datepicker').pickadate({
+       selectMonths: true, // Creates a dropdown to control month
+       selectYears: 15 // Creates a dropdown of 15 years to control year
+     });
+  }
 });
 
 app.directive('oneTask', function() {
@@ -142,6 +177,6 @@ app.directive('oneTask', function() {
           task: '=' //Two-way data binding
       },
       controller: 'taskCtrl',
-      templateUrl: '/../views/task.html?20'
+      templateUrl: '/../views/task.html?65'
   };
 });

@@ -6,12 +6,16 @@ html, body {
   display: none !important;
 }
 
-.unselectable {
+.nonselectable {
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
     -webkit-user-select: none;
     -o-user-select: none;
     user-select: none;
+}
+
+.clickable {
+  cursor: pointer;
 }
 
 svg {
@@ -69,6 +73,14 @@ nav .nav-wrapper .brand-logo img {
   nav .nav-wrapper .brand-logo img {
     height: 40px;
   }
+}
+
+#port {
+  height:25px;
+  width:40px;
+  text-align:
+  right;
+  padding: 0 5px;
 }
 
 .input-card {
@@ -137,9 +149,84 @@ nav .nav-wrapper .brand-logo img {
 }
 
 .task-card .card-title {
-  width: calc(100% - 2.5rem - 64px);
-  width: -webkit-calc(100% - 2.5rem - 64px);
-  width: -moz-calc(100% - 2.5rem - 64px);
+  width: calc(100% - 3.0rem - 64px);
+  width: -webkit-calc(100% - 3.0rem - 64px);
+  width: -moz-calc(100% - 3.0rem - 64px);
+}
+
+.modal {
+  max-height: 80%;
+}
+
+.modal.modal-fixed-footer {
+  height: 80%;
+}
+
+@media (max-height: 720px) {
+  .modal .picker--opened .picker__frame {
+      top: 5%;
+      bottom: auto;
+  }
+
+  .modal {
+    top: 5% !important;
+    max-height: 90%;
+  }
+
+  .modal.modal-fixed-footer {
+    height: 90%;
+  }
+}
+
+.modal .card-title {
+  font-size: 32px;
+  font-weight: 300;
+}
+
+.modal .task-header {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.modal .completed .task-header {
+  text-decoration: line-through;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.modal .task-header input {
+  box-sizing: border-box;
+  height: 70px;
+  padding: 0 20px;
+  margin-bottom: 0;
+}
+
+
+.modal .task-body {
+  width: 90%;
+  margin: 30px 5% 0 5%;
+}
+
+.modal .valign-wrapper {
+  margin: 0;
+}
+
+.modal .task-body textarea:focus:not([readonly]) {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.modal hr {
+  width: 90%;
+  margin: 0 5%;
+  border-width: 0 0 0 0;
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.modal h5 {
+  font-size: 18px;
+}
+
+.modal .description {
+  min-height: 10em;
 }
 
 

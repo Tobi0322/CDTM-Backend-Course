@@ -54,13 +54,13 @@ def db_get_tasks():
     ''' Returns all tasks from the database '''
     with app.app_context():
         cur = get_db().cursor()
-        cur.execute('select * from tasks')
+        cur.execute('select * from tasks order by created desc')
         return [Task.fromDict(dict_from_row(row)) for row in cur]
 
 def db_get_task(id):
     ''' Queries the db for a task with the specified id'''
     query = '''
-        SELECT id, title, status
+        SELECT id, title, status, description
         FROM tasks
         WHERE id = ?;
     '''
@@ -89,14 +89,14 @@ def db_upate_task(task):
     ''' Updates a task and returns it '''
     query = '''
         UPDATE tasks
-        SET title = ? , status =  ?
+        SET title = ? , status =  ?, description = ?
         WHERE id = ?;
     '''.format()
 
     with app.app_context():
         db = get_db()
         cur = db.cursor()
-        cur.execute(query, [task.title, task.status, task.id])
+        cur.execute(query, [task.title, task.status, task.description, task.id])
         db.commit()
 
     return db_get_task(task.id)
@@ -142,12 +142,12 @@ def create_task():
 # UPDATE ROUTE
 @app.route('/api/tasks/<string:task_id>', methods=['PUT'])
 def update_task(task_id):
-    print task_id
     task = db_get_task(task_id)
     if task == None:
         abort(404)
     task.setTitle(request.json['title'])
     task.setStatus(request.json['status'])
+    task.setDescription(request.json['description'])
 
     task = db_upate_task(task)
     if task == None:
