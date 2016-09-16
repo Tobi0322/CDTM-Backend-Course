@@ -1,6 +1,14 @@
+#!/usr/bin/env python
+# coding: utf8
+
 from flask import Flask, jsonify, redirect, request, abort, g
 import sqlite3
+import sys
 from task import Task
+
+# special characters (e.g. üäö ...) work now
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 # tell the front end which version we are currently running.
 response = {
@@ -54,25 +62,25 @@ def db_get_task(id):
     query = '''
         SELECT id, title, status
         FROM tasks
-        WHERE id = {}
-    '''.format(id)
+        WHERE id = ?;
+    '''
 
     with app.app_context():
         cur = get_db().cursor()
-        cur.execute(query)
+        cur.execute(query, [id])
         return Task.fromDict(dict_from_row(cur.fetchone()))
 
 def db_create_task(title):
     ''' Inserts a new task and returns it '''
     query = '''
         INSERT INTO Tasks(title, status)
-        Values ('{}', 'normal');
-    '''.format(title)
+        Values (?, 'normal');
+    '''
 
     with app.app_context():
         db = get_db()
         cur = db.cursor()
-        cur.execute(query)
+        cur.execute(query, [title])
         db.commit()
 
     return db_get_task(cur.lastrowid)
@@ -81,14 +89,14 @@ def db_upate_task(task):
     ''' Updates a task and returns it '''
     query = '''
         UPDATE tasks
-        SET title = '{}', status = '{}'
-        WHERE id = {}
-    '''.format(task.title, task.status, task.id)
+        SET title = ? , status =  ?
+        WHERE id = ?;
+    '''.format()
 
     with app.app_context():
         db = get_db()
         cur = db.cursor()
-        cur.execute(query)
+        cur.execute(query, [task.title, task.status, task.id])
         db.commit()
 
     return db_get_task(task.id)
@@ -98,15 +106,13 @@ def db_delete_task(id):
     query = '''
         DELETE
         FROM tasks
-        WHERE id = {}
-    '''.format(id)
-
-    print query
+        WHERE id = ?;
+    '''
 
     with app.app_context():
         db = get_db()
         cur = db.cursor()
-        cur.execute(query)
+        cur.execute(query, [id])
         db.commit()
 
 # --------------------------
@@ -136,6 +142,7 @@ def create_task():
 # UPDATE ROUTE
 @app.route('/api/tasks/<string:task_id>', methods=['PUT'])
 def update_task(task_id):
+    print task_id
     task = db_get_task(task_id)
     if task == None:
         abort(404)
