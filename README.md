@@ -65,7 +65,7 @@ On Friday we will kick off the course with a short lecture introducing the conce
 >   - [ ] Bash / CMD (basics)
 >   - [ ] Git / Github
 >   - [ ] Flask
-> - [ ] Demo Code Hello-World-Server
+> - [X] Demo Code Hello-World-Server
 
 ### Saturday (09:00 - 17:00)
 Today we will concentrate on implementing the basic application logic of our application. In short lectures you will be introduced to the basics of *HTTP*, *REST*, *Databases* and *SQL*.
