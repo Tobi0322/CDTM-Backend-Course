@@ -40,7 +40,7 @@ def init_db():
 
 def dict_from_row(row):
     ''' Converts a query result into a dict '''
-    return dict(zip(row.keys(), row))
+    return {} if row == None else dict(zip(row.keys(), row))
 
 def db_get_tasks():
     ''' Returns all tasks from the database '''
@@ -49,6 +49,13 @@ def db_get_tasks():
         cur.execute('select * from tasks')
         return [Task.fromDict(dict_from_row(row)) for row in cur]
 
+def db_get_task(id):
+    ''' Queries the db for a task with the specified id'''
+    with app.app_context():
+        cur = get_db().cursor()
+        cur.execute('select * from tasks where id = {}'.format(id))
+        return Task.fromDict(dict_from_row(cur.fetchone()))
+
 def db_create_task(title):
     ''' Inserts a new task and returns it '''
     query = '''
@@ -56,13 +63,29 @@ def db_create_task(title):
         Values ('{}', 'normal');
     '''.format(title)
 
-    db = get_db()
-    cur = db.cursor()
-    cur.execute(query)
-    db.commit()
+    with app.app_context():
+        db = get_db()
+        cur = db.cursor()
+        cur.execute(query)
+        db.commit()
 
-    cur.execute('select * from tasks where id = {}'.format(cur.lastrowid))
-    return Task.fromDict(dict_from_row(cur.fetchone()))
+    return db_get_task(cur.lastrowid)
+
+def db_upate_task(task):
+    ''' Updates a task and returns it '''
+    query = '''
+        UPDATE tasks
+        SET title = '{}', status = '{}'
+        WHERE id = {}
+    '''.format(task.title, task.status, task.id)
+
+    with app.app_context():
+        db = get_db()
+        cur = db.cursor()
+        cur.execute(query)
+        db.commit()
+
+    return db_get_task(task.id)
 
 # --------------------------
 # -----     ROUTES     -----
@@ -84,19 +107,23 @@ def get_tasks():
 def create_task():
     title = request.json['title']
     newTask = db_create_task(title)
+    if newTask == None:
+        abort(500)
     return jsonify(newTask.__dict__)
 
 # UPDATE ROUTE
 @app.route('/api/tasks/<string:task_id>', methods=['PUT'])
 def update_task(task_id):
-    task = [task for task in myTasks if task.id == task_id]
-    print task
-    if len(task) == 0:
+    task = db_get_task(task_id)
+    if task == None:
         abort(404)
-    task[0].setTitle(request.json['title'])
-    task[0].setStatus(request.json['status'])
-    return jsonify(task[0].__dict__)
+    task.setTitle(request.json['title'])
+    task.setStatus(request.json['status'])
 
+    task = db_upate_task(task)
+    if task == None:
+        abort(500)
+    return jsonify(task.__dict__)
 
 # DESTROY ROUTE
 @app.route('/api/tasks/<string:task_id>', methods=['DELETE'])
