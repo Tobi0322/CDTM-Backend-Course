@@ -90,7 +90,7 @@ After today your server should be capable of the following things:
 >   - [X] 5. DB: SQLlite, Todo-Item-Schema
 >   - [X] 6. DB: Connect API with DB
 >   - [ ] 7. DB: Sanitize Input
->           - http://127.0.0.1:20007/api/tasks/20%20or%201=1
+>       - DELETE: http://127.0.0.1:20007/api/tasks/20%20or%201=1
 >   - [ ] 8. Functionality: Date & Description
 >   - [ ] 9. Functionality: Files
 
