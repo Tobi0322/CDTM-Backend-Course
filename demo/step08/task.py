@@ -1,4 +1,5 @@
 from flask import json
+from datetime import datetime
 
 class Task:
     '''Represents one Todo-Item'''
@@ -12,7 +13,8 @@ class Task:
             task = Task(
                 dict['title'],
                 id = dict['id'],
-                description = dict['description']
+                description = dict['description'],
+                due = dict['due']
             )
             task.setStatus(dict['status'])
             return task
@@ -44,3 +46,8 @@ class Task:
         if description == None or description == '':
             return
         self.description = description
+
+    def setDueDate(self, dueDate):
+        if dueDate == None or dueDate == '':
+            self.dueDate = ''
+        self.due = dueDate

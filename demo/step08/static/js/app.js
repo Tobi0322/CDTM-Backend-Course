@@ -76,13 +76,16 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location) {
            // success callback
            $scope.api_version = response.data.version;
            $scope.tasks = response.data.data;
+           $scope.tasks.forEach(function(task) {
+             task.overdue = task.due != null && task.due != '' && new Date(task.due) < new Date();
+           });
            $scope.loading = false;
          },
          function(response){
            // failure callback
            $scope.api_version = "N/A";
            $scope.tasks = [];
-           console.log( response);
+           console.log(response);
            $scope.loading = false;
          }
       );
@@ -106,7 +109,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location) {
   }
 
   $scope.updateTask = function(task) {
-    $http.put($rootScope.hostString() + '/api/tasks/' + task.id,  JSON.stringify(task))
+    $http.put($rootScope.hostString() + '/api/tasks/' + task.id, JSON.stringify(task))
      .then(
          function(response){
            // success callback
@@ -136,7 +139,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location) {
   }
 });
 
-app.controller('taskCtrl', function($scope, $rootScope, $http) {
+app.controller('taskCtrl', function($scope, $rootScope, $http, $filter) {
   $scope.toggleTask = function() {
     if ($scope.task.status == 'normal') {
       $scope.task.status = 'completed';
@@ -156,7 +159,6 @@ app.controller('taskCtrl', function($scope, $rootScope, $http) {
   }
 
   $scope.updateTask = function() {
-    console.log("Update task " + $scope.task);
     $('#modal' + $scope.task.id).closeModal();
     $scope.$parent.updateTask($scope.task);
   }
@@ -164,9 +166,15 @@ app.controller('taskCtrl', function($scope, $rootScope, $http) {
   $scope.showDetails = function() {
     clearSelection()
      $('#modal' + $scope.task.id).openModal();
-     $('.datepicker').pickadate({
+     $('#dueDate' + $scope.task.id).pickadate({
        selectMonths: true, // Creates a dropdown to control month
-       selectYears: 15 // Creates a dropdown of 15 years to control year
+       selectYears: 15, // Creates a dropdown of 15 years to control year
+       format: 'mmmm dd, yyyy',
+       onSet: function(context) {
+         var date = new Date($('#dueDate' + $scope.task.id)[0].value);
+         $scope.task.due = $filter('date')(date, 'yyyy-MM-dd');
+         $scope.task.overdue = $scope.task.due != null && $scope.task.due != '' && new Date($scope.task.due) < new Date();
+       }
      });
   }
 });
@@ -177,6 +185,6 @@ app.directive('oneTask', function() {
           task: '=' //Two-way data binding
       },
       controller: 'taskCtrl',
-      templateUrl: '/../views/task.html?65'
+      templateUrl: '/../views/task.html?77'
   };
 });

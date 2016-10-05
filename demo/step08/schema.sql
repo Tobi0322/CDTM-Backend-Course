@@ -8,6 +8,7 @@ CREATE TABLE Tasks(
     created     TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO Tasks(title, status, description) Values ('Eat an apple', 'normal', 'Hey there! Don\'t forget taking more notes... You know, small things are easy to forget :-)');
-INSERT INTO Tasks(title, status) Values ('Go for a run', 'normal');
-INSERT INTO Tasks(title, status, description) Values ('Call grandma', 'completed', 'Hey there! Don\'t forget taking more notes... You know, small things are easy to forget :-)');
+
+INSERT INTO Tasks(title, status, due) VALUES ('Go for a run', 'normal', '1970-01-01');
+INSERT INTO Tasks(title, status, description) VALUES ('Eat an apple', 'normal', 'Hey there! Don''t forget taking more notes... You know, small things are easy to forget :-)');
+INSERT INTO Tasks(title, status, description) VALUES ('Call grandma', 'completed', 'Hey there! Don''t forget taking more notes... You know, small things are easy to forget :-)');

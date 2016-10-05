@@ -2,7 +2,7 @@
   <a class="col checkbox nonselectable" href ng-click="toggleTask()">
     <img src="/assets/icons/check.svg">
   </a>
-  <div class="card-title col">
+  <div class="card-title col" ng-class="{due: task.overdue && task.status!='completed'}">
     {{task.title}}
   </div>
   <a class="col delete nonselectable" href ng-click="deleteTask()"></a>
@@ -23,7 +23,7 @@
       <div class="row task-body">
         <div class="input-field col s12">
           <h5>Due Date</h5>
-          <input id="dueDate{{task.id}}" type="date" class="datepicker" placeholder="Remind me :-)" ng-model="task.dueDate">
+          <input id="dueDate{{task.id}}" type="text" placeholder="Remind me :-)" value="{{task.due | date:'MMMM dd, yyyy'}}" >
         </div>
         <div class="input-field col s12">
           <h5>Description</h5>
