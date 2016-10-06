@@ -185,6 +185,6 @@ app.directive('oneTask', function() {
           task: '=' //Two-way data binding
       },
       controller: 'taskCtrl',
-      templateUrl: '/../views/task.html?77'
+      templateUrl: '/../views/task.html?83'
   };
 });

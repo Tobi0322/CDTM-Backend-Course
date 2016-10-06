@@ -81,7 +81,7 @@ nav .nav-wrapper .brand-logo img {
 
 #port {
   height:25px;
-  width:40px;
+  width:45px;
   text-align:
   right;
   padding: 0 5px;
@@ -116,15 +116,26 @@ nav .nav-wrapper .brand-logo img {
   margin: 0.75rem;
   padding: 0;
   background: url("/assets/icons/circle.svg");
+  background-repeat: no-repeat;
+}
+
+.task-card .duedate {
+  font-size: 0.65em;
+  width: 30%;
+  text-align: right;
 }
 
 .task-card .delete {
-  display: none;
   width: 24px;
   height: 24px;
   margin: 0.75rem;
   padding: 0;
+  background: rgba(0,0,0,0);
+}
+
+.task-card:hover .delete {
   background: url("/assets/icons/delete.svg");
+  background-repeat: no-repeat;
 }
 
 .task-card .delete:hover {
@@ -135,9 +146,6 @@ nav .nav-wrapper .brand-logo img {
   background: url("/assets/icons/delete_now.svg");
 }
 
-.task-card:hover .delete {
-  display:block;
-}
 
 .task-card img  {
   margin: auto auto;

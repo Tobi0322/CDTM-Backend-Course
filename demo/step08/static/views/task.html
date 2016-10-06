@@ -5,6 +5,9 @@
   <div class="card-title col" ng-class="{due: task.overdue && task.status!='completed'}">
     {{task.title}}
   </div>
+  <div class="col duedate" ng-class="{due: task.overdue && task.status!='completed'}"> 
+    {{task.due | date:'MMMM dd, yyyy'}}
+  </div>
   <a class="col delete nonselectable" href ng-click="deleteTask()"></a>
 </div>
 
