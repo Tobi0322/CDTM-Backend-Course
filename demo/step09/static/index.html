@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CDTM Todo App</title>
+    <base href="/">
+
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <!--Import custom stylesheet-->
+    <link type="text/css" rel="stylesheet" href="css/main.css"  media="screen,projection"/>
+
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body ng-app="taskApp">
+<div  ng-controller="mainCtrl" class="ng-cloak">
+  <!-- Navbar -->
+  <nav>
+  <div class="nav-wrapper grey lighten-5 black-text">
+    <a href="#!" class="brand-logo">
+      <img class="" src="/assets/CDTM_color.png" alt="CDTM"/><span> Task App</span>
+    </a>
+    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+    <ul class="right hide-on-med-and-down">
+    </ul>
+    <ul class="side-nav" id="mobile-demo">
+    </ul>
+  </div>
+  </nav>
+
+  <div hide ng-show="loading" class="progress" style="margin-top:0;">
+    <div class="indeterminate"></div>
+  </div>
+
+  <div class="row">
+    <div class="col s6 left-align">
+      <span>Host: {{HOST}}</span> |
+      <span ng-submit="changePort()">Port:
+        <input id="port" class="subtle" type="text" ng-model="PORT" ng-blur="changePort()"/>
+      </span>
+    </div>
+    <div class="col s6 right-align">
+      <span>api: v{{api_version}}</span> |
+      <span>app: v9.0</span>
+    </div>
+  </div>
+
+    <div class="container row">
+
+      <h1 class="center-align">Tasks</h1>
+      <div class="col s0 m2"></div>
+      <div class="col s12 m8">
+        <div id="input-card" class="card hoverable input-card row">
+          <form ng-submit="addTask()">
+            <input class="subtle card-title" type="text" autocomplete="off" ng-model="newTask.title" placeholder="{{placeholder}}">
+            <input type="submit" class="hidden">
+          </form>
+        </div>
+        <div ng-repeat="t in tasks | filter: filterTasks">
+          <one-task task="t"></one-task>
+        </div>
+        <div class="input-footer">
+          <a href ng-click="toggleHideCompletedTasks()">{{hideCompletedTasks ? 'Show' : 'Hide'}} Completed Tasks</a>
+        </div>
+      </div>
+      <div class="col s0 m2"></div>
+    </div>
+</div>
+</body>
+
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+
+  <!--Import Angular-->
+  <script type="text/javascript" src="js/angular.js"></script>
+  <script type="text/javascript" src="js/angular-aria.js"></script>
+
+  <!--Import Angular app-->
+  <script type="text/javascript" src="js/app.js"></script>
+</html>
