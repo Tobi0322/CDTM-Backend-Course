@@ -102,9 +102,20 @@ Up to now everything could have been done on the client directly. One advantage 
 > **TODO** 
 > - [ ] Lectures
 >   - [ ] User Authentication Basics
+>   - [ ] Shared Objects Implementation Strategy
 > - [ ] Tutorial & Demo Code  
 >   - [ ] 1. User: Register User
 >   - [ ] 2. User: Login / Logout
->   - [ ] 3. Public / Private Todo-Items
->   - [ ] 4. Direct Sharing
+>   - [ ] 3. User: Delete Account
+>   - [ ] 4. Private Todo-Items: Secure API
+>   - [ ] 5. Organise Todo-Items Into Lists
+>       - Default Lists: Inbox, Today, This Week
+>       - Refactor DB
+>       - Refactor API
+>   - [ ] 6. Custom Lists
+>       - CRUD
+>   - [ ] 7. Shared Lists
+>       - Invite User: GET User
+>       - Remove User: GET User
+>       - Leave Shared List: GET User
 >   - [ ] 5. Todo-Groups
