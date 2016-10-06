@@ -3,7 +3,7 @@
 
 from flask import Flask, jsonify, redirect, request, abort, g, send_from_directory
 from werkzeug import secure_filename
-import sys, os, sqlite3
+import sys, os, sqlite3, shutil
 from task import Task
 
 # special characters (e.g. üäö ...) work now
@@ -164,7 +164,7 @@ def db_delete_file(task_id, filename):
     query = '''
         DELETE
         FROM Uploads
-        WHERE task = ?, filename = ?;
+        WHERE task = ? AND filename = ?;
     '''
 
     with app.app_context():
@@ -219,6 +219,10 @@ def update_task(task_id):
 # DESTROY ROUTE
 @app.route('/api/tasks/<string:task_id>', methods=['DELETE'])
 def remove_task(task_id):
+    # don't forget to delete all Uploads
+    directory = os.path.join(app.config['UPLOAD_FOLDER'], task_id)
+    shutil.rmtree(directory, ignore_errors=True)
+
     db_delete_task(task_id)
     return jsonify({'result': True})
 
@@ -251,17 +255,20 @@ def upload_file(task_id):
 
 # GET FILE
 @app.route('/api/tasks/<string:task_id>/files/<string:filename>', methods=['GET'])
-def get_file(task_id, file_id):
+def get_file(task_id, filename):
     dir = os.path.join(app.config['UPLOAD_FOLDER'], task_id)
     print dir
     return send_from_directory(dir, filename)
 
 
 # REMOVE FILE
-@app.route('/api/tasks/<string:task_id>/files/<string:file_id>', methods=['DELETE'])
-def remove_file(task_id, file_id):
-    # TODO: Implement remove file logic
-    return jsonify({'result': False})
+@app.route('/api/tasks/<string:task_id>/files/<string:filename>', methods=['DELETE'])
+def remove_file(task_id, filename):
+    db_delete_file(task_id, filename)
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], task_id, filename)
+    if os.path.exists(filepath) and os.path.isfile(filepath):
+        os.remove(filepath)
+    return jsonify({'result': True})
 
 
 if __name__ == '__main__':

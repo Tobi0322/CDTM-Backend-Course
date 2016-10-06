@@ -140,6 +140,7 @@ nav .nav-wrapper .brand-logo img {
   height: 24px;
   margin: 0.75rem;
   padding: 0;
+  padding-left: 10px;
   background: rgba(0,0,0,0);
 }
 
@@ -149,11 +150,8 @@ nav .nav-wrapper .brand-logo img {
 }
 
 .task-card .delete:hover {
-  width: 24px;
-  height: 24px;
-  margin: 0.75rem;
-  padding: 0;
   background: url("/assets/icons/delete_now.svg");
+  background-repeat: no-repeat;
 }
 
 
