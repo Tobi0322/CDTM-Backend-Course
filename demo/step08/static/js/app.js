@@ -49,6 +49,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location) {
   $scope.loading = false;
   $scope.placeholder = placeholders[Math.floor(Math.random(1337)*placeholders.length)];
   $scope.newTask = {}
+  $scope.hideCompletedTasks = true;
 
   $scope.$watch('$viewContentLoaded', function(){
     $('.button-collapse').sideNav();
@@ -67,6 +68,19 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location) {
   $scope.changePort = function() {
     $scope.loadTasks()
   };
+
+  $scope.toggleHideCompletedTasks = function() {
+    $scope.hideCompletedTasks = !$scope.hideCompletedTasks;
+  }
+
+  $scope.filterTasks = function(item) {
+    if ($scope.hideCompletedTasks) {
+      if (item.status == 'completed') {
+        return false;
+      }
+    }
+    return true;
+  }
 
   $scope.loadTasks = function() {
     $scope.loading = true;

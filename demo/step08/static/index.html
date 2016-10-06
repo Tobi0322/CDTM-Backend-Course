@@ -60,8 +60,11 @@
             <input type="submit" class="hidden">
           </form>
         </div>
-        <div ng-repeat="t in tasks">
+        <div ng-repeat="t in tasks | filter: filterTasks">
           <one-task task="t"></one-task>
+        </div>
+        <div class="input-footer">
+          <a href ng-click="toggleHideCompletedTasks()">{{hideCompletedTasks ? 'Show' : 'Hide'}} Completed Tasks</a>
         </div>
       </div>
       <div class="col s0 m2"></div>
