@@ -73,15 +73,6 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location) {
     $scope.hideCompletedTasks = !$scope.hideCompletedTasks;
   }
 
-  $scope.filterTasks = function(item) {
-    if ($scope.hideCompletedTasks) {
-      if (item.status == 'completed') {
-        return false;
-      }
-    }
-    return true;
-  }
-
   $scope.loadTasks = function() {
     $scope.loading = true;
     $http.get($rootScope.hostString() + '/api/tasks')
@@ -153,7 +144,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location) {
   }
 });
 
-app.controller('taskCtrl', function($scope, $rootScope, $http, $filter) {
+app.controller('taskCtrl', function($scope, $rootScope, $http) {
   $scope.toggleTask = function() {
     if ($scope.task.status == 'normal') {
       $scope.task.status = 'completed';
@@ -193,12 +184,74 @@ app.controller('taskCtrl', function($scope, $rootScope, $http, $filter) {
   }
 });
 
+app.controller('fileCtrl', function($scope, $rootScope, $element, $http) {
+  $element.on('dragover', function(e) {
+    console.log('Dragover');
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
+  $element.on('dragenter', function(e) {
+    console.log('dragenter');
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
+  $element.on('drop', function(e) {
+    console.log('drop');
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.originalEvent.dataTransfer){
+        if (e.originalEvent.dataTransfer.files.length > 0) {
+            $scope.upload(e.originalEvent.dataTransfer.files);
+        }
+    }
+    return false;
+  });
+
+// TODO: Fix Uplaod function
+  $scope.upload = function(files) {
+    console.log(files);
+
+      var data = new FormData();
+      data.append('files[]', files);
+
+      console.log(data['files[]']);
+
+      $http({
+          method: 'POST',
+          data: data,
+          url: $rootScope.hostString() + '/api/tasks/' + $scope.task.id + '/files',
+          transformRequest: angular.identity,
+          headers: {
+              'Content-Type': 'undefined'
+          }
+      }).success(function(response) {
+          console.log("Uploaded");
+      }).error(function(response) {
+          console.log("Error");
+      });
+  };
+
+});
+
 app.directive('oneTask', function() {
   return {
       scope: {
           task: '=' //Two-way data binding
       },
       controller: 'taskCtrl',
-      templateUrl: '/../views/task.html?83'
+      templateUrl: '/../views/task.html?100'
   };
+});
+
+app.directive('dropZone', function() {
+    return {
+        scope: {
+          task: '=' //Two-way data binding
+        },
+        controller: 'fileCtrl',
+        restrict: 'E',
+        replace: true
+    };
 });

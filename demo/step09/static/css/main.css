@@ -22,6 +22,17 @@ html, body {
   cursor: pointer;
 }
 
+.overlay {
+   width: 100%;
+   height: 100%;
+   position:
+   absolute;
+   top: 0;
+   left: 0;
+   z-index: 10;
+   background:rgba(255,0,0,0.4);
+}
+
 svg {
   color: inherit;
   fill: currentColor;
@@ -176,6 +187,10 @@ nav .nav-wrapper .brand-logo img {
 
 .modal {
   max-height: 80%;
+}
+
+.modal drop-zone {
+  height: 100%;
 }
 
 .modal.modal-fixed-footer {

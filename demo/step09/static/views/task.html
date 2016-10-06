@@ -1,18 +1,18 @@
-<div id="{{task.id}}" ng-class="{completed: task.status=='completed'}"  class="card hoverable row valign-wrapper task-card clickable" ng-dblclick="showDetails()">
+<div id="{{task.id}}" ng-hide="$parent.hideCompletedTasks && task.status=='completed' " ng-class="{completed: task.status=='completed'}"  class="card hoverable row valign-wrapper task-card clickable" ng-dblclick="showDetails()">
   <a class="col checkbox nonselectable" href ng-click="toggleTask()">
     <img src="/assets/icons/check.svg">
   </a>
   <div class="card-title col" ng-class="{due: task.overdue && task.status!='completed'}">
     {{task.title}}
   </div>
-  <div class="col duedate" ng-class="{due: task.overdue && task.status!='completed'}"> 
+  <div class="col duedate" ng-class="{due: task.overdue && task.status!='completed'}">
     {{task.due | date:'MMMM dd, yyyy'}}
   </div>
   <a class="col delete nonselectable" href ng-click="deleteTask()"></a>
 </div>
 
 <form id="modal{{task.id}}"  ng-submit="updateTask()" class="modal modal-fixed-footer">
-  <div class="modal-content">
+  <drop-zone task="task" class="modal-content">
     <div id="{{task.id}}" ng-class="{completed: task.status=='completed'}"  class="row task-card" ng-dblclick="showDetails()">
       <div class="task-header valign-wrapper col s12 row">
         <a class="col checkbox nonselectable" href ng-click="toggleTask()">
@@ -33,10 +33,9 @@
           <textarea id="description{{task.id}}" class="materialize-textarea description" placeholder="Your description ..." ng-model="task.description"></textarea>
         </div>
       </div>
-
     </div>
-  </div>
+  </drop-zone>
   <div class="modal-footer">
     <a class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="updateTask()">Fertig</a>
-  </div>
+  </div >
 </form>
