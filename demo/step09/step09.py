@@ -229,16 +229,13 @@ def remove_task(task_id):
 # UPLOAD FILES
 @app.route('/api/tasks/<string:task_id>/files', methods=['POST'])
 def upload_file(task_id):
-
-    print "Received Some Files"
-
     # each file is save in a folder named after the corresponding tasks id
     directory = os.path.join(app.config['UPLOAD_FOLDER'], task_id)
     if not os.path.exists(directory):
         os.makedirs(directory)
 
     # Get the name of the uploaded files
-    uploaded_files = request.files.getlist("file[]")
+    uploaded_files = request.files.getlist("files[]")
     for file in uploaded_files:
         if file and allowed_file(file.filename):
             # sanitize the filename
