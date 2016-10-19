@@ -221,20 +221,20 @@ app.controller('fileCtrl', function($scope, $rootScope, $element, $http) {
   });
 
   $scope.upload = function(files) {
-    console.log(files);
 
-      var data = new FormData();
-      data.append('files[]', files);
-
-      console.log(data['files[]']);
+      // took some time to figure out how to properly use append
+      var formData = new FormData();
+      for (var i = 0; i < files.length; i++) {
+        formData.append('files[]', files[i]);
+      }
 
       $http({
           method: 'POST',
-          data: data,
+          data: formData,
           url: $rootScope.hostString() + '/api/tasks/' + $scope.task.id + '/files',
-          transformRequest: angular.identity,
+          transformRequest: angular.identity, // needed to work
           headers: {
-              'Content-Type': 'undefined'
+              'Content-Type': undefined // needed to work
           }
       }).success(function(response) {
           console.log("Uploaded");
