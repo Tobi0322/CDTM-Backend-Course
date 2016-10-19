@@ -12,7 +12,7 @@
 </div>
 
 <form id="modal{{task.id}}"  ng-submit="updateTask()" class="modal modal-fixed-footer">
-  <drop-zone task="task" class="modal-content">
+  <drop-zone id="multifile-drop" task="task" class="modal-content">
     <div id="{{task.id}}" ng-class="{completed: task.status=='completed'}"  class="row task-card" ng-dblclick="showDetails()">
       <div class="task-header valign-wrapper col s12 row">
         <a class="col checkbox nonselectable" href ng-click="toggleTask()">

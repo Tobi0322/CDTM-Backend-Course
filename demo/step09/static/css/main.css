@@ -189,8 +189,20 @@ nav .nav-wrapper .brand-logo img {
   max-height: 80%;
 }
 
-.modal drop-zone {
+.modal drop-zone#multifile-drop {
+  background-color: red;
   height: 100%;
+  padding: 12px;
+  margin: 12px;
+  width: calc(100% - 24px);
+  height: calc(100% - 56px - 24px);
+}
+
+.modal drop-zone#multifile-drop.over {
+  border-style: dashed;
+  border-width: 4px;
+  border-color: rgb(221,221,221);
+  background-color: rgba(255,255,255,0.2);
 }
 
 .modal.modal-fixed-footer {
