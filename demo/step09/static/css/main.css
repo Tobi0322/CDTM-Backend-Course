@@ -30,7 +30,6 @@ html, body {
    top: 0;
    left: 0;
    z-index: 10;
-   background:rgba(255,0,0,0.4);
 }
 
 svg {
@@ -190,7 +189,6 @@ nav .nav-wrapper .brand-logo img {
 }
 
 .modal drop-zone#multifile-drop {
-  background-color: red;
   height: 100%;
   padding: 12px;
   margin: 12px;
@@ -198,11 +196,23 @@ nav .nav-wrapper .brand-logo img {
   height: calc(100% - 56px - 24px);
 }
 
-.modal drop-zone#multifile-drop.over {
+.modal drop-zone#multifile-drop #drop-indicator {
+  /*Important: Cancel all pointer events on the overlay.*/
+  pointer-events: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  display: none;
+}
+
+.modal drop-zone#multifile-drop.over #drop-indicator {
+  display: block;
+  background: rgba(255, 255, 255, 0.8);
   border-style: dashed;
   border-width: 4px;
   border-color: rgb(221,221,221);
-  background-color: rgba(255,255,255,0.2);
 }
 
 .modal.modal-fixed-footer {

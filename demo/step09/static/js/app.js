@@ -186,30 +186,30 @@ app.controller('taskCtrl', function($scope, $rootScope, $http) {
 
 app.controller('fileCtrl', function($scope, $rootScope, $element, $http) {
   $element.on('dragover', function(e) {
-    console.log('Dragover');
-    document.getElementById('multifile-drop').classList.add('over');
-    console.log(document.getElementById('multifile-drop'));
+    console.log('dragover');
+    // console.log(this);
+    this.classList.add('over');
     e.preventDefault();
     e.stopPropagation();
   });
 
   $element.on('dragenter', function(e) {
     console.log('dragenter');
-    document.getElementById('multifile-drop').classList.add('over');
+    this.classList.add('over');
     e.preventDefault();
     e.stopPropagation();
   });
 
   $element.on('dragleave', function(e) {
       console.log('dragleave');
-      document.getElementById('multifile-drop').classList.remove('over');
+      this.classList.remove('over');
       e.preventDefault();
       e.stopPropagation();
     });
 
   $element.on('drop', function(e) {
     console.log('drop');
-    document.getElementById('multifile-drop').classList.remove('over');
+    this.classList.remove('over');
     e.preventDefault();
     e.stopPropagation();
     if (e.originalEvent.dataTransfer){
