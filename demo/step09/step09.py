@@ -256,7 +256,7 @@ def upload_file(task_id):
 @app.route('/api/tasks/<string:task_id>/files/<string:filename>', methods=['GET'])
 def get_file(task_id, filename):
     directory = os.path.join(app.config['UPLOAD_FOLDER'], task_id)
-    return send_from_directory(dir, directory)
+    return send_from_directory(directory, filename)
 
 
 # REMOVE FILE

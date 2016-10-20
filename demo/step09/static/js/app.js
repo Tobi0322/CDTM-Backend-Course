@@ -85,6 +85,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location) {
              task.overdue = task.due != null && task.due != '' && new Date(task.due) < new Date();
            });
            $scope.loading = false;
+           console.log($scope.tasks);
          },
          function(response){
            // failure callback
@@ -144,7 +145,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location) {
   }
 });
 
-app.controller('taskCtrl', function($scope, $rootScope, $http) {
+app.controller('taskCtrl', function($scope, $rootScope, $http, $window) {
   $scope.toggleTask = function() {
     if ($scope.task.status == 'normal') {
       $scope.task.status = 'completed';
@@ -182,6 +183,29 @@ app.controller('taskCtrl', function($scope, $rootScope, $http) {
        }
      });
   }
+
+  $scope.removeFile = function(file) {
+    $http.delete($rootScope.hostString() + '/api/tasks/' + $scope.task.id + '/files/' + file)
+     .then(
+         function(response){
+           // success callback
+           if (response.data.result == true) {
+             var index = $scope.task.files.indexOf(file);
+             if (index > -1) {
+                $scope.task.files.splice(index, 1);
+            }
+           }
+         },
+         function(response){
+           // failure callback
+           console.log(response);
+         }
+      );
+    }
+
+    $scope.downloadFile = function(file) {
+      $window.open($rootScope.hostString() + '/api/tasks/' + $scope.task.id + '/files/' + file);
+    }
 });
 
 app.controller('fileCtrl', function($scope, $rootScope, $element, $http) {
@@ -251,7 +275,7 @@ app.directive('oneTask', function() {
           task: '=' //Two-way data binding
       },
       controller: 'taskCtrl',
-      templateUrl: '/../views/task.html?100'
+      templateUrl: '/../views/task.html'
   };
 });
 

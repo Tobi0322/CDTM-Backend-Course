@@ -293,6 +293,10 @@ nav .nav-wrapper .brand-logo img {
   min-height: 10em;
 }
 
+.modal .attachment-field {
+  font-size: 11pt;
+}
+
 
 /* ANIMATIONS  */
 .animated {

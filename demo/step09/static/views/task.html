@@ -36,6 +36,15 @@
           <h5>Description</h5>
           <textarea id="description{{task.id}}" class="materialize-textarea description" placeholder="Your description ..." ng-model="task.description"></textarea>
         </div>
+        <div class="row attachment-field" ng-repeat="file in task.files">
+          <div class="col s12">
+            <span class="clickable" ng-click="downloadFile(file)">
+              <img src="/assets/icons/attachment.svg" style="vertical-align:middle;">
+              <span> {{file}} </span>
+            </span ng-click="download(file)">
+            <img class="clickable" src="/assets/icons/close.svg" style="vertical-align:middle;" ng-click="removeFile(file)">
+          </div>
+        </div>
       </div>
     </div>
   </drop-zone>
