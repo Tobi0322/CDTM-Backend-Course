@@ -209,10 +209,17 @@ nav .nav-wrapper .brand-logo img {
 
 .modal drop-zone#multifile-drop.over #drop-indicator {
   display: block;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.9);
   border-style: dashed;
   border-width: 4px;
-  border-color: rgb(221,221,221);
+  border-color: rgb(150,150,150);
+}
+
+.modal drop-zone#multifile-drop #drop-indicator p{
+  color: rgb(150,150,150);
+  font-size: 24pt;
+  text-align: center;
+  margin-top: 40%;
 }
 
 .modal.modal-fixed-footer {

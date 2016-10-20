@@ -187,7 +187,6 @@ app.controller('taskCtrl', function($scope, $rootScope, $http) {
 app.controller('fileCtrl', function($scope, $rootScope, $element, $http) {
   $element.on('dragover', function(e) {
     console.log('dragover');
-    // console.log(this);
     this.classList.add('over');
     e.preventDefault();
     e.stopPropagation();
@@ -203,6 +202,7 @@ app.controller('fileCtrl', function($scope, $rootScope, $element, $http) {
   $element.on('dragleave', function(e) {
       console.log('dragleave');
       this.classList.remove('over');
+      this.classList.add('over');
       e.preventDefault();
       e.stopPropagation();
     });

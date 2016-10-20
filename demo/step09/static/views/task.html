@@ -14,7 +14,8 @@
 <form id="modal{{task.id}}"  ng-submit="updateTask()" class="modal modal-fixed-footer">
   <drop-zone id="multifile-drop" task="task" class="modal-content">
     <div id="drop-indicator" class="overlay">
-
+      <p>Place files here</p>
+      </div>
     </div>
     <div id="{{task.id}}" ng-class="{completed: task.status=='completed'}"  class="row task-card" ng-dblclick="showDetails()">
       <div class="task-header valign-wrapper col s12 row">
