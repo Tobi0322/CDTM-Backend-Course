@@ -1,0 +1,21 @@
+<div class="container row">
+
+  <h1 class="center-align">Tasks</h1>
+  <div class="col s0 m2"></div>
+  <div class="col s12 m8">
+    <div id="input-card" class="card hoverable input-card row">
+      <form ng-submit="addTask()">
+        <input class="subtle card-title" type="text" autocomplete="off" ng-model="newTask.title" placeholder="{{placeholder}}">
+        <input type="submit" class="hidden">
+      </form>
+    </div>
+    <div ng-repeat="t in tasks | orderBy : ['-status', 'due']">
+      <one-task task="t"></one-task>
+    </div>
+    <div class="input-footer">
+      <a href ng-click="toggleHideCompletedTasks()">{{hideCompletedTasks ? 'Show' : 'Hide'}} Completed Tasks</a>
+    </div>
+  </div>
+  <div class="col s0 m2"></div>
+  
+</div>

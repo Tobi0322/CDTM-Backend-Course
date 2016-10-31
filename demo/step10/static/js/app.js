@@ -1,4 +1,4 @@
-var app = angular.module('taskApp', []);
+var app = angular.module('taskApp', ['ngRoute']);
 
 function shake(element) {
   try {
@@ -23,9 +23,38 @@ function clearSelection() {
     }
 }
 
-app.config(function($locationProvider) {
-      // use the HTML5 History API
-      $locationProvider.html5Mode(true).hashPrefix('!');
+app.config(function($locationProvider, $routeProvider) {
+    // use the HTML5 History API
+    $locationProvider.html5Mode(true).hashPrefix('!');
+
+    $routeProvider
+    .when('/', {
+      templateUrl: '/views/main.html'
+    })
+    .when('/index.html', {
+      templateUrl: '/views/main.html'
+    })
+  //   .when('/login', {
+  //     templateUrl: 'static/partials/login.html',
+  //     controller: 'loginController'
+  //   })
+  //   .when('/logout', {
+  //     controller: 'logoutController'
+  //   })
+    .when('/register', {
+      templateUrl: '/views/register.html'
+      // controller: 'registerController'
+    })
+  //   .when('/one', {
+  //     template: '<h1>This is page one!</h1>'
+  //   })
+  //   .when('/two', {
+  //     template: '<h1>This is page two!</h1>'
+  //   })
+  //   .otherwise({
+  //     redirectTo: '/'
+  //   });
+  // });
 });
 
 app.controller('mainCtrl', function($scope, $rootScope, $http, $location) {

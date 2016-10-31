@@ -269,5 +269,18 @@ def remove_file(task_id, filename):
     return jsonify({'result': True})
 
 
+# Authentication
+# Register User
+@app.route('/api/register', methods=['POST'])
+def register():
+    json_data = request.json
+    user = User(
+        email=json_data['email'],
+        password=json_data['password']
+    )
+    # TODO: Save user in the database if he doesn't exist
+    return jsonify({'result': True})
+
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=int('20010'), debug=True)
