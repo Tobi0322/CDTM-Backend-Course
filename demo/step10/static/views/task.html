@@ -41,8 +41,11 @@
             <span class="clickable" ng-click="downloadFile(file)">
               <img src="/assets/icons/attachment.svg" style="vertical-align:middle;">
               <span> {{file}} </span>
-            </span ng-click="download(file)">
-            <img class="clickable" src="/assets/icons/close.svg" style="vertical-align:middle;" ng-click="removeFile(file)">
+            </span>
+            123
+            {{file.loading}}
+            <img hide ng-show="file.loading"class="clickable" src="/assets/icons/uploading.svg" style="vertical-align:middle;">
+            <img ng-hide="file.loading"class="clickable" src="/assets/icons/close.svg" style="vertical-align:middle;" ng-click="removeFile(file)">
           </div>
         </div>
       </div>

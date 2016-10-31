@@ -248,6 +248,16 @@ app.controller('fileCtrl', function($scope, $rootScope, $element, $http) {
         formData.append('files[]', files[i]);
       }
 
+      for (var i = 0; i < files.length; i++) {
+          file = files[i].name;
+          file.loading = true; // Doesn't work, since a string is a primitive type in JS
+          var index = $scope.task.files.indexOf(file);
+          if (index > -1) {
+             $scope.task.files.splice(index, 1);
+          }
+          $scope.task.files.unshift(file);
+      }
+
       $http({
           method: 'POST',
           data: formData,
@@ -257,14 +267,10 @@ app.controller('fileCtrl', function($scope, $rootScope, $element, $http) {
               'Content-Type': undefined // needed to work
           }
       }).success(function(response) {
-        for (var i = 0; i < files.length; i++) {
-            var index = $scope.task.files.indexOf(files[i].name);
-            if (index > -1) {
-               $scope.task.files.splice(index, 1);
-            }
-            $scope.task.files.unshift(files[i].name)
-        }
+        $scope.task = response;
+        console.log(response);
       }).error(function(response) {
+          shake(document.getElementById('modal' + $scope.task.id));
           console.log("Error uploading files.");
           console.log(response);
       });
