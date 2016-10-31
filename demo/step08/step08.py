@@ -54,7 +54,7 @@ def db_get_tasks():
     ''' Returns all tasks from the database '''
     with app.app_context():
         cur = get_db().cursor()
-        cur.execute('select * from tasks order by due asc')
+        cur.execute('select * from tasks order by status desc, due asc')
         return [Task.fromDict(dict_from_row(row)) for row in cur]
 
 def db_get_task(id):
