@@ -261,6 +261,15 @@ app.controller('fileCtrl', function($scope, $rootScope, $element, $http) {
               'Content-Type': undefined // needed to work
           }
       }).success(function(response) {
+        for (var i = 0; i < files.length; i++) {
+            console.log(files[i]);
+            var index = $scope.task.files.indexOf(files[i].name);
+            if (index > -1) {
+               $scope.task.files.splice(index, 1);
+            }
+            $scope.task.files.unshift(files[i].name)
+        }
+          console.log($scope.task);
           console.log("Uploaded");
       }).error(function(response) {
           console.log("Error");
