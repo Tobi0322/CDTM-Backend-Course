@@ -145,7 +145,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location) {
   }
 });
 
-app.controller('taskCtrl', function($scope, $rootScope, $http, $window) {
+app.controller('taskCtrl', function($scope, $rootScope, $http, $window, $filter) {
   $scope.toggleTask = function() {
     if ($scope.task.status == 'normal') {
       $scope.task.status = 'completed';
@@ -210,21 +210,18 @@ app.controller('taskCtrl', function($scope, $rootScope, $http, $window) {
 
 app.controller('fileCtrl', function($scope, $rootScope, $element, $http) {
   $element.on('dragover', function(e) {
-    console.log('dragover');
     this.classList.add('over');
     e.preventDefault();
     e.stopPropagation();
   });
 
   $element.on('dragenter', function(e) {
-    console.log('dragenter');
     this.classList.add('over');
     e.preventDefault();
     e.stopPropagation();
   });
 
   $element.on('dragleave', function(e) {
-      console.log('dragleave');
       this.classList.remove('over');
       this.classList.add('over');
       e.preventDefault();
@@ -232,7 +229,6 @@ app.controller('fileCtrl', function($scope, $rootScope, $element, $http) {
     });
 
   $element.on('drop', function(e) {
-    console.log('drop');
     this.classList.remove('over');
     e.preventDefault();
     e.stopPropagation();
@@ -262,17 +258,15 @@ app.controller('fileCtrl', function($scope, $rootScope, $element, $http) {
           }
       }).success(function(response) {
         for (var i = 0; i < files.length; i++) {
-            console.log(files[i]);
             var index = $scope.task.files.indexOf(files[i].name);
             if (index > -1) {
                $scope.task.files.splice(index, 1);
             }
             $scope.task.files.unshift(files[i].name)
         }
-          console.log($scope.task);
-          console.log("Uploaded");
       }).error(function(response) {
-          console.log("Error");
+          console.log("Error uploading files.");
+          console.log(response);
       });
   };
 

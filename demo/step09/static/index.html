@@ -60,7 +60,7 @@
             <input type="submit" class="hidden">
           </form>
         </div>
-        <div ng-repeat="t in tasks">
+        <div ng-repeat="t in tasks | orderBy : ['-status', 'due']">
           <one-task task="t"></one-task>
         </div>
         <div class="input-footer">
