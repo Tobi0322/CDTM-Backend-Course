@@ -41,7 +41,7 @@ app.config(function($locationProvider, $routeProvider) {
   //   .when('/logout', {
   //     controller: 'logoutController'
   //   })
-    .when('/register', {
+    .when('/register/', {
       templateUrl: '/views/register.html'
       // controller: 'registerController'
     })

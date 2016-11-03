@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf8
 
-from flask import Flask, jsonify, redirect, request, abort, g, send_from_directory
+from flask import Flask, jsonify, redirect, request, abort, g, send_from_directory, send_file
 from werkzeug import secure_filename
 import sys, os, sqlite3, shutil
 from task import Task
@@ -180,9 +180,10 @@ def db_delete_file(task_id, filename):
 
 # serve static files
 @app.route('/')
+@app.route('/login/')
+@app.route('/register/')
 def frontEnd():
-    return redirect("/index.html", code=302)
-
+    return send_file("static/index.html")
 
 # INDEX ROUTE
 @app.route('/api/tasks', methods=['GET'])
