@@ -57,7 +57,7 @@ MacOS shipes with python. However, since MacOS ElCapitan a feature called *Syste
 ### 2.4 Flask
 Now you should be able to install flask, a microframework for web-development by running ```pip install flask```.
 Verify it by launching the python interactive shell (run ```python```) and type ```import flask```. You are good to go, if there is no error message.
-Otherwise try to run the following command ```export PYTHONPATH="${PYTHONPATH}/usr/local/lib/python2.7/site-packages:/usr/lib/python2.7/site-packages"```
+Otherwise try to run the following command ```echo 'export PYTHONPATH="${PYTHONPATH}/usr/local/lib/python2.7/site-packages:/usr/lib/python2.7/site-packages"' >> ~/.bash_profile```
 
 ### 2.5 Git
 Git is a  *Version Control System'  used for software development. It's  a bit like Dropbox, only that files get synchronised only if you say so explicitly and you can easily revert to any previously synchronised state of a file. More on this later.
