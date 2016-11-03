@@ -296,7 +296,7 @@ app.controller('fileCtrl', function($scope, $rootScope, $element, $http) {
               'Content-Type': undefined // needed to work
           }
       }).success(function(response) {
-        $scope.task = response;
+        $scope.task.files = response.files;
         console.log(response);
       }).error(function(response) {
           shake(document.getElementById('modal' + $scope.task.id));
