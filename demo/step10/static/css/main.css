@@ -117,6 +117,16 @@ nav .nav-wrapper .brand-logo img {
   }
 }
 
+.config-bar {
+  background: rgba(255,255,255,0.8);
+  position:relative;
+  z-index:1;
+}
+
+.config-bar > div:first-of-type {
+  height: 21.75px;
+}
+
 #port {
   height:25px;
   width:45px;
