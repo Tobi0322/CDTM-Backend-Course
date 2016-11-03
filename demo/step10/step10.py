@@ -97,7 +97,7 @@ def db_create_task(title):
 
     return db_get_task(cur.lastrowid)
 
-def db_upate_task(task):
+def db_update_task(task):
     ''' Updates a task and returns it '''
     query = '''
         UPDATE tasks
@@ -211,7 +211,7 @@ def update_task(task_id):
     task.setDescription(request.json['description'])
     task.setDueDate(request.json['due'])
 
-    task = db_upate_task(task)
+    task = db_update_task(task)
     if task == None:
         abort(500)
 
