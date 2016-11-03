@@ -44,7 +44,7 @@ class Task:
             self.status = self.NORMAL
 
     def setDescription(self, description):
-        if description == None or description == '':
+        if description == None:
             return
         self.description = description
 
