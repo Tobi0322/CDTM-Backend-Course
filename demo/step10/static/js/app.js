@@ -23,13 +23,34 @@ function clearSelection() {
     }
 }
 
+function initMaterializeComponents() {
+  $('.button-collapse').sideNav();
+  // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+  $('.modal-trigger').leanModal();
+
+  $('.datepicker').pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15 // Creates a dropdown of 15 years to control year
+  });
+
+  $('.parallax').parallax();
+}
+
 app.config(function($locationProvider, $routeProvider) {
     // use the HTML5 History API
     $locationProvider.html5Mode(true).hashPrefix('!');
 
     $routeProvider
     .when('/', {
-      templateUrl: '/views/main.html'
+      templateUrl: function(param) {
+        // TODO: Add a proper check and redirect to '/' if the user isn't logged in
+        var authenticated = false;
+        if (authenticated) {
+          return '/views/main.html'
+        } else {
+          return '/views/landing.html'
+        }
+      }
     })
     .when('/index.html', {
       templateUrl: '/views/main.html'
@@ -57,7 +78,7 @@ app.config(function($locationProvider, $routeProvider) {
   // });
 });
 
-app.controller('mainCtrl', function($scope, $rootScope, $http, $location) {
+app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeout) {
 
   var placeholders = [
     "What needs to be done?",
@@ -81,18 +102,16 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location) {
   $scope.hideCompletedTasks = true;
 
   $scope.$watch('$viewContentLoaded', function(){
-    $('.button-collapse').sideNav();
-    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-    $('.modal-trigger').leanModal();
-
-    $('.datepicker').pickadate({
-      selectMonths: true, // Creates a dropdown to control month
-      selectYears: 15 // Creates a dropdown of 15 years to control year
-    });
+    initMaterializeComponents();
 
     $scope.HOST = $location.host()
     $scope.loadTasks()
   });
+
+  angular.element(document).ready(function () {
+    $timeout(initMaterializeComponents,0);
+  });
+
 
   $scope.changePort = function() {
     $scope.loadTasks()
