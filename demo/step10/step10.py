@@ -2,9 +2,10 @@
 # coding: utf8
 
 from flask import Flask, jsonify, redirect, request, abort, g, send_from_directory, send_file
-from werkzeug import secure_filename
+from werkzeug import secure_filename, security
 import sys, os, sqlite3, shutil
 from task import Task
+from user import User
 
 # special characters (e.g. üäö ...) work now
 reload(sys)
@@ -158,7 +159,6 @@ def db_create_file(task_id, filename):
         db.commit()
 
 
-
 def db_delete_file(task_id, filename):
     ''' Deletes the file with the task_id and filename '''
     query = '''
@@ -172,6 +172,46 @@ def db_delete_file(task_id, filename):
         cur = db.cursor()
         cur.execute(query, [task_id, filename])
         db.commit()
+
+def db_get_user(email):
+    ''' Queries the db for a task with the specified id'''
+    query = '''
+        SELECT id, email, password
+        FROM user
+        WHERE email = ?;
+    '''
+
+    with app.app_context():
+        cur = get_db().cursor()
+        cur.execute(query, [email])
+        user = User.fromDict(dict_from_row(cur.fetchone()))
+        return user
+
+
+def db_create_user(email, password):
+    ''' Creates a new user, if it does not exist yet'''
+    query = '''
+        INSERT INTO User(email, password)
+        VALUES (?,?);
+    '''
+
+    if db_get_user(email) != None:
+        return False
+
+    with app.app_context():
+        db = get_db()
+        cur = db.cursor()
+        cur.execute(query, [email, password])
+        db.commit()
+        return True
+
+def db_check_password(email, password):
+    user = db_get_user(email)
+    if user != None:
+        return security.check_password_hash(user.password, password)
+    return False
+
+
 
 
 # --------------------------
@@ -274,13 +314,16 @@ def remove_file(task_id, filename):
 # Register User
 @app.route('/api/register', methods=['POST'])
 def register():
-    json_data = request.json
-    user = User(
-        email=json_data['email'],
-        password=json_data['password']
-    )
-    # TODO: Save user in the database if he doesn't exist
-    return jsonify({'result': True})
+    email = request.json['email']
+    password = request.json['password']
+    print email
+    print password
+    # TODO: properly check for email
+    if email == None or email == '' or password == None or len(password) < 6:
+        return jsonify({'result': False, 'text': 'invalid user input'})
+    if db_create_user(email, security.generate_password_hash(password)):
+        return jsonify({'result': True, 'text': 'user successfully created'})
+    return jsonify({'result': False, 'text': 'user exists'})
 
 
 if __name__ == '__main__':

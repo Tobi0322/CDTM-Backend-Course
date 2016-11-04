@@ -47,7 +47,7 @@ app.config(function($locationProvider, $routeProvider) {
     .when('/', {
       templateUrl: function(param) {
         // TODO: Add a proper check and redirect to '/' if the user isn't logged in
-        var authenticated = false;
+        var authenticated = true;
         if (authenticated) {
           return '/views/main.html'
         } else {

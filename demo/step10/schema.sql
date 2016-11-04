@@ -20,7 +20,7 @@ CREATE TABLE Uploads(
 DROP TABLE IF EXISTS User;
 CREATE TABLE User(
   id          INTEGER      PRIMARY KEY AUTOINCREMENT,
-  email       TEXT         NOT NULL,
+  email       TEXT         NOT NULL UNIQUE,
   password    TEXT         NOT NULL
 );
 

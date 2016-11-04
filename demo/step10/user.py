@@ -16,5 +16,5 @@ class User:
 
     def __init__(self, email, password, id=''):
         self.id = id
-        self.email =  title
-        self.password = status
+        self.email =  email
+        self.password = password
