@@ -239,7 +239,8 @@ def get_tasks():
 # CREATE ROUTE
 @app.route('/api/tasks', methods=['POST'])
 def create_task():
-    title = request.json['title']
+    data = request.get_json(force=True)
+    title = data['title']
     newTask = db_create_task(title)
     if newTask == None:
         abort(500)
@@ -248,13 +249,14 @@ def create_task():
 # UPDATE ROUTE
 @app.route('/api/tasks/<string:task_id>', methods=['PUT'])
 def update_task(task_id):
+    data = request.get_json(force=True)
     task = db_get_task(task_id)
     if task == None:
         abort(404)
-    task.setTitle(request.json['title'])
-    task.setStatus(request.json['status'])
-    task.setDescription(request.json['description'])
-    task.setDueDate(request.json['due'])
+    task.setTitle(data['title'])
+    task.setStatus(data['status'])
+    task.setDescription(data['description'])
+    task.setDueDate(data['due'])
 
     task = db_update_task(task)
     if task == None:
@@ -319,8 +321,9 @@ def remove_file(task_id, filename):
 # Register User
 @app.route('/api/register', methods=['POST'])
 def register():
-    email = request.json['email']
-    password = request.json['password']
+    data = request.get_json(force=True)
+    email = data['email']
+    password = data['password']
     # TODO: properly check for email
     if email == None or email == '' or password == None or len(password) < 6:
         return jsonify({'result': False, 'text': 'invalid user input'})
@@ -330,8 +333,9 @@ def register():
 
 @app.route('/api/login', methods=['POST'])
 def login():
-    email = request.json['email']
-    password = request.json['password']
+    data = request.get_json(force=True)
+    email = data['email']
+    password = data['password']
 
     if db_check_password(email, password):
         session['logged_in'] = True
