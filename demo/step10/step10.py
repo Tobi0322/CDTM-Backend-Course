@@ -225,6 +225,7 @@ def db_check_password(email, password):
 # serve static files
 @app.route('/')
 @app.route('/login/')
+@app.route('/logout/')
 @app.route('/register/')
 @app.route('/home/')
 def frontEnd():
@@ -359,7 +360,7 @@ def status():
             return jsonify({'status': True})
     else:
         return jsonify({'status': False})
-        
+
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=int('20010'), debug=True)
