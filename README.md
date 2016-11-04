@@ -2,8 +2,8 @@
 
 ## Repository Structure
 ```
-. 
-+-- README.md 
+.
++-- README.md
 +-- demo/               (demo code goes here)
 |   +-- step01/         (tutorial step x)
     |   +-- frontend/   (demo frontend)
@@ -19,20 +19,20 @@ We want to give you an overview what is planned for the next days. We are trying
 ### Preparation
 We designed this course for students with limited programming skills. With this in mind, we want to avoid repeating the 'Basics of Programming' lecture from the Trend Seminar. Therefore we would ask you to complete the *Codeacademy Learn Python* tutorial **before the start of the course** to get you up and running.
 
-#### Codeacademy Learn Python 
+#### Codeacademy Learn Python
 Link: https://www.codecademy.com/learn/python
 > * Get's you up to speed :-)
-> * You should be comfortable with the following concepts aftwards 
->     * variables 
->     * strings 
->     * functions 
->     * parameters 
->     * control flow (if, elif, else) 
+> * You should be comfortable with the following concepts aftwards
+>     * variables
+>     * strings
+>     * functions
+>     * parameters
+>     * control flow (if, elif, else)
 >     * loops (while, for)
 >     * lists  
 >     * dictionaries
->     * tuples 
->     * Object Orientation (Classes, methods) 
+>     * tuples
+>     * Object Orientation (Classes, methods)
 
 
 #### Other Resources
@@ -42,16 +42,16 @@ Link: https://www.codecademy.com/learn/python
     * The best beginner programmer’s guide to Python, which covers everything from “hello world” to the console to the web.
 * Python Crash Course (https://www.nostarch.com/pythoncrashcourse)
     * A book (~ 30 € ) giving a hands-On, project-based introduction to programming in Python.
- 
+
 
 ### Friday (17:00 - 21.00)
 On Friday we will kick off the course with a short lecture introducing the concept of *Backend / Frontend*. After that we will setup your systems to run all the needed frameworks and libraries. And finally each of you will implement their very own web-server.
 
-> **TODO** 
+> **TODO**
 > - [ ] Lecture Frontend / Backend Introduction
 >   - [ ] Terminology
 >   - [ ] Rationale why there is a distinction
->   - [ ] Development Stacks & Examples (http://stackshare.io/stacks) 
+>   - [ ] Development Stacks & Examples (http://stackshare.io/stacks)
 > - [X] [Setup Tutorial](./tutorial/0-Setup.md "Install all the things!")
 >   - [X] Setup Chrome
 >   - [X] Setup IDE / text editor
@@ -74,12 +74,12 @@ After today your server should be capable of the following things:
 * Handling CRUD (Create, Read, Update, Destroy) requests for Todo-Items over a RESTful API
 * Storing Todo-Items persistently in a database
 
-> **TODO** 
+> **TODO**
 > - [ ] Lectures
->   - [ ] Objects: Object Orientation 
+>   - [ ] Objects: Object Orientation
 >   - [ ] Routing: HTTP, REST and JSON
 >   - [ ] Persistent Storage: Databases and SQL
->   - [ ] (Large) File Handling 
+>   - [ ] (Large) File Handling
 > - [ ] Introduction Tools / Frameworks
 >   - [ ] Postman
 >   - [ ] SQLite
@@ -99,11 +99,12 @@ After today your server should be capable of the following things:
 ### Sunday (09:00 -17:00)
 Up to now everything could have been done on the client directly. One advantage of having a centralized backend is that we can access and manipulate the same information with multiple clients. Today's goal is to implement user authentication and allow to share TodoItems.
 
-> **TODO** 
+> **TODO**
 > - [ ] Lectures
 >   - [ ] User Authentication Basics
 >   - [ ] Shared Objects Implementation Strategy
 > - [ ] Tutorial & Demo Code  
+>   - [ ] 0. Refactor (?) (Would be nice at this point as, everyone has to review their code)
 >   - [ ] 1. User: Register User
 >   - [ ] 2. User: Login / Logout
 >   - [ ] 3. User: Delete Account
