@@ -25,7 +25,6 @@ function clearSelection() {
 
 function initMaterializeComponents() {
   try {
-    $('.button-collapse').sideNav();
     // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
     $('.modal-trigger').leanModal();
 
@@ -54,15 +53,16 @@ app.config(function($locationProvider, $routeProvider) {
         } else {
           return '/views/landing.html'
         }
-      }
+      },
+      controller: 'homeCtrl'
     })
     .when('/index.html', {
       templateUrl: '/views/main.html'
     })
-  //   .when('/login', {
-  //     templateUrl: 'static/partials/login.html',
-  //     controller: 'loginController'
-  //   })
+    .when('/login', {
+      templateUrl: '/views/login.html',
+      // controller: 'loginController'
+    })
   //   .when('/logout', {
   //     controller: 'logoutController'
   //   })
@@ -80,6 +80,10 @@ app.config(function($locationProvider, $routeProvider) {
   //     redirectTo: '/'
   //   });
   // });
+});
+
+app.controller('homeCtrl', function($timeout) {
+  $timeout(initMaterializeComponents,0);
 });
 
 app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeout) {
@@ -106,16 +110,19 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeo
   $scope.hideCompletedTasks = true;
 
   $scope.$watch('$viewContentLoaded', function(){
-    initMaterializeComponents();
+    $timeout(initMaterializeComponents,0);
+
+    // only call once
+    $('.button-collapse').sideNav({
+        menuWidth: 300, // Default is 240
+        edge: 'left', // Choose the horizontal origin
+        closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+        draggable: true // Choose whether you can drag to open on touch screens
+    });
 
     $scope.HOST = $location.host()
     $scope.loadTasks()
   });
-
-  angular.element(document).ready(function () {
-    $timeout(initMaterializeComponents,0);
-  });
-
 
   $scope.changePort = function() {
     $scope.loadTasks()

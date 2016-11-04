@@ -1,6 +1,6 @@
 html, body {
   color: rgba(0, 0, 0, 0.8);
-} 
+}
 
 .hidden {
   display: none !important;
@@ -56,6 +56,13 @@ html, body {
    z-index: 10;
 }
 
+.parrallax img {
+  background-image: url("/assets/meeting.jpg");
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+}
+
 svg {
   color: inherit;
   fill: currentColor;
@@ -65,16 +72,27 @@ svg {
   width: 100%;
 }
 
+input:focus:not([readonly]) {
+  border-bottom: 1px solid #153d77 !important;
+  -webkit-box-shadow: 0 1px 0 0 #153d77 !important;
+  -moz-box-shadow: 0 1px 0 0 #153d77 !important;
+  box-shadow: 0 1px 0 0 #153d77 !important;
+}
+
 .subtle, .subtle:active, .subtle:focus {
-  border-style: none !important;
-  box-shadow: 0 0 0 0 white;
+  border-bottom: 1px solid #153d77;
+  box-shadow: 0 1px 0 0 #153d77;
+}
+
+input[type=text].subtle {
+  border-bottom: 0 none white !important;
 }
 
 input[type=text]:focus:not([readonly]).subtle {
   background: rgba(0, 0, 0, 0.05);
   border-style: none !important;
   border-width: 0 !important;
-  box-shadow: 0 0 0 0 white;
+  box-shadow: 0 0 0 0 white !important;
 }
 
 nav ul li a{
