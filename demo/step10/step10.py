@@ -228,7 +228,7 @@ def db_check_password(email, password):
 @app.route('/register/')
 @app.route('/home/')
 def frontEnd():
-    return send_file("static/index.html")
+    return send_file('static/index.html')
 
 # INDEX ROUTE
 @app.route('/api/tasks', methods=['GET'])
@@ -288,7 +288,7 @@ def upload_file(task_id):
         os.makedirs(directory)
 
     # Get the name of the uploaded files
-    uploaded_files = request.files.getlist("files[]")
+    uploaded_files = request.files.getlist('files[]')
     for file in uploaded_files:
         if file and allowed_file(file.filename):
             # sanitize the filename
@@ -331,10 +331,10 @@ def register():
     password = data.get('password')
     # TODO: properly check for email
     if email == None or email == '' or password == None or len(password) < 6:
-        return jsonify({'result': False, 'text': 'invalid user input'})
+        return jsonify({'result': False, 'text': 'Invalid username and/or password'})
     if db_create_user(email, security.generate_password_hash(password)):
-        return jsonify({'result': True, 'text': 'user successfully created'})
-    return jsonify({'result': False, 'text': 'user exists'})
+        return jsonify({'result': True, 'text': 'User successfully created'})
+    return jsonify({'result': False, 'text': 'User already exists'})
 
 @app.route('/api/login', methods=['POST'])
 def login():

@@ -25,7 +25,7 @@ function clearSelection() {
 
 function initMaterializeComponents() {
   try {
-    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    // the 'href' attribute of .modal-trigger must specify the modal ID that wants to be triggered
     $('.modal-trigger').leanModal();
 
     $('.datepicker').pickadate({
@@ -45,42 +45,42 @@ app.config(function($locationProvider, $routeProvider) {
 
     $routeProvider
     .when('/', {
-      templateUrl: function(param) {
-        // TODO: Add a proper check and redirect to '/' if the user isn't logged in
-        var authenticated = true;
-        if (authenticated) {
-          return '/views/main.html'
-        } else {
-          return '/views/landing.html'
-        }
-      },
-      controller: 'homeCtrl'
+      templateUrl: '/views/main.html',
+      controller: 'homeCtrl',
+      access: {restricted: true}
     })
     .when('/home', {
       templateUrl: '/views/landing.html',
-      controller: 'homeCtrl'
+      controller: 'homeCtrl',
+      access: {restricted: false}
     })
     .when('/login', {
       templateUrl: '/views/login.html',
-      controller: 'loginCtrl'
+      controller: 'loginCtrl',
+      access: {restricted: false}
     })
-  //   .when('/logout', {
-  //     controller: 'logoutController'
-  //   })
+    .when('/logout', {
+      controller: 'logoutController',
+      access: {restricted: true}
+    })
     .when('/register', {
-      templateUrl: '/views/register.html'
-      // controller: 'registerController'
+      templateUrl: '/views/register.html',
+      controller: 'registerController',
+      access: {restricted: false}
     })
-  //   .when('/one', {
-  //     template: '<h1>This is page one!</h1>'
-  //   })
-  //   .when('/two', {
-  //     template: '<h1>This is page two!</h1>'
-  //   })
-  //   .otherwise({
-  //     redirectTo: '/'
-  //   });
-  // });
+});
+
+app.run(function ($rootScope, $location, $route, AuthService) {
+  $rootScope.$on('$routeChangeStart', function (event, next, current) {
+    if (next.access && next.access.restricted && AuthService.isLoggedIn() === false) {
+      // The index page should either show the landing page or the app
+      if (next.$$route.originalPath == '/') {
+        next.$$route.templateUrl = '/views/landing.html';
+      } else {
+        $location.path('/login');
+      }
+    }
+  });
 });
 
 app.controller('homeCtrl', function($timeout) {
@@ -88,7 +88,6 @@ app.controller('homeCtrl', function($timeout) {
 });
 
 app.controller('loginCtrl', function($scope, $location, AuthService) {
-
   $scope.login = function () {
     // initial values
     $scope.error = false;
@@ -105,23 +104,65 @@ app.controller('loginCtrl', function($scope, $location, AuthService) {
       // handle error
       .catch(function () {
         $scope.error = true;
-        $scope.errorMessage = "Invalid username and/or password";
+        $scope.errorMessage = 'Invalid username and/or password';
         $scope.disabled = false;
         $scope.loginForm = {};
       });
   };
-
 })
+
+app.controller('logoutController',
+  ['$scope', '$location', 'AuthService',
+  function ($scope, $location, AuthService) {
+
+    $scope.logout = function () {
+
+      // call logout from service
+      AuthService.logout()
+        .then(function () {
+          $location.path('/login');
+        });
+    };
+}]);
+
+app.controller('registerController',
+  ['$scope', '$location', 'AuthService',
+  function ($scope, $location, AuthService) {
+
+    $scope.register = function () {
+
+      // initial values
+      $scope.error = false;
+      $scope.disabled = true;
+
+      // call register from service
+      AuthService.register($scope.registerForm.email,
+                           $scope.registerForm.password)
+        // handle success
+        .then(function () {
+          $location.path('/login');
+          $scope.disabled = false;
+          $scope.registerForm = {};
+        })
+        // handle error
+        .catch(function () {
+          $scope.error = true;
+          $scope.errorMessage = "Something went wrong!";
+          $scope.disabled = false;
+          $scope.registerForm = {};
+        });
+    };
+}]);
 
 app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeout) {
 
   var placeholders = [
-    "What needs to be done?",
-    "Anything else to do?",
-    "Remind me about ...",
-    "Don't forget about ...",
-    "Remind me about ...",
-    "What's on your agenda?",
+    'What needs to be done?',
+    'Anything else to do?',
+    'Remind me about ...',
+    'Don\'t forget about ...',
+    'Remind me about ...',
+    'What\'s on your agenda?',
   ]
 
   $rootScope.HOST ='localhost';
@@ -175,7 +216,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeo
          },
          function(response){
            // failure callback
-           $scope.api_version = "N/A";
+           $scope.api_version = 'N/A';
            $scope.tasks = [];
            console.log(response);
            $scope.loading = false;
@@ -357,7 +398,7 @@ app.controller('fileCtrl', function($scope, $rootScope, $element, $http) {
         console.log(response);
       }).error(function(response) {
           shake(document.getElementById('modal' + $scope.task.id));
-          console.log("Error uploading files.");
+          console.log('Error uploading files.');
           console.log(response);
       });
   };
