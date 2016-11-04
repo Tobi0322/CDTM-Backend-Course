@@ -352,6 +352,14 @@ def logout():
     session.pop('logged_in', None)
     return jsonify({'result': True})
 
+@app.route('/api/status')
+def status():
+    if session.get('logged_in'):
+        if session['logged_in']:
+            return jsonify({'status': True})
+    else:
+        return jsonify({'status': False})
+        
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=int('20010'), debug=True)

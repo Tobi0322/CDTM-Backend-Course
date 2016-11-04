@@ -73,12 +73,14 @@ app.config(function($locationProvider, $routeProvider) {
 app.run(function ($rootScope, $location, $route, AuthService) {
   $rootScope.$on('$routeChangeStart', function (event, next, current) {
     if (next.access && next.access.restricted && AuthService.isLoggedIn() === false) {
-      // The index page should either show the landing page or the app
-      if (next.$$route.originalPath == '/') {
-        next.$$route.templateUrl = '/views/landing.html';
-      } else {
-        $location.path('/login');
-      }
+      AuthService.getUserStatus().then(function() {
+        // The index page should either show the landing page or the app
+        if (next.$$route.originalPath == '/') {
+          next.$$route.templateUrl = '/views/landing.html';
+        } else {
+          $location.path('/login');
+        }
+      });
     }
   });
 });

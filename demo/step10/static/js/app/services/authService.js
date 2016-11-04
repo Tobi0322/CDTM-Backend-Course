@@ -1,6 +1,6 @@
 angular.module('taskApp').factory('AuthService',
-  ['$q', '$timeout', '$http',
-  function ($q, $timeout, $http) {
+  ['$rootScope', '$q', '$timeout', '$http',
+  function ($rootScope, $q, $timeout, $http) {
 
     // create user variable
     var user = null;
@@ -14,11 +14,9 @@ angular.module('taskApp').factory('AuthService',
     }
 
     function login(email, password) {
-      // create a new instance of deferred
       var deferred = $q.defer();
 
-      // send a post request to the server
-      $http.post('/api/login', {email: email, password: password})
+      $http.post($rootScope.hostString() + '/api/login', {email: email, password: password})
         .success(function (data, status) {
           if(status === 200 && data.result){
             user = true;
@@ -35,10 +33,9 @@ angular.module('taskApp').factory('AuthService',
     }
 
     function logout() {
-      // create a new instance of deferred
       var deferred = $q.defer();
 
-      $http.get('/api/logout')
+      $http.get($rootScope.hostString() + '/api/logout')
         .success(function (data) {
           user = false;
           deferred.resolve();
@@ -53,7 +50,7 @@ angular.module('taskApp').factory('AuthService',
     function register(email, password) {
       var deferred = $q.defer();
 
-      $http.post('/api/register', {email: email, password: password})
+      $http.post($rootScope.hostString() + '/api/register', {email: email, password: password})
         .success(function (data, status) {
           if(status === 200 && data.result){
             deferred.resolve();
@@ -66,12 +63,27 @@ angular.module('taskApp').factory('AuthService',
       return deferred.promise;
     }
 
+    function getUserStatus() {
+      return $http.get($rootScope.hostString() + '/api/status')
+      .success(function (data) {
+        if(data.status){
+          user = true;
+        } else {
+          user = false;
+        }
+      })
+      .error(function (data) {
+        user = false;
+      });
+    }
+
     // return available functions for use in controllers
     return ({
       isLoggedIn: isLoggedIn,
       login: login,
       logout: logout,
-      register: register
+      register: register,
+      getUserStatus: getUserStatus
     });
 
 }]);
