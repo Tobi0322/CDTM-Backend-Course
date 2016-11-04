@@ -32,23 +32,23 @@ html, body {
 }
 
 .text-primary {
-  color: #153d77;
+  color: #153d77 !important;
 }
 
 .text-accent {
-  color: rgb(0,148,64);
+  color: rgb(0,148,64) !important;
 }
 
 .primary {
-  background-color: #153d77;
+  background-color: #153d77 !important;
 }
 
 .primary.btn:hover, .primary.btn:active, .primary.btn:focus {
-  background-color: rgb(0,101,189);
+  background-color: rgb(0,101,189) !important;
 }
 
 .accent{
-  background-color: rgb(0,148,64);
+  background-color: rgb(0,148,64) !important;
 }
 
 .overlay {
