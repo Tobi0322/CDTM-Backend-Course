@@ -240,8 +240,12 @@ def get_tasks():
 @app.route('/api/tasks', methods=['POST'])
 def create_task():
     data = request.get_json(force=True)
-    title = data['title']
+    title = data.get('title')
+    if title == None:
+        abort(400)
+
     newTask = db_create_task(title)
+
     if newTask == None:
         abort(500)
     return jsonify(newTask.__dict__)
@@ -253,10 +257,11 @@ def update_task(task_id):
     task = db_get_task(task_id)
     if task == None:
         abort(404)
-    task.setTitle(data['title'])
-    task.setStatus(data['status'])
-    task.setDescription(data['description'])
-    task.setDueDate(data['due'])
+
+    task.setTitle(data.get('title'))
+    task.setStatus(data.get('status'))
+    task.setDescription(data.get('description'))
+    task.setDueDate(data.get('due'))
 
     task = db_update_task(task)
     if task == None:
@@ -322,8 +327,8 @@ def remove_file(task_id, filename):
 @app.route('/api/register', methods=['POST'])
 def register():
     data = request.get_json(force=True)
-    email = data['email']
-    password = data['password']
+    email = data.get('email', '').lower()
+    password = data.get('password')
     # TODO: properly check for email
     if email == None or email == '' or password == None or len(password) < 6:
         return jsonify({'result': False, 'text': 'invalid user input'})
@@ -334,8 +339,8 @@ def register():
 @app.route('/api/login', methods=['POST'])
 def login():
     data = request.get_json(force=True)
-    email = data['email']
-    password = data['password']
+    email = data.get('email', '').lower()
+    password = data.get('password')
 
     if db_check_password(email, password):
         session['logged_in'] = True
