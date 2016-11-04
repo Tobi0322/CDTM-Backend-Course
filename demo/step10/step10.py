@@ -19,6 +19,10 @@ response = {
 # set the project root directory as the static folder, you can set others.
 app = Flask(__name__, static_url_path='')
 
+# config session parameters
+app.secret_key = 'mostly awesome'
+app.config['SESSION_TYPE'] = 'memchached'
+
 # This is the path to the upload directory
 app.config['UPLOAD_FOLDER'] = 'uploads/'
 # These are the extension that we are accepting to be uploaded
