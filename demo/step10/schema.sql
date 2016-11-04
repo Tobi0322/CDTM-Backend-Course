@@ -17,6 +17,13 @@ CREATE TABLE Uploads(
   FOREIGN KEY(task) REFERENCES Tasks(id)
 );
 
+DROP TABLE IF EXISTS User;
+CREATE TABLE User(
+  id          INTEGER      PRIMARY KEY AUTOINCREMENT,
+  email       TEXT         NOT NULL,
+  password    TEXT         NOT NULL
+);
+
 
 INSERT INTO Tasks(title, status, due) VALUES ('Go for a run', 'normal', '1970-01-01');
 INSERT INTO Tasks(title, status, description) VALUES ('Eat an apple', 'normal', 'Hey there! Don''t forget taking more notes... You know, small things are easy to forget :-)');

@@ -1,4 +1,3 @@
-from flask import json
 from datetime import datetime
 
 class Task:
