@@ -46,7 +46,6 @@ app.config(function($locationProvider, $routeProvider) {
     $routeProvider
     .when('/', {
       templateUrl: '/views/main.html',
-      controller: 'homeCtrl',
       access: {restricted: true}
     })
     .when('/home', {
@@ -54,14 +53,13 @@ app.config(function($locationProvider, $routeProvider) {
       controller: 'homeCtrl',
       access: {restricted: false}
     })
+    .when('/logout', {
+      redirectTo: '/'
+    })
     .when('/login', {
       templateUrl: '/views/login.html',
       controller: 'loginCtrl',
       access: {restricted: false}
-    })
-    .when('/logout', {
-      controller: 'logoutController',
-      access: {restricted: true}
     })
     .when('/register', {
       templateUrl: '/views/register.html',
@@ -72,16 +70,15 @@ app.config(function($locationProvider, $routeProvider) {
 
 app.run(function ($rootScope, $location, $route, AuthService) {
   $rootScope.$on('$routeChangeStart', function (event, next, current) {
-    if (next.access && next.access.restricted && AuthService.isLoggedIn() === false) {
-      AuthService.getUserStatus().then(function() {
-        // The index page should either show the landing page or the app
-        if (next.$$route.originalPath == '/') {
-          next.$$route.templateUrl = '/views/landing.html';
-        } else {
-          $location.path('/login');
-        }
-      });
+    if (next.$$route.originalPath === '/logout') {
+        AuthService.logout()
     }
+    
+    AuthService.getUserStatus().then(function() {
+      if (next.access && next.access.restricted && AuthService.isLoggedIn() === false) {
+        $location.path('/home');
+      }
+    });
   });
 });
 
@@ -90,6 +87,11 @@ app.controller('homeCtrl', function($timeout) {
 });
 
 app.controller('loginCtrl', function($scope, $location, AuthService) {
+
+  if (AuthService.isLoggedIn()) {
+    $location.path('/');
+  }
+
   $scope.login = function () {
     // initial values
     $scope.error = false;
@@ -113,23 +115,12 @@ app.controller('loginCtrl', function($scope, $location, AuthService) {
   };
 })
 
-app.controller('logoutController',
-  ['$scope', '$location', 'AuthService',
-  function ($scope, $location, AuthService) {
+app.controller('registerController', function ($scope, $location, AuthService) {
 
-    $scope.logout = function () {
+    if (AuthService.isLoggedIn()) {
+      $location.path('/');
+    }
 
-      // call logout from service
-      AuthService.logout()
-        .then(function () {
-          $location.path('/login');
-        });
-    };
-}]);
-
-app.controller('registerController',
-  ['$scope', '$location', 'AuthService',
-  function ($scope, $location, AuthService) {
 
     $scope.register = function () {
 
@@ -154,9 +145,9 @@ app.controller('registerController',
           $scope.registerForm = {};
         });
     };
-}]);
+});
 
-app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeout) {
+app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeout, AuthService) {
 
   var placeholders = [
     'What needs to be done?',
@@ -172,6 +163,10 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeo
 
   $rootScope.hostString = function() {
     return 'http://' + $scope.HOST + ':' + $scope.PORT
+  }
+
+  $scope.isLoggedIn = function() {
+    return AuthService.isLoggedIn();
   }
 
   $scope.loading = false;
