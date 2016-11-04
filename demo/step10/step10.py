@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf8
 
-from flask import Flask, jsonify, redirect, request, abort, g, send_from_directory, send_file
+from flask import Flask, jsonify, redirect, request, abort, g, send_from_directory, send_file, session
 from werkzeug import secure_filename, security
 import sys, os, sqlite3, shutil
 from task import Task
@@ -316,14 +316,27 @@ def remove_file(task_id, filename):
 def register():
     email = request.json['email']
     password = request.json['password']
-    print email
-    print password
     # TODO: properly check for email
     if email == None or email == '' or password == None or len(password) < 6:
         return jsonify({'result': False, 'text': 'invalid user input'})
     if db_create_user(email, security.generate_password_hash(password)):
         return jsonify({'result': True, 'text': 'user successfully created'})
     return jsonify({'result': False, 'text': 'user exists'})
+
+@app.route('/api/login', methods=['POST'])
+def login():
+    email = request.json['email']
+    password = request.json['password']
+
+    if db_check_password(email, password):
+        session['logged_in'] = True
+        return jsonify({'result': True})
+    return jsonify({'result': False})
+
+@app.route('/api/logout')
+def logout():
+    session.pop('logged_in', None)
+    return jsonify({'result': True})
 
 
 if __name__ == '__main__':
