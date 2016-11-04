@@ -226,6 +226,7 @@ def db_check_password(email, password):
 @app.route('/')
 @app.route('/login/')
 @app.route('/register/')
+@app.route('/home/')
 def frontEnd():
     return send_file("static/index.html")
 

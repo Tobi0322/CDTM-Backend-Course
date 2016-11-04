@@ -56,8 +56,9 @@ app.config(function($locationProvider, $routeProvider) {
       },
       controller: 'homeCtrl'
     })
-    .when('/index.html', {
-      templateUrl: '/views/main.html'
+    .when('/home', {
+      templateUrl: '/views/landing.html',
+      controller: 'homeCtrl'
     })
     .when('/login', {
       templateUrl: '/views/login.html',
@@ -66,7 +67,7 @@ app.config(function($locationProvider, $routeProvider) {
   //   .when('/logout', {
   //     controller: 'logoutController'
   //   })
-    .when('/register/', {
+    .when('/register', {
       templateUrl: '/views/register.html'
       // controller: 'registerController'
     })
