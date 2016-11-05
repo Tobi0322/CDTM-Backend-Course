@@ -246,6 +246,12 @@ def db_check_password(email, password):
 def frontEnd():
     return send_file('static/index.html')
 
+# Return current version
+@app.route('/api/version', methods=['GET'])
+@login_required
+def get_version():
+    return jsonify(response)
+
 # INDEX ROUTE
 @app.route('/api/tasks', methods=['GET'])
 @login_required

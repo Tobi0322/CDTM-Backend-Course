@@ -1,8 +1,19 @@
-app.factory('ApiService', function ($location) {
+app.factory('ApiService', function ($location, $http) {
 
     var HOST = $location.host();
     var PORT = $location.port();
     var VERSION = 'N/A';
+
+    $http.get(hostString() + '/api/tasks')
+     .then(
+         function(response){
+           // success callback
+           setApiVersion(response.data.version);
+         },
+         function(response){
+           setApiVersion('N/A');
+        }
+      );
 
     function setPort(new_port) {
       if(new_port && new_port != null && new_port != undefined && new_port != '') {
