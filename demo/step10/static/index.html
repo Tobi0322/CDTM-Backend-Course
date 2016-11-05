@@ -26,9 +26,12 @@
     </a>
     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
     <ul class="right hide-on-med-and-down">
-      <li hide ng-show="!isLoggedIn()"><a href="/register" class="primary waves-effect waves-light btn">Register</a></li>
-      <li hide ng-show="!isLoggedIn()"><a href="/login" class="text-primary white waves-effect waves-light btn">Login</a></li><li>{{AuthService.isLoggedIn()}}</li>
-      <li hide ng-show="isLoggedIn()"><a href="/logout" class="text-primary white waves-effect waves-light btn">Logout</a></li><li>{{AuthService.isLoggedIn()}}</li>
+        <li hide ng-show="isLoggedIn()" class="text-primary" style="font-size: 18px; text-transform: capitalize;">
+          <img src="assets/icons/user.svg" width="45" style="vertical-align:middle"/> {{user().split('.')[0]}}
+        </li>
+        <li hide ng-show="isLoggedIn()"><a href="/logout" class="text-primary white waves-effect waves-light btn">Logout</a></li><li>{{AuthService.isLoggedIn()}}</li>
+        <li hide ng-show="!isLoggedIn()"><a href="/register" class="primary waves-effect waves-light btn">Register</a></li>
+        <li hide ng-show="!isLoggedIn()"><a href="/login" class="text-primary white waves-effect waves-light btn">Login</a></li><li>{{AuthService.isLoggedIn()}}</li>
     </ul>
     <ul class="side-nav" id="mobile-demo">
 

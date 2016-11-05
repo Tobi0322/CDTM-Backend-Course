@@ -3,6 +3,7 @@
 
 from flask import Flask, jsonify, redirect, request, abort, g, send_from_directory, send_file, session
 from werkzeug import secure_filename, security
+from functools import wraps
 import sys, os, sqlite3, shutil
 from task import Task
 from user import User
@@ -32,6 +33,15 @@ def allowed_file(filename):
     ''' return whether it's an allowed type or not '''
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        print "Helloe"
+        if not session.get('logged_in'):
+            abort(401)
+        return f(*args, **kwargs)
+    return decorated_function
 
 # --------------------------
 # -----    DATABASE    -----
@@ -234,12 +244,14 @@ def frontEnd():
 
 # INDEX ROUTE
 @app.route('/api/tasks', methods=['GET'])
+@login_required
 def get_tasks():
     response['data'] = [t.__dict__ for t in db_get_tasks()]
     return jsonify(response)
 
 # CREATE ROUTE
 @app.route('/api/tasks', methods=['POST'])
+@login_required
 def create_task():
     data = request.get_json(force=True)
     title = data.get('title')
@@ -254,6 +266,7 @@ def create_task():
 
 # UPDATE ROUTE
 @app.route('/api/tasks/<string:task_id>', methods=['PUT'])
+@login_required
 def update_task(task_id):
     data = request.get_json(force=True)
     task = db_get_task(task_id)
@@ -273,6 +286,7 @@ def update_task(task_id):
 
 # DESTROY ROUTE
 @app.route('/api/tasks/<string:task_id>', methods=['DELETE'])
+@login_required
 def remove_task(task_id):
     # don't forget to delete all Uploads
     directory = os.path.join(app.config['UPLOAD_FOLDER'], task_id)
@@ -283,6 +297,7 @@ def remove_task(task_id):
 
 # UPLOAD FILES
 @app.route('/api/tasks/<string:task_id>/files', methods=['POST'])
+@login_required
 def upload_file(task_id):
     # each file is save in a folder named after the corresponding tasks id
     directory = os.path.join(app.config['UPLOAD_FOLDER'], task_id)
@@ -309,6 +324,7 @@ def upload_file(task_id):
 
 # GET FILE
 @app.route('/api/tasks/<string:task_id>/files/<string:filename>', methods=['GET'])
+@login_required
 def get_file(task_id, filename):
     directory = os.path.join(app.config['UPLOAD_FOLDER'], task_id)
     return send_from_directory(directory, filename)
@@ -316,6 +332,7 @@ def get_file(task_id, filename):
 
 # REMOVE FILE
 @app.route('/api/tasks/<string:task_id>/files/<string:filename>', methods=['DELETE'])
+@login_required
 def remove_file(task_id, filename):
     db_delete_file(task_id, filename)
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], task_id, filename)
@@ -353,6 +370,7 @@ def login():
     return jsonify({'result': False})
 
 @app.route('/api/logout')
+@login_required
 def logout():
     session.pop('logged_in', None)
     session.pop('userID', None)
