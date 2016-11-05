@@ -348,6 +348,7 @@ def login():
     if user != None:
         session['logged_in'] = True
         session['userID'] = user.id
+        session['userEmail'] = user.email
         return jsonify({'result': True, 'user': user.email})
     return jsonify({'result': False})
 
@@ -355,6 +356,7 @@ def login():
 def logout():
     session.pop('logged_in', None)
     session.pop('userID', None)
+    session.pop('userEmail', None)
     return jsonify({'result': True})
 
 @app.route('/api/status')
