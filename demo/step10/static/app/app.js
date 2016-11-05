@@ -47,11 +47,11 @@ app.config(function($locationProvider, $routeProvider) {
 
     $routeProvider
     .when('/', {
-      templateUrl: '/views/main.html',
+      templateUrl: 'app/views/main.html',
       access: {restricted: true}
     })
     .when('/home', {
-      templateUrl: '/views/landing.html',
+      templateUrl: 'app/views/landing.html',
       controller: 'homeCtrl',
       access: {restricted: false}
     })
@@ -59,12 +59,12 @@ app.config(function($locationProvider, $routeProvider) {
       redirectTo: '/'
     })
     .when('/login', {
-      templateUrl: '/views/login.html',
+      templateUrl: 'app/views/login.html',
       controller: 'loginCtrl',
       access: {restricted: false}
     })
     .when('/register', {
-      templateUrl: '/views/register.html',
+      templateUrl: 'app/views/register.html',
       controller: 'registerController',
       access: {restricted: false}
     })
@@ -87,13 +87,7 @@ app.run(function ($rootScope, $location, $route, AuthService) {
 app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeout, AuthService, ApiService, TaskService) {
 
   $scope.TaskService = TaskService;
-
-  $scope.isLoggedIn = function() {
-    return AuthService.isLoggedIn();
-  }
-  $scope.user = function() {
-    return AuthService.getUser();
-  }
+  $scope.AuthService = AuthService
 
   $scope.$watch('$viewContentLoaded', function(){
     $timeout(initMaterializeComponents,0);

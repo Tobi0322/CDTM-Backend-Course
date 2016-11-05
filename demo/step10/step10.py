@@ -380,7 +380,6 @@ def login():
     return jsonify({'result': False})
 
 @app.route('/api/logout')
-@login_required
 def logout():
     session.pop('logged_in', None)
     session.pop('userID', None)
