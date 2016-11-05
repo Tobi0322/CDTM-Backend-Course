@@ -73,7 +73,7 @@ app.run(function ($rootScope, $location, $route, AuthService) {
     if (next.$$route.originalPath === '/logout') {
         AuthService.logout()
     }
-    
+
     AuthService.getUserStatus().then(function() {
       if (next.access && next.access.restricted && AuthService.isLoggedIn() === false) {
         $location.path('/home');
@@ -167,6 +167,9 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeo
 
   $scope.isLoggedIn = function() {
     return AuthService.isLoggedIn();
+  }
+  $scope.user = function() {
+    return AuthService.getUser();
   }
 
   $scope.loading = false;

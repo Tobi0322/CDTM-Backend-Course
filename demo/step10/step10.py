@@ -210,10 +210,11 @@ def db_create_user(email, password):
         return True
 
 def db_check_password(email, password):
+    ''' Checks the password for the email and returns the respective user if they match'''
     user = db_get_user(email)
-    if user != None:
-        return security.check_password_hash(user.password, password)
-    return False
+    if user != None and security.check_password_hash(user.password, password):
+        return user
+    return None
 
 
 
@@ -343,23 +344,26 @@ def login():
     email = data.get('email', '').lower()
     password = data.get('password')
 
-    if db_check_password(email, password):
+    user = db_check_password(email, password)
+    if user != None:
         session['logged_in'] = True
-        return jsonify({'result': True})
+        session['userID'] = user.id
+        return jsonify({'result': True, 'user': user.email})
     return jsonify({'result': False})
 
 @app.route('/api/logout')
 def logout():
     session.pop('logged_in', None)
+    session.pop('userID', None)
     return jsonify({'result': True})
 
 @app.route('/api/status')
 def status():
     if session.get('logged_in'):
         if session['logged_in']:
-            return jsonify({'status': True})
+            return jsonify({'result': True, 'user': session['userEmail']})
     else:
-        return jsonify({'status': False})
+        return jsonify({'result': False})
 
 
 if __name__ == '__main__':

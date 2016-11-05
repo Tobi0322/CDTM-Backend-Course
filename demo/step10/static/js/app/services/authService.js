@@ -6,11 +6,15 @@ angular.module('taskApp').factory('AuthService',
     var user = null;
 
     function isLoggedIn() {
-      if(user) {
+      if(user && user != null && user != undefined && user != '') {
         return true;
       } else {
         return false;
       }
+    }
+
+    function getUser() {
+      return user;
     }
 
     function login(email, password) {
@@ -19,14 +23,14 @@ angular.module('taskApp').factory('AuthService',
       $http.post($rootScope.hostString() + '/api/login', {email: email, password: password})
         .success(function (data, status) {
           if(status === 200 && data.result){
-            user = true;
+            user = data.user;
             deferred.resolve();
           } else {
-            user = false;
+            user = null;
             deferred.reject();
           }
         }).error(function (data) {
-          user = false;
+          user = null;
           deferred.reject();
         });
       return deferred.promise;
@@ -37,11 +41,11 @@ angular.module('taskApp').factory('AuthService',
 
       $http.get($rootScope.hostString() + '/api/logout')
         .success(function (data) {
-          user = false;
+          user = null;
           deferred.resolve();
         })
         .error(function (data) {
-          user = false;
+          user = null;
           deferred.reject();
         });
       return deferred.promise;
@@ -64,21 +68,23 @@ angular.module('taskApp').factory('AuthService',
     }
 
     function getUserStatus() {
+      console.log("user status")
       return $http.get($rootScope.hostString() + '/api/status')
       .success(function (data) {
-        if(data.status){
-          user = true;
+        if(data.result){
+          user = data.user;
         } else {
-          user = false;
+          user = null;
         }
       })
       .error(function (data) {
-        user = false;
+        user = null;
       });
     }
 
     // return available functions for use in controllers
     return ({
+      getUser: getUser,
       isLoggedIn: isLoggedIn,
       login: login,
       logout: logout,
