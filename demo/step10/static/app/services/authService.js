@@ -1,4 +1,4 @@
-app.factory('AuthService', function ($q, $timeout, $http, ApiService) {
+app.factory('AuthService', function ($q, $http, ApiService) {
 
     // create user variable
     var user = null;

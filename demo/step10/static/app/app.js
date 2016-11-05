@@ -3,9 +3,11 @@ var app = angular.module('taskApp', ['ngRoute']);
 function shake(element) {
   try {
     element.classList.add('shake');
+    element.classList.add('long');
     element.classList.add('animated');
     setTimeout(function () {
       element.classList.remove('shake');
+      element.classList.remove('long');
       element.classList.remove('animated');
     }, 1000);
   }
@@ -155,7 +157,9 @@ app.controller('registerController', function ($scope, $location, AuthService) {
     };
 });
 
-app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeout, AuthService, ApiService) {
+app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeout, AuthService, ApiService, TaskService) {
+
+  $scope.TaskService = TaskService;
 
   var placeholders = [
     'What needs to be done?',
@@ -174,7 +178,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeo
     return AuthService.getUser();
   }
 
-  $scope.loading = false;
+
   $scope.placeholder = placeholders[Math.floor(Math.random(1337)*placeholders.length)];
   $scope.newTask = {}
 
@@ -189,153 +193,54 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeo
         draggable: true // Choose whether you can drag to open on touch screens
     });
 
-    $scope.loadTasks()
+    TaskService.loadTasks();
   });
 
-
-  $scope.loadTasks = function() {
-    $scope.loading = true;
-    $http.get(ApiService.hostString() + '/api/tasks')
-     .then(
-         function(response){
-           // success callback
-           $scope.api_version = response.data.version;
-           $scope.tasks = response.data.data;
-           $scope.tasks.forEach(function(task) {
-             task.overdue = task.due != null && task.due != '' && new Date(task.due) < new Date();
-           });
-           $scope.loading = false;
-           console.log($scope.tasks);
-         },
-         function(response){
-           // failure callback
-           $scope.api_version = 'N/A';
-           $scope.tasks = [];
-           console.log(response);
-           $scope.loading = false;
-         }
-      );
-  };
-
-  $scope.addTask = function () {
-    $http.post(ApiService.hostString() + '/api/tasks', JSON.stringify($scope.newTask))
-     .then(
-         function(response){
-           // success callback
-           $scope.tasks.push(response.data);
-           $scope.placeholder = placeholders[Math.floor(Math.random(1337)*placeholders.length)];
-           $scope.newTask = {};
-         },
-         function(response){
-           // failure callback
-           console.log(response)
-           shake(document.getElementById('input-card'));
-         }
-      );
-  }
-
-  $scope.updateTask = function(task) {
-    $http.put(ApiService.hostString() + '/api/tasks/' + task.id, JSON.stringify(task))
-     .then(
-         function(response){
-           // success callback
-           task = response.data;
-         },
-         function(response){
-           // failure callback
-           console.log(response)
-           shake(document.getElementById(task.id));
-         }
-      );
-  }
-
-  $scope.removeTask = function(task) {
-    $http.delete(ApiService.hostString() + '/api/tasks/' + task.id)
-     .then(
-         function(response){
-           // success callback
-           $scope.tasks.splice($scope.tasks.indexOf(task),1);
-         },
-         function(response){
-           // failure callback
-           console.log(response)
-           shake(document.getElementById(task.id));
-         }
-      );
-  }
-});
-
-app.controller('taskCtrl', function($scope, $rootScope, $http, $window, $filter, ApiService) {
-  $scope.toggleTask = function() {
-    if ($scope.task.status == 'normal') {
-      $scope.task.status = 'completed';
-    } else {
-      $scope.task.status = 'normal';
-    }
-    $scope.$parent.updateTask($scope.task)
-  }
-
-  $scope.deleteTask = function() {
-    $scope.$parent.removeTask($scope.task);
-  }
-
-  $scope.deleteTaskModally = function() {
-    $('#modal' + $scope.task.id).closeModal();
-    $scope.$parent.removeTask($scope.task);
-  }
-
-  $scope.updateTask = function() {
-    $('#modal' + $scope.task.id).closeModal();
-    $scope.$parent.updateTask($scope.task);
-  }
-
-  $scope.showDetails = function() {
-    clearSelection()
-     $('#modal' + $scope.task.id).openModal();
-     $('#dueDate' + $scope.task.id).pickadate({
-       selectMonths: true, // Creates a dropdown to control month
-       selectYears: 15, // Creates a dropdown of 15 years to control year
-       format: 'mmmm dd, yyyy',
-       onSet: function(context) {
-         var date = new Date($('#dueDate' + $scope.task.id)[0].value);
-         $scope.task.due = $filter('date')(date, 'yyyy-MM-dd');
-         $scope.task.overdue = $scope.task.due != null && $scope.task.due != '' && new Date($scope.task.due) < new Date();
-       }
-     });
-  }
-
-  $scope.removeFile = function(file) {
-    $http.delete(ApiService.hostString() + '/api/tasks/' + $scope.task.id + '/files/' + file)
-     .then(
-         function(response){
-           // success callback
-           if (response.data.result == true) {
-             var index = $scope.task.files.indexOf(file);
-             if (index > -1) {
-                $scope.task.files.splice(index, 1);
-            }
-           }
-         },
-         function(response){
-           // failure callback
-           console.log(response);
-         }
-      );
-    }
-
-    $scope.downloadFile = function(file) {
-      $window.open(ApiService.hostString() + '/api/tasks/' + $scope.task.id + '/files/' + file);
-    }
-});
-
-
-
-app.directive('oneTask', function() {
-  return {
-      scope: {
-          task: '=' //Two-way data binding
-      },
-      controller: 'taskCtrl',
-      templateUrl: '/../views/task.html'
-  };
+  //
+  // $scope.addTask = function () {
+  //   $http.post(ApiService.hostString() + '/api/tasks', JSON.stringify($scope.newTask))
+  //    .then(
+  //        function(response){
+  //          // success callback
+  //          $scope.tasks.push(response.data);
+  //          $scope.placeholder = placeholders[Math.floor(Math.random(1337)*placeholders.length)];
+  //          $scope.newTask = {};
+  //        },
+  //        function(response){
+  //          // failure callback
+  //          console.log(response)
+  //          shake(document.getElementById('input-card'));
+  //        }
+  //     );
+  // }
+  //
+  // $scope.updateTask = function(task) {
+  //   $http.put(ApiService.hostString() + '/api/tasks/' + task.id, JSON.stringify(task))
+  //    .then(
+  //        function(response){
+  //          // success callback
+  //          task = response.data;
+  //        },
+  //        function(response){
+  //          // failure callback
+  //          console.log(response)
+  //          shake(document.getElementById(task.id));
+  //        }
+  //     );
+  // }
+  //
+  // $scope.removeTask = function(task) {
+  //   $http.delete(ApiService.hostString() + '/api/tasks/' + task.id)
+  //    .then(
+  //        function(response){
+  //          // success callback
+  //          $scope.tasks.splice($scope.tasks.indexOf(task),1);
+  //        },
+  //        function(response){
+  //          // failure callback
+  //          console.log(response)
+  //          shake(document.getElementById(task.id));
+  //        }
+  //     );
+  // }
 });

@@ -55,7 +55,7 @@
   </div>
   </nav>
 
-  <div hide ng-show="loading" class="progress" style="margin-top:0;">
+  <div hide ng-show="TaskService.loading" class="progress" style="margin-top:0;">
     <div class="indeterminate"></div>
   </div>
 
@@ -79,9 +79,12 @@
   <script type="text/javascript" src="app/app.js"></script>
   <script type="text/javascript" src="app/services/authService.js" ></script>
   <script type="text/javascript" src="app/services/apiService.js" ></script>
+  <script type="text/javascript" src="app/services/taskService.js" ></script>
+
   <script type="text/javascript" src="app/components/devBar/devBar.js" ></script>
   <script type="text/javascript" src="app/components/dropZone/dropZone.js" ></script>
   <script type="text/javascript" src="app/components/taskList/taskList.js" ></script>
+  <script type="text/javascript" src="app/components/oneTask/oneTask.js" ></script>
 
 
 </html>
