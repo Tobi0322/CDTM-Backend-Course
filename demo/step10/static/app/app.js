@@ -155,7 +155,7 @@ app.controller('registerController', function ($scope, $location, AuthService) {
     };
 });
 
-app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeout, AuthService) {
+app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeout, AuthService, ApiService) {
 
   var placeholders = [
     'What needs to be done?',
@@ -166,12 +166,6 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeo
     'What\'s on your agenda?',
   ]
 
-  $rootScope.HOST ='localhost';
-  $rootScope.PORT = '20010';
-
-  $rootScope.hostString = function() {
-    return 'http://' + $scope.HOST + ':' + $scope.PORT
-  }
 
   $scope.isLoggedIn = function() {
     return AuthService.isLoggedIn();
@@ -195,17 +189,25 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeo
         draggable: true // Choose whether you can drag to open on touch screens
     });
 
-    $scope.HOST = $location.host()
     $scope.loadTasks()
   });
 
-  $scope.changePort = function() {
-    $scope.loadTasks()
+  $scope.changePort = function(e) {
+    ApiService.setPort(e.originalEvent.target.value);
+    // $route.reload()
   };
+
+  $scope.getPort = function() {
+    return ApiService.getPort()
+  }
+
+  $scope.getHost = function() {
+    return ApiService.getHost()
+  }
 
   $scope.loadTasks = function() {
     $scope.loading = true;
-    $http.get($rootScope.hostString() + '/api/tasks')
+    $http.get(ApiService.hostString() + '/api/tasks')
      .then(
          function(response){
            // success callback
@@ -228,7 +230,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeo
   };
 
   $scope.addTask = function () {
-    $http.post($rootScope.hostString() + '/api/tasks', JSON.stringify($scope.newTask))
+    $http.post(ApiService.hostString() + '/api/tasks', JSON.stringify($scope.newTask))
      .then(
          function(response){
            // success callback
@@ -245,7 +247,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeo
   }
 
   $scope.updateTask = function(task) {
-    $http.put($rootScope.hostString() + '/api/tasks/' + task.id, JSON.stringify(task))
+    $http.put(ApiService.hostString() + '/api/tasks/' + task.id, JSON.stringify(task))
      .then(
          function(response){
            // success callback
@@ -260,7 +262,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeo
   }
 
   $scope.removeTask = function(task) {
-    $http.delete($rootScope.hostString() + '/api/tasks/' + task.id)
+    $http.delete(ApiService.hostString() + '/api/tasks/' + task.id)
      .then(
          function(response){
            // success callback
@@ -275,7 +277,7 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeo
   }
 });
 
-app.controller('taskCtrl', function($scope, $rootScope, $http, $window, $filter) {
+app.controller('taskCtrl', function($scope, $rootScope, $http, $window, $filter, ApiService) {
   $scope.toggleTask = function() {
     if ($scope.task.status == 'normal') {
       $scope.task.status = 'completed';
@@ -315,7 +317,7 @@ app.controller('taskCtrl', function($scope, $rootScope, $http, $window, $filter)
   }
 
   $scope.removeFile = function(file) {
-    $http.delete($rootScope.hostString() + '/api/tasks/' + $scope.task.id + '/files/' + file)
+    $http.delete(ApiService.hostString() + '/api/tasks/' + $scope.task.id + '/files/' + file)
      .then(
          function(response){
            // success callback
@@ -334,7 +336,7 @@ app.controller('taskCtrl', function($scope, $rootScope, $http, $window, $filter)
     }
 
     $scope.downloadFile = function(file) {
-      $window.open($rootScope.hostString() + '/api/tasks/' + $scope.task.id + '/files/' + file);
+      $window.open(ApiService.hostString() + '/api/tasks/' + $scope.task.id + '/files/' + file);
     }
 });
 

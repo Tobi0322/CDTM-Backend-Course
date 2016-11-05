@@ -1,6 +1,4 @@
-angular.module('taskApp').factory('AuthService',
-  ['$rootScope', '$q', '$timeout', '$http',
-  function ($rootScope, $q, $timeout, $http) {
+app.factory('AuthService', function ($q, $timeout, $http, ApiService) {
 
     // create user variable
     var user = null;
@@ -20,7 +18,7 @@ angular.module('taskApp').factory('AuthService',
     function login(email, password) {
       var deferred = $q.defer();
 
-      $http.post($rootScope.hostString() + '/api/login', {email: email, password: password})
+      $http.post(ApiService.hostString() + '/api/login', {email: email, password: password})
         .success(function (data, status) {
           if(status === 200 && data.result){
             user = data.user;
@@ -39,7 +37,7 @@ angular.module('taskApp').factory('AuthService',
     function logout() {
       var deferred = $q.defer();
 
-      $http.get($rootScope.hostString() + '/api/logout')
+      $http.get(ApiService.hostString() + '/api/logout')
         .success(function (data) {
           user = null;
           deferred.resolve();
@@ -54,7 +52,7 @@ angular.module('taskApp').factory('AuthService',
     function register(email, password) {
       var deferred = $q.defer();
 
-      $http.post($rootScope.hostString() + '/api/register', {email: email, password: password})
+      $http.post(ApiService.hostString() + '/api/register', {email: email, password: password})
         .success(function (data, status) {
           if(status === 200 && data.result){
             deferred.resolve();
@@ -68,7 +66,7 @@ angular.module('taskApp').factory('AuthService',
     }
 
     function getUserStatus() {
-      return $http.get($rootScope.hostString() + '/api/status')
+      return $http.get(ApiService.hostString() + '/api/status')
       .success(function (data) {
         if(data.result){
           user = data.user;
@@ -91,4 +89,4 @@ angular.module('taskApp').factory('AuthService',
       getUserStatus: getUserStatus
     });
 
-}]);
+});

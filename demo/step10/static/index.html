@@ -61,9 +61,9 @@
 
   <div class="row config-bar">
     <div class="col s6 left-align">
-      <span>Host: {{HOST}}</span> |
-      <span ng-submit="changePort()">Port:
-        <input id="port" class="subtle" type="text" ng-model="PORT" ng-blur="changePort()"/>
+      <span>Host: {{getHost()}}</span> |
+      <span ng-submit="changePort($event)">Port:
+        <input id="port" class="subtle" type="text" value="{{getPort()}}" ng-blur="changePort($event)"/>
       </span>
     </div>
     <div class="col s6 right-align">
@@ -89,6 +89,7 @@
   <!--Import Angular app-->
   <script type="text/javascript" src="app/app.js"></script>
   <script type="text/javascript" src="app/services/authService.js" ></script>
+  <script type="text/javascript" src="app/services/apiService.js" ></script>
   <script type="text/javascript" src="app/components/dropZone/dropZone.js" ></script>
   <script type="text/javascript" src="app/components/taskList/taskList.js" ></script>
 

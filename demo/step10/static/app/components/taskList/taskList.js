@@ -9,7 +9,7 @@ app.directive('taskList', function() {
     };
 });
 
-app.controller('taskListCtrl', function($scope, $rootScope) {
+app.controller('taskListCtrl', function($scope) {
   $scope.hideCompletedTasks = true;
 
   $scope.toggleHideCompletedTasks = function() {
