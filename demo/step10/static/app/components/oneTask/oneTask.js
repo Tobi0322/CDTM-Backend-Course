@@ -11,25 +11,22 @@ app.directive('oneTask', function() {
 app.controller('taskCtrl', function($scope, $rootScope, $http, $window, $timeout, $filter, ApiService, TaskService) {
   $scope.toggleTask = function() {
     if ($scope.task.status == 'normal') {
-      var element = document.getElementById($scope.task.id);
-      element.classList.add('completed');
-      element.classList.add('fadeOutUp');
-      element.classList.add('animated');
-      $timeout(function() {
-        $scope.task.status = 'completed';
-        element.classList.remove('fadeOutUp');
-        element.classList.remove('animated');
-        TaskService.updateTask($scope.task)
-      }, 500);
-      // try {
-      //   var element = document.getElementById($scope.task.id);
-      //   element.classList.add('task-disappear');
-      //   $timeout(function() {
-      //     $scope.task.status = 'completed';
-      //   }, 500);
-      // } catch (e) {
-      //   $scope.task.status = 'completed';
-      // }
+        try {
+          var element = document.getElementById($scope.task.id);
+          element.classList.add('completed');
+          element.classList.add('fadeOutUp');
+          element.classList.add('animated');
+
+          $timeout(function() {
+            // css animation is 0.5 seconds
+            $scope.task.status = 'completed';
+            element.classList.remove('fadeOutUp');
+            element.classList.remove('animated');
+          }, 500);
+        } catch (e) {
+          $scope.task.status = 'completed';
+          TaskService.updateTask($scope.task)
+        }
     } else {
       $scope.task.status = 'normal';
       TaskService.updateTask($scope.task)
@@ -38,21 +35,27 @@ app.controller('taskCtrl', function($scope, $rootScope, $http, $window, $timeout
   }
 
   $scope.deleteTask = function() {
-    $scope.$parent.removeTask($scope.task);
+    TaskService.removeTask($scope.task)
+      .catch(function () {
+        shake(document.getElementById($scope.task.id));
+      });
   }
 
   $scope.deleteTaskModally = function() {
     $('#modal' + $scope.task.id).closeModal();
-    $scope.$parent.removeTask($scope.task);
+    $scope.deleteTask($scope.task);
   }
 
   $scope.updateTask = function() {
     $('#modal' + $scope.task.id).closeModal();
-    $scope.$parent.updateTask($scope.task);
+    TaskService.updateTask($scope.task)
+      .catch(function () {
+        shake(document.getElementById(task.id));
+      });
   }
 
   $scope.showDetails = function() {
-    clearSelection()
+     clearSelection()
      $('#modal' + $scope.task.id).openModal();
      $('#dueDate' + $scope.task.id).pickadate({
        selectMonths: true, // Creates a dropdown to control month
@@ -66,26 +69,18 @@ app.controller('taskCtrl', function($scope, $rootScope, $http, $window, $timeout
      });
   }
 
+  $scope.uploadFiles = function(files) {
+    TaskService.uploadFiles($scope.task, files)
+      .catch(function () {
+        shake(document.getElementById('modal' + $scope.task.id));
+      });
+  }
+
   $scope.removeFile = function(file) {
-    $http.delete(ApiService.hostString() + '/api/tasks/' + $scope.task.id + '/files/' + file)
-     .then(
-         function(response){
-           // success callback
-           if (response.data.result == true) {
-             var index = $scope.task.files.indexOf(file);
-             if (index > -1) {
-                $scope.task.files.splice(index, 1);
-            }
-           }
-         },
-         function(response){
-           // failure callback
-           console.log(response);
-         }
-      );
-    }
+    TaskService.removeFile($scope.task, file);
+  }
 
     $scope.downloadFile = function(file) {
-      $window.open(ApiService.hostString() + '/api/tasks/' + $scope.task.id + '/files/' + file);
+      $window.open(TaskService.fileLocation($scope.task, file));
     }
 });

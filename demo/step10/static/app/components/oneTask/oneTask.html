@@ -12,7 +12,7 @@
 </div>
 
 <form id="modal{{task.id}}"  ng-submit="updateTask()" class="modal modal-fixed-footer">
-  <drop-zone id="multifile-drop" task="task" class="modal-content">
+  <drop-zone id="multifile-drop" task="task" upload-files="uploadFiles(files)" class="modal-content">
     <div id="drop-indicator" class="overlay">
       <p>Place files here</p>
       </div>
