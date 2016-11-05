@@ -4,9 +4,10 @@
 from flask import Flask, jsonify, redirect, request, abort, g, send_from_directory, send_file, session
 from werkzeug import secure_filename, security
 from functools import wraps
-import sys, os, sqlite3, shutil
+import sys, os, sqlite3, shutil, re
 from task import Task
 from user import User
+
 
 # special characters (e.g. üäö ...) work now
 reload(sys)
@@ -34,10 +35,13 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
+def isEmail(email):
+    ''' returns whether a given string is a valid email address'''
+    return re.match("^[a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+.[a-zA-Z]{2,6}$", email) != None
+
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        print "Helloe"
         if not session.get('logged_in'):
             abort(401)
         return f(*args, **kwargs)
@@ -349,7 +353,7 @@ def register():
     email = data.get('email', '').lower()
     password = data.get('password')
     # TODO: properly check for email
-    if email == None or email == '' or password == None or len(password) < 6:
+    if email == None or (not isEmail(email)) or password == None or len(password) < 6:
         return jsonify({'result': False, 'text': 'Invalid username and/or password'})
     if db_create_user(email, security.generate_password_hash(password)):
         return jsonify({'result': True, 'text': 'User successfully created'})
