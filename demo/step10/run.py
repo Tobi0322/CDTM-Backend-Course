@@ -15,6 +15,4 @@ if __name__ == '__main__':
     app.config['UPLOAD_FOLDER'] =  os.path.join(app.root_path, '..', config.UPLOAD_FOLDER)
     app.config['ALLOWED_EXTENSIONS'] = set(config.ALLOWED_EXTENSIONS)
 
-    print app.config['VERSION']
-
     app.run(host=config.HOST, port=int(config.PORT), debug=True)

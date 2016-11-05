@@ -1,6 +1,8 @@
 from flask import g
 import sqlite3
 
+from step10 import app
+
 # make sure to use this  only within app.app_context()
 def get_db():
     db = getattr(g, '_database', None)

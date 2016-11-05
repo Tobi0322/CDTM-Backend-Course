@@ -11,4 +11,4 @@ UPLOAD_FOLDER = 'uploads/'
 # These are the extension that we are accepting to be uploaded
 ALLOWED_EXTENSIONS = ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']
 
-DB_SEED = False
+DB_SEED = True
