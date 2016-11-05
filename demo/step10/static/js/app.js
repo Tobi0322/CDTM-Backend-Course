@@ -183,7 +183,6 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeo
   $scope.loading = false;
   $scope.placeholder = placeholders[Math.floor(Math.random(1337)*placeholders.length)];
   $scope.newTask = {}
-  $scope.hideCompletedTasks = true;
 
   $scope.$watch('$viewContentLoaded', function(){
     $timeout(initMaterializeComponents,0);
@@ -203,10 +202,6 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeo
   $scope.changePort = function() {
     $scope.loadTasks()
   };
-
-  $scope.toggleHideCompletedTasks = function() {
-    $scope.hideCompletedTasks = !$scope.hideCompletedTasks;
-  }
 
   $scope.loadTasks = function() {
     $scope.loading = true;
