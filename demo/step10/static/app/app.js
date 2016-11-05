@@ -192,18 +192,6 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeo
     $scope.loadTasks()
   });
 
-  $scope.changePort = function(e) {
-    ApiService.setPort(e.originalEvent.target.value);
-    // $route.reload()
-  };
-
-  $scope.getPort = function() {
-    return ApiService.getPort()
-  }
-
-  $scope.getHost = function() {
-    return ApiService.getHost()
-  }
 
   $scope.loadTasks = function() {
     $scope.loading = true;
