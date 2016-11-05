@@ -68,7 +68,6 @@ angular.module('taskApp').factory('AuthService',
     }
 
     function getUserStatus() {
-      console.log("user status")
       return $http.get($rootScope.hostString() + '/api/status')
       .success(function (data) {
         if(data.result){

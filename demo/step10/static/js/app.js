@@ -110,7 +110,7 @@ app.controller('loginCtrl', function($scope, $location, AuthService) {
         $scope.error = true;
         $scope.errorMessage = 'Invalid username and/or password';
         $scope.disabled = false;
-        $scope.loginForm = {};
+        $scope.loginForm.password = null;
       });
   };
 })
@@ -120,7 +120,6 @@ app.controller('registerController', function ($scope, $location, AuthService) {
     if (AuthService.isLoggedIn()) {
       $location.path('/');
     }
-
 
     $scope.register = function () {
 
@@ -133,14 +132,23 @@ app.controller('registerController', function ($scope, $location, AuthService) {
                            $scope.registerForm.password)
         // handle success
         .then(function () {
-          $location.path('/login');
-          $scope.disabled = false;
-          $scope.registerForm = {};
+          AuthService.login($scope.registerForm.email,
+                             $scope.registerForm.password)
+            .then(function() {
+              $location.path('/');
+              $scope.disabled = false;
+              $scope.registerForm = {};
+            })
+            .catch(function() {
+              $location.path('/login');
+              $scope.disabled = false;
+              $scope.registerForm = {};
+            })
         })
         // handle error
         .catch(function () {
           $scope.error = true;
-          $scope.errorMessage = "Something went wrong!";
+          $scope.errorMessage = "Ooops! Something went wrong =(";
           $scope.disabled = false;
           $scope.registerForm = {};
         });
