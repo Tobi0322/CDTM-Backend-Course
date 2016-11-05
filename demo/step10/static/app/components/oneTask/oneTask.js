@@ -8,7 +8,7 @@ app.directive('oneTask', function() {
   };
 });
 
-app.controller('taskCtrl', function($scope, $rootScope, $http, $window, $timeout, $filter, ApiService, TaskService) {
+app.controller('taskCtrl', function($scope, $window, $timeout, $filter, ApiService, TaskService) {
   $scope.toggleTask = function() {
     if ($scope.task.status == 'normal') {
         try {

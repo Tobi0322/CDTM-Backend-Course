@@ -161,26 +161,12 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeo
 
   $scope.TaskService = TaskService;
 
-  var placeholders = [
-    'What needs to be done?',
-    'Anything else to do?',
-    'Remind me about ...',
-    'Don\'t forget about ...',
-    'Remind me about ...',
-    'What\'s on your agenda?',
-  ]
-
-
   $scope.isLoggedIn = function() {
     return AuthService.isLoggedIn();
   }
   $scope.user = function() {
     return AuthService.getUser();
   }
-
-
-  $scope.placeholder = placeholders[Math.floor(Math.random(1337)*placeholders.length)];
-  $scope.newTask = {}
 
   $scope.$watch('$viewContentLoaded', function(){
     $timeout(initMaterializeComponents,0);
@@ -195,52 +181,4 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeo
 
     TaskService.loadTasks();
   });
-
-  //
-  // $scope.addTask = function () {
-  //   $http.post(ApiService.hostString() + '/api/tasks', JSON.stringify($scope.newTask))
-  //    .then(
-  //        function(response){
-  //          // success callback
-  //          $scope.tasks.push(response.data);
-  //          $scope.placeholder = placeholders[Math.floor(Math.random(1337)*placeholders.length)];
-  //          $scope.newTask = {};
-  //        },
-  //        function(response){
-  //          // failure callback
-  //          console.log(response)
-  //          shake(document.getElementById('input-card'));
-  //        }
-  //     );
-  // }
-  //
-  // $scope.updateTask = function(task) {
-  //   $http.put(ApiService.hostString() + '/api/tasks/' + task.id, JSON.stringify(task))
-  //    .then(
-  //        function(response){
-  //          // success callback
-  //          task = response.data;
-  //        },
-  //        function(response){
-  //          // failure callback
-  //          console.log(response)
-  //          shake(document.getElementById(task.id));
-  //        }
-  //     );
-  // }
-  //
-  // $scope.removeTask = function(task) {
-  //   $http.delete(ApiService.hostString() + '/api/tasks/' + task.id)
-  //    .then(
-  //        function(response){
-  //          // success callback
-  //          $scope.tasks.splice($scope.tasks.indexOf(task),1);
-  //        },
-  //        function(response){
-  //          // failure callback
-  //          console.log(response)
-  //          shake(document.getElementById(task.id));
-  //        }
-  //     );
-  // }
 });

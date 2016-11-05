@@ -33,7 +33,7 @@ app.factory('TaskService', function($q, $http, ApiService) {
 
     TaskHandler.addTask = function(task) {
       var deferred = $q.defer();
-      $http.post(ApiService.hostString() + '/api/tasks', JSON.stringify($scope.newTask))
+      $http.post(ApiService.hostString() + '/api/tasks', JSON.stringify(task))
        .then(
            function(response){
              // success callback
@@ -43,8 +43,6 @@ app.factory('TaskService', function($q, $http, ApiService) {
            function(response){
              // failure callback
              deferred.reject();
-             //TODO: View manipulation should probably happen not at this place
-             shake(document.getElementById('input-card'));
            }
         );
       return deferred.promise;
