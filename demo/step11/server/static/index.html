@@ -32,31 +32,10 @@
     </a>
     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
     <ul class="right hide-on-med-and-down">
-        <li hide ng-show="AuthService.isLoggedIn()" class="text-primary" style="font-size: 18px; text-transform: capitalize;">
-          <img src="assets/icons/user.svg" width="45" style="vertical-align:middle"/> {{AuthService.getUser().split('.')[0]}}
-        </li>
-        <li hide ng-show="AuthService.isLoggedIn()"><a href="/logout" class="text-primary white waves-effect waves-light btn">Logout</a></li>
-        <li hide ng-show="!AuthService.isLoggedIn()"><a href="/register" class="primary waves-effect waves-light btn">Register</a></li>
-        <li hide ng-show="!AuthService.isLoggedIn()"><a href="/login" class="text-primary white waves-effect waves-light btn">Login</a></li>
+        <li ><a href="/register" class="primary waves-effect waves-light btn">Register</a></li>
     </ul>
     <ul class="side-nav" id="mobile-demo">
-
-      <li>
-        <div>
-          <a href="/home"><img width="140" src="/assets/CDTM_color.png" alt="CDTM" style="vertical-align:middle" /><span class="text-primary" style="font-size:25px;"> Tasks</span></a>
-        </div>
-      </li>
-      <li><div class="divider"></div></li>
-      <li hide ng-show="AuthService.isLoggedIn()">
-        <div class="center center-align" style="width: 80%; margin: 20px auto;">
-          <img src="assets/icons/user.svg" width="100" alt=""/>
-          <a href="/">{{AuthService.getUser()}}</a>
-        </div>
-      </li>
-
-      <li hide ng-show="!AuthService.isLoggedIn()"><a href="/register" class="primary waves-effect waves-light btn">Register</a></li>
-      <li hide ng-show="!AuthService.isLoggedIn()"><a href="/login" class="text-primary white waves-effect waves-light btn">Login</a></li>
-      <li hide ng-show="AuthService.isLoggedIn()"><a href="/logout" class="text-primary white waves-effect waves-light btn">Logout</a></li>
+      <li><a href="/register" class="primary waves-effect waves-light btn">Register</a></li>
     </ul>
   </div>
   </nav>
@@ -89,9 +68,7 @@
   <script type="text/javascript" src="app/services/apiService.js" ></script>
   <script type="text/javascript" src="app/services/taskService.js" ></script>
 
-  <script type="text/javascript" src="app/controllers/homeCtrl.js" ></script>
   <script type="text/javascript" src="app/controllers/mainCtrl.js" ></script>
-  <script type="text/javascript" src="app/controllers/loginCtrl.js" ></script>
   <script type="text/javascript" src="app/controllers/registerCtrl.js" ></script>
 
   <script type="text/javascript" src="app/components/devBar/devBar.js" ></script>

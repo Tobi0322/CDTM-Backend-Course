@@ -1,11 +1,6 @@
 app.controller('registerCtrl', function ($scope, $location, AuthService) {
 
-    if (AuthService.isLoggedIn()) {
-      $location.path('/');
-    }
-
     $scope.register = function () {
-
       // initial values
       $scope.error = false;
       $scope.disabled = true;
@@ -15,18 +10,8 @@ app.controller('registerCtrl', function ($scope, $location, AuthService) {
                            $scope.registerForm.password)
         // handle success
         .then(function () {
-          AuthService.login($scope.registerForm.email,
-                             $scope.registerForm.password)
-            .then(function() {
-              $location.path('/');
-              $scope.disabled = false;
-              $scope.registerForm = {};
-            })
-            .catch(function() {
-              $location.path('/login');
-              $scope.disabled = false;
-              $scope.registerForm = {};
-            })
+          alert('Successfully registered user ' + $scope.registerForm.email);
+          $location.path('/');
         })
         // handle error
         .catch(function () {
