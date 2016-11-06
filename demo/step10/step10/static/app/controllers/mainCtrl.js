@@ -6,12 +6,12 @@ app.controller('mainCtrl', function($interval, $timeout, AuthService, TaskServic
     }
   }, 0);
 
-
   // TODO: find a better solution to busy waiting
-  $interval(function() {
-    console.log("Try to load tasks");
+  var loadTasks = $interval(function() {
     if (AuthService.isLoggedIn()) {
-      TaskService.loadTasks(false)
+      TaskService.loadTasks(false);
+    } else {
+      $interval.cancel(loadTasks);
     }
   }, 10000);
 

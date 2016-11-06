@@ -37,7 +37,16 @@ app.config(function($locationProvider, $routeProvider) {
 
 app.run(function ($rootScope, $timeout, $location, $route, ApiService, AuthService) {
 
+  var initial = true;
+
   ApiService.loadApiVersion()
+  AuthService.getUserStatus()
+    .then(function() {
+      initial = false;
+    })
+    .catch(function() {
+      initial = false;
+    });
 
   $timeout(function(){
     // give it some time (looks better visually)
@@ -45,17 +54,21 @@ app.run(function ($rootScope, $timeout, $location, $route, ApiService, AuthServi
   }, 250);
 
 
-  $rootScope.$on('$routeChangeStart', function (event, next, current) {
-    AuthService.getUserStatus()
-    .then(function() {
+  $rootScope.$on('$routeChangeStart', function(event, next, current) {
+    // Keep waiting until the userStatus was loaded
+    // TODO: Implement a better solution than busy waiting
+    if(initial) {
+      event.preventDefault()
+      $timeout(function(){
+        $route.reload()
+      }, 25);
+    } else {
       if (next.access && next.access.restricted && AuthService.isLoggedIn() === false) {
-        $location.path('/home');
+          $location.path('/home');
       }
-    })
-    .catch(function(){
-        $location.path('/home');
-    });
+    }
   });
+
 });
 
 app.controller('rootCtrl', function($scope, $timeout, AuthService, TaskService) {
