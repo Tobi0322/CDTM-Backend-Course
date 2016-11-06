@@ -61,6 +61,7 @@ app.controller('taskCtrl', function($scope, $window, $timeout, $filter, ApiServi
        selectMonths: true, // Creates a dropdown to control month
        selectYears: 15, // Creates a dropdown of 15 years to control year
        format: 'mmmm dd, yyyy',
+       firstDay: 1,
        onSet: function(context) {
          var date = new Date($('#dueDate' + $scope.task.id)[0].value);
          $scope.task.due = $filter('date')(date, 'yyyy-MM-dd');
