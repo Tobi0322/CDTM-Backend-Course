@@ -79,11 +79,11 @@ After today your server should be capable of the following things:
 >   - [ ] Objects: Object Orientation
 >   - [ ] Routing: HTTP, REST and JSON
 >   - [ ] Persistent Storage: Databases and SQL
->   - [ ] (Large) File Handling
+>   - [ ] File Handling
 > - [ ] Introduction Tools / Frameworks
 >   - [ ] Postman
 >   - [ ] SQLite
-> - [ ] Tutorial & Demo Code  
+> - [X] Tutorial & Demo Code  
 >   - [X] 1. Todo-Item Object (State, Name) + Routing: get all Todo-Items
 >   - [X] 2. Routing: create new Todo-Item
 >   - [X] 3. Routing: delete Todo-Item
@@ -104,10 +104,9 @@ Up to now everything could have been done on the client directly. One advantage 
 >   - [ ] User Authentication Basics
 >   - [ ] Shared Objects Implementation Strategy
 > - [ ] Tutorial & Demo Code  
->   - [ ] 0. Refactor (?) (Would be nice at this point as, everyone has to review their code)
->   - [ ] 1. User: Register User
->   - [ ] 2. User: Login / Logout
->   - [ ] 3. User: Delete Account
+>   - [X] 1. Refactor (?) (Would be nice at this point as, everyone has to review their code)
+>   - [X] 2. User: Register User
+>   - [X] 3. User: Login / Logout
 >   - [ ] 4. Private Todo-Items: Secure API
 >   - [ ] 5. Organise Todo-Items Into Lists
 >       - Default Lists: Inbox, Today, This Week
