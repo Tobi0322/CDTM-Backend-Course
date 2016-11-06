@@ -1,5 +1,3 @@
-from werkzeug import security
-
 from utils import *
 
 from server import app
@@ -37,10 +35,3 @@ def db_create_user(email, password):
         cur.execute(query, [email, password])
         db.commit()
         return True
-
-def db_check_password(email, password):
-    ''' Checks the password for the email and returns the respective user if they match'''
-    user = db_get_user(email)
-    if user != None and security.check_password_hash(user.password, password):
-        return user
-    return None

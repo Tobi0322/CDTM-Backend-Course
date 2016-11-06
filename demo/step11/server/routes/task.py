@@ -5,13 +5,12 @@ import os, shutil
 
 from server import app
 from server.database import *
-from server.utils import login_required, allowed_file
+from server.utils import allowed_file
 
 response = {}
 
 # INDEX ROUTE
 @app.route('/api/tasks', methods=['GET'])
-@login_required
 def get_tasks():
     response['version'] = app.config['VERSION']
     response['data'] = [t.__dict__ for t in db_get_tasks()]
@@ -19,7 +18,6 @@ def get_tasks():
 
 # CREATE ROUTE
 @app.route('/api/tasks', methods=['POST'])
-@login_required
 def create_task():
     data = request.get_json(force=True)
     title = data.get('title')
@@ -34,7 +32,6 @@ def create_task():
 
 # UPDATE ROUTE
 @app.route('/api/tasks/<string:task_id>', methods=['PUT'])
-@login_required
 def update_task(task_id):
     print "updating task!"
     data = request.get_json(force=True)
@@ -55,7 +52,6 @@ def update_task(task_id):
 
 # DESTROY ROUTE
 @app.route('/api/tasks/<string:task_id>', methods=['DELETE'])
-@login_required
 def remove_task(task_id):
     # don't forget to delete all Uploads
     directory = os.path.join(app.config['UPLOAD_FOLDER'], task_id)
@@ -66,7 +62,6 @@ def remove_task(task_id):
 
 # UPLOAD FILES
 @app.route('/api/tasks/<string:task_id>/files', methods=['POST'])
-@login_required
 def upload_file(task_id):
     # each file is save in a folder named after the corresponding tasks id
     directory = os.path.join(app.config['UPLOAD_FOLDER'], task_id)
@@ -93,7 +88,6 @@ def upload_file(task_id):
 
 # GET FILE
 @app.route('/api/tasks/<string:task_id>/files/<string:filename>', methods=['GET'])
-@login_required
 def get_file(task_id, filename):
     directory = os.path.join(app.config['UPLOAD_FOLDER'], task_id)
     print directory, filename
@@ -104,7 +98,6 @@ def get_file(task_id, filename):
 
 # REMOVE FILE
 @app.route('/api/tasks/<string:task_id>/files/<string:filename>', methods=['DELETE'])
-@login_required
 def remove_file(task_id, filename):
     db_delete_file(task_id, filename)
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], task_id, filename)
