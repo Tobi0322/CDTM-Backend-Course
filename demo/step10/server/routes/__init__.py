@@ -5,7 +5,6 @@ from server import app
 # import all the routes
 from static import *
 from task import *
-from auth import *
 
 # Return current version
 @app.route('/api/version', methods=['GET'])
