@@ -15,12 +15,9 @@ function shake(element) {
 }
 
 function clearSelection() {
-    console.log("clearSelection")
     if(document.selection && document.selection.empty) {
-        console.log("clearSelection => 1")
         document.selection.empty();
     } else if(window.getSelection) {
-      console.log("clearSelection => 2")
         var sel = window.getSelection();
         sel.removeAllRanges();
     }

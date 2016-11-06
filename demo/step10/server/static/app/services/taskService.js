@@ -1,4 +1,4 @@
-app.factory('TaskService', function($q, $http, ApiService, AuthService) {
+app.factory('TaskService', function($q, $http, ApiService) {
 
     var TaskHandler = {};
 
