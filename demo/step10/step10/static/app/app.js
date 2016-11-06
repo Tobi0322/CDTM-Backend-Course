@@ -1,45 +1,5 @@
 var app = angular.module('taskApp', ['ngRoute']);
 
-function shake(element) {
-  try {
-    element.classList.add('shake');
-    element.classList.add('long');
-    element.classList.add('animated');
-    setTimeout(function () {
-      element.classList.remove('shake');
-      element.classList.remove('long');
-      element.classList.remove('animated');
-    }, 1000);
-  }
-  catch(err) {
-    // ignore
-  }
-}
-
-function clearSelection() {
-    if(document.selection && document.selection.empty) {
-        document.selection.empty();
-    } else if(window.getSelection) {
-        var sel = window.getSelection();
-        sel.removeAllRanges();
-    }
-}
-
-function initMaterializeComponents() {
-  try {
-    // the 'href' attribute of .modal-trigger must specify the modal ID that wants to be triggered
-    $('.modal-trigger').leanModal();
-
-    $('.datepicker').pickadate({
-      selectMonths: true, // Creates a dropdown to control month
-      selectYears: 15 // Creates a dropdown of 15 years to control year
-    });
-
-    $('.parallax').parallax();
-  } catch(err) {
-    // ignore
-  }
-}
 
 app.config(function($locationProvider, $routeProvider) {
     // use the HTML5 History API
@@ -74,6 +34,8 @@ app.config(function($locationProvider, $routeProvider) {
 app.run(function ($rootScope, $location, $route, ApiService, AuthService) {
 
   ApiService.loadApiVersion()
+
+  document.querySelector('.loading').remove();
 
   $rootScope.$on('$routeChangeStart', function (event, next, current) {
     if (next.$$route.originalPath === '/logout') {

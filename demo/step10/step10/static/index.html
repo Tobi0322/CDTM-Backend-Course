@@ -17,7 +17,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body ng-app="taskApp">
-<div  ng-controller="rootCtrl" class="ng-cloak">
+<div class="loading">
+  <div>
+      <img src="assets/icons/loading.svg" alt="" />
+      <h6 class="light">Loading ...</h6>
+  </div>
+</div>
+<div  ng-controller="rootCtrl" ng-cloak>
   <!-- Navbar -->
   <nav>
   <div class="nav-wrapper grey lighten-5 black-text">
@@ -77,6 +83,8 @@
 
   <!--Import Angular app-->
   <script type="text/javascript" src="app/app.js"></script>
+  <script type="text/javascript" src="app/utils.js"></script>
+
   <script type="text/javascript" src="app/services/authService.js" ></script>
   <script type="text/javascript" src="app/services/apiService.js" ></script>
   <script type="text/javascript" src="app/services/taskService.js" ></script>
