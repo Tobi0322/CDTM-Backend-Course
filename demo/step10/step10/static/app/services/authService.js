@@ -1,4 +1,4 @@
-app.factory('AuthService', function ($q, $http, ApiService) {
+app.factory('AuthService', function ($q, $http, $location, ApiService) {
 
     // create user variable
     var user = null;
@@ -34,15 +34,21 @@ app.factory('AuthService', function ($q, $http, ApiService) {
       return deferred.promise;
     }
 
-    function logout() {
+    function logout(redirect) {
       var deferred = $q.defer();
 
       user = null;
       $http.get(ApiService.hostString() + '/api/logout')
         .success(function (data) {
+          if (redirect) {
+            $location.path('/');
+          }
           deferred.resolve();
         })
         .error(function (data) {
+          if (redirect) {
+            $location.path('/');
+          }
           deferred.reject();
         });
       return deferred.promise;

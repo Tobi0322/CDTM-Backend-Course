@@ -17,7 +17,11 @@ app.config(function($locationProvider, $routeProvider) {
       access: {restricted: false}
     })
     .when('/logout', {
-      redirectTo: '/'
+        resolve: {
+            logout: ['AuthService', function (AuthService) {
+                AuthService.logout(true)
+            }]
+        }
     })
     .when('/login', {
       templateUrl: 'app/views/login.html',
@@ -42,10 +46,6 @@ app.run(function ($rootScope, $timeout, $location, $route, ApiService, AuthServi
 
 
   $rootScope.$on('$routeChangeStart', function (event, next, current) {
-    if (next.$$route.originalPath === '/logout') {
-        AuthService.logout()
-    }
-
     AuthService.getUserStatus()
     .then(function() {
       if (next.access && next.access.restricted && AuthService.isLoggedIn() === false) {
