@@ -1,4 +1,4 @@
-app.controller('registerController', function ($scope, $location, AuthService) {
+app.controller('registerCtrl', function ($scope, $location, AuthService) {
 
     if (AuthService.isLoggedIn()) {
       $location.path('/');

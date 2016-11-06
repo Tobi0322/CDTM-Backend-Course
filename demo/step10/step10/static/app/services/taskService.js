@@ -1,4 +1,4 @@
-app.factory('TaskService', function($q, $http, ApiService) {
+app.factory('TaskService', function($q, $http, ApiService, AuthService) {
 
     var TaskHandler = {};
 
@@ -12,7 +12,6 @@ app.factory('TaskService', function($q, $http, ApiService) {
        .then(
            function(response){
              // success callback
-             ApiService.setApiVersion(response.data.version);
              TaskHandler.tasks = response.data.data;
              TaskHandler.tasks.forEach(function(task) {
                task.overdue = task.due != null && task.due != '' && new Date(task.due) < new Date();
@@ -23,7 +22,6 @@ app.factory('TaskService', function($q, $http, ApiService) {
            function(response){
              // failure callback
              TaskHandler.tasks = [];
-             ApiService.setApiVersion('N/A');
              TaskHandler.loading = false;
              deferred.reject();
            }

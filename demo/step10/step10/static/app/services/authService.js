@@ -37,13 +37,12 @@ app.factory('AuthService', function ($q, $http, ApiService) {
     function logout() {
       var deferred = $q.defer();
 
+      user = null;
       $http.get(ApiService.hostString() + '/api/logout')
         .success(function (data) {
-          user = null;
           deferred.resolve();
         })
         .error(function (data) {
-          user = null;
           deferred.reject();
         });
       return deferred.promise;

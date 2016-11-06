@@ -48,6 +48,7 @@ app.config(function($locationProvider, $routeProvider) {
     $routeProvider
     .when('/', {
       templateUrl: 'app/views/main.html',
+      controller: 'mainCtrl',
       access: {restricted: true}
     })
     .when('/home', {
@@ -65,26 +66,33 @@ app.config(function($locationProvider, $routeProvider) {
     })
     .when('/register', {
       templateUrl: 'app/views/register.html',
-      controller: 'registerController',
+      controller: 'registerCtrl',
       access: {restricted: false}
     })
 });
 
-app.run(function ($rootScope, $location, $route, AuthService) {
+app.run(function ($rootScope, $location, $route, ApiService, AuthService) {
+
+  ApiService.loadApiVersion()
+
   $rootScope.$on('$routeChangeStart', function (event, next, current) {
     if (next.$$route.originalPath === '/logout') {
         AuthService.logout()
     }
 
-    AuthService.getUserStatus().then(function() {
+    AuthService.getUserStatus()
+    .then(function() {
       if (next.access && next.access.restricted && AuthService.isLoggedIn() === false) {
         $location.path('/home');
       }
+    })
+    .catch(function(){
+        $location.path('/home');
     });
   });
 });
 
-app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeout, AuthService, ApiService, TaskService) {
+app.controller('rootCtrl', function($scope, $timeout, AuthService, TaskService) {
 
   $scope.TaskService = TaskService;
   $scope.AuthService = AuthService
@@ -99,7 +107,5 @@ app.controller('mainCtrl', function($scope, $rootScope, $http, $location, $timeo
         closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
         draggable: true // Choose whether you can drag to open on touch screens
     });
-
-    TaskService.loadTasks();
   });
 });

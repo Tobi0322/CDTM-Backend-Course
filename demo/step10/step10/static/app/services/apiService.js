@@ -4,17 +4,6 @@ app.factory('ApiService', function ($location, $http) {
     var PORT = $location.port();
     var VERSION = 'N/A';
 
-    $http.get(hostString() + '/api/tasks')
-     .then(
-         function(response){
-           // success callback
-           setApiVersion(response.data.version);
-         },
-         function(response){
-           setApiVersion('N/A');
-        }
-      );
-
     function setPort(new_port) {
       if(new_port && new_port != null && new_port != undefined && new_port != '') {
         PORT = new_port;
@@ -37,8 +26,17 @@ app.factory('ApiService', function ($location, $http) {
       return VERSION;
     }
 
-    function setApiVersion(new_version) {
-      VERSION = new_version;
+    function loadApiVersion() {
+      $http.get(hostString() + '/api/version')
+       .then(
+           function(response){
+             // success callback
+             VERSION = response.data.version;
+           },
+           function(response){
+             VERSION = 'N/A';
+          }
+        );
     }
 
     // return available functions for use in controllers
@@ -48,7 +46,7 @@ app.factory('ApiService', function ($location, $http) {
       getPort: getPort,
       getHost: getHost,
       getApiVersion: getApiVersion,
-      setApiVersion: setApiVersion
+      loadApiVersion: loadApiVersion
     });
 
 });
