@@ -2,8 +2,8 @@ import os
 
 from utils import *
 
-from step10 import app
-from step10.models import Task
+from server import app
+from server.models import Task
 
 
 def db_get_tasks():

@@ -2,8 +2,8 @@ from werkzeug import security
 
 from utils import *
 
-from step10 import app
-from step10.models import User
+from server import app
+from server.models import User
 
 
 def db_get_user(email):

@@ -3,9 +3,9 @@ from werkzeug import secure_filename
 
 import os, shutil
 
-from step10 import app
-from step10.database import *
-from step10.utils import login_required, allowed_file
+from server import app
+from server.database import *
+from server.utils import login_required, allowed_file
 
 response = {}
 

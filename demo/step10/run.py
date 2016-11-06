@@ -1,6 +1,6 @@
 import os
 
-from step10 import *
+from server import *
 import config
 
 if __name__ == '__main__':

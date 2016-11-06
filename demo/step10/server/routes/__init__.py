@@ -1,6 +1,6 @@
 from flask import jsonify
 
-from step10 import app
+from server import app
 
 # import all the routes
 from static import *

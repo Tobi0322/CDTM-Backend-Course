@@ -2,7 +2,7 @@ from flask import session, abort
 from functools import wraps
 import re
 
-from step10 import app
+from server import app
 
 def login_required(f):
     @wraps(f)

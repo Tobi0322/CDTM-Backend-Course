@@ -1,5 +1,5 @@
 from flask import send_file
-from step10 import app
+from server import app
 
 # serve static files
 @app.route('/')

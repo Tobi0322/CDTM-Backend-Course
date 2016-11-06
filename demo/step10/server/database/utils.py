@@ -1,7 +1,7 @@
 from flask import g
 import sqlite3
 
-from step10 import app
+from server import app
 
 # make sure to use this  only within app.app_context()
 def get_db():

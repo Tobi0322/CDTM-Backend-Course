@@ -1,9 +1,9 @@
 from flask import request, session, jsonify
 from werkzeug import security
 
-from step10 import app
-from step10.database import *
-from step10.utils import login_required, isEmail
+from server import app
+from server.database import *
+from server.utils import login_required, isEmail
 
 # register User
 @app.route('/api/register', methods=['POST'])
