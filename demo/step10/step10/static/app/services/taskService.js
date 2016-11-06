@@ -5,9 +5,9 @@ app.factory('TaskService', function($q, $http, ApiService, AuthService) {
     TaskHandler.tasks = [];
     TaskHandler.loading = false;
 
-    TaskHandler.loadTasks =function() {
+    TaskHandler.loadTasks =function(shouldShowLoading) {
       var deferred = $q.defer();
-      TaskHandler.loading = true;
+      TaskHandler.loading = shouldShowLoading;
       $http.get(ApiService.hostString() + '/api/tasks')
        .then(
            function(response){
