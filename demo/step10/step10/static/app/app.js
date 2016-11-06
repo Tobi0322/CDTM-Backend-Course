@@ -31,11 +31,15 @@ app.config(function($locationProvider, $routeProvider) {
     })
 });
 
-app.run(function ($rootScope, $location, $route, ApiService, AuthService) {
+app.run(function ($rootScope, $timeout, $location, $route, ApiService, AuthService) {
 
   ApiService.loadApiVersion()
 
-  document.querySelector('.loading').remove();
+  $timeout(function(){
+    // give it some time (looks better visually)
+    document.querySelector('.loading').remove();
+  }, 250);
+
 
   $rootScope.$on('$routeChangeStart', function (event, next, current) {
     if (next.$$route.originalPath === '/logout') {
