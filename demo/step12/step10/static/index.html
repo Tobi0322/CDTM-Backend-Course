@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CDTM Todo App</title>
+    <base href="/">
+
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <!--Import custom stylesheet-->
+    <link type="text/css" rel="stylesheet" href="css/main.css"  media="screen,projection"/>
+
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body ng-app="taskApp">
+<div class="loading">
+  <div>
+      <img src="assets/icons/loading.svg" alt="" />
+      <h6 class="light">Loading ...</h6>
+  </div>
+</div>
+<div  ng-controller="rootCtrl" ng-cloak>
+  <!-- Navbar -->
+  <nav>
+  <div class="nav-wrapper grey lighten-5 black-text">
+    <a href="/" class="brand-logo">
+      <img class="" src="/assets/CDTM_color.png" alt="CDTM"/><span> Tasks</span>
+    </a>
+    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+    <ul class="right hide-on-med-and-down">
+        <li hide ng-show="AuthService.isLoggedIn()" class="text-primary" style="font-size: 18px; text-transform: capitalize;">
+          <img src="assets/icons/user.svg" width="45" style="vertical-align:middle"/> {{AuthService.getUser().split('.')[0]}}
+        </li>
+        <li hide ng-show="AuthService.isLoggedIn()"><a href="/logout" class="text-primary white waves-effect waves-light btn">Logout</a></li>
+        <li hide ng-show="!AuthService.isLoggedIn()"><a href="/register" class="primary waves-effect waves-light btn">Register</a></li>
+        <li hide ng-show="!AuthService.isLoggedIn()"><a href="/login" class="text-primary white waves-effect waves-light btn">Login</a></li>
+    </ul>
+    <ul class="side-nav" id="mobile-demo">
+
+      <li>
+        <div>
+          <a href="/home"><img width="140" src="/assets/CDTM_color.png" alt="CDTM" style="vertical-align:middle" /><span class="text-primary" style="font-size:25px;"> Tasks</span></a>
+        </div>
+      </li>
+      <li><div class="divider"></div></li>
+      <li hide ng-show="AuthService.isLoggedIn()">
+        <div class="center center-align" style="width: 80%; margin: 20px auto;">
+          <img src="assets/icons/user.svg" width="100" alt=""/>
+          <a href="/">{{AuthService.getUser()}}</a>
+        </div>
+      </li>
+
+      <li hide ng-show="!AuthService.isLoggedIn()"><a href="/register" class="primary waves-effect waves-light btn">Register</a></li>
+      <li hide ng-show="!AuthService.isLoggedIn()"><a href="/login" class="text-primary white waves-effect waves-light btn">Login</a></li>
+      <li hide ng-show="AuthService.isLoggedIn()"><a href="/logout" class="text-primary white waves-effect waves-light btn">Logout</a></li>
+    </ul>
+  </div>
+  </nav>
+
+  <div hide ng-show="TaskService.loading" class="progress" style="margin-top:0;">
+    <div class="indeterminate"></div>
+  </div>
+
+  <dev-bar></dev-bar>
+
+  <ng-view></ng-view>
+
+</div>
+</body>
+
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+
+  <!--Import Angular-->
+  <script type="text/javascript" src="js/angular.js"></script>
+  <script type="text/javascript" src="js/angular-route.js"></script>
+  <script type="text/javascript" src="js/angular-aria.js"></script>
+
+  <!--Import Angular app-->
+  <script type="text/javascript" src="app/app.js"></script>
+  <script type="text/javascript" src="app/utils.js"></script>
+
+  <script type="text/javascript" src="app/services/authService.js" ></script>
+  <script type="text/javascript" src="app/services/apiService.js" ></script>
+  <script type="text/javascript" src="app/services/taskService.js" ></script>
+
+  <script type="text/javascript" src="app/controllers/homeCtrl.js" ></script>
+  <script type="text/javascript" src="app/controllers/mainCtrl.js" ></script>
+  <script type="text/javascript" src="app/controllers/loginCtrl.js" ></script>
+  <script type="text/javascript" src="app/controllers/registerCtrl.js" ></script>
+
+  <script type="text/javascript" src="app/components/devBar/devBar.js" ></script>
+  <script type="text/javascript" src="app/components/newTask/newTask.js" ></script>
+  <script type="text/javascript" src="app/components/dropZone/dropZone.js" ></script>
+  <script type="text/javascript" src="app/components/taskList/taskList.js" ></script>
+  <script type="text/javascript" src="app/components/oneTask/oneTask.js" ></script>
+
+
+</html>
