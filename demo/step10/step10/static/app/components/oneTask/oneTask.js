@@ -16,12 +16,12 @@ app.controller('taskCtrl', function($scope, $window, $timeout, $filter, ApiServi
           element.classList.add('completed');
           element.classList.add('fadeOutUp');
           element.classList.add('animated');
-
           $timeout(function() {
             // css animation is 0.5 seconds
             $scope.task.status = 'completed';
             element.classList.remove('fadeOutUp');
             element.classList.remove('animated');
+            TaskService.updateTask($scope.task)
           }, 500);
         } catch (e) {
           $scope.task.status = 'completed';
