@@ -184,6 +184,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 >   ]
 > }
 > ```
+
 ### Get a specific task
 > - *Login Required*
 > - The user needs to have rights to access the specified list
@@ -207,6 +208,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 >   "files": []
 > }
 > ```
+
 ### Create a task
 > - *Login Required*
 > - The user needs to have rights to access the specified list
@@ -240,6 +242,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 >   "files": []
 > }
 > ```
+
 ### Update a task by overwriting properties
 > - *Login Required*
 > - The user needs to have rights to access the specified list
@@ -288,6 +291,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 >   "files": []
 > }
 > ```
+
 ### Delete a task permanently
 > - *Login Required*
 > - The user needs to have rights to access the specified list
@@ -303,6 +307,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 >   "result": true
 > }
 > ```
+
 ### Get a specific file
 > - *Login Required*
 > - The user needs to have rights to access the specified list
@@ -311,9 +316,11 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > ```
 > #### Response
 > - Returns the actual file
+
 ### Upload files
 > - *Login Required*
 > - The user needs to have rights to access the specified list
+> - Upload must happen via form, where ```files[]```contains all the files.
 > ```
 > POST /api/lists/:id/tasks/:id/files
 > ```
@@ -334,6 +341,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 >   "files": ["the_uploaded_filename.png", "the_2nd_uploaded_filename.png"]
 > }
 > ```
+
 ### Delete a file permanently
 > - *Login Required*
 > - The user needs to have rights to access the specified list
