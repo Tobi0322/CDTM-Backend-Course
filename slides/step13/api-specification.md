@@ -179,7 +179,8 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 >     "description": "I really need to do 2 more electives...",
 >     "due": "1970-01-01",
 >     "revision": 1,
->     "starred": true
+>     "starred": true,
+>     "files": []
 >   ]
 > }
 > ```
@@ -202,7 +203,8 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 >   "description": "I really need to do 2 more electives...",
 >   "due": "1970-01-01",
 >   "revision": 1,
->   "starred": true
+>   "starred": true,
+>   "files": []
 > }
 > ```
 ### Create a task
@@ -234,7 +236,8 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 >   "description": "",
 >   "due": null,
 >   "revision": 1,
->   "starred": true
+>   "starred": true,
+>   "files": []
 > }
 > ```
 ### Update a task by overwriting properties
@@ -253,6 +256,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > | due           | String           | true     |
 > | revision      | Int              | true     |
 > | starred       | Boolean          | true     |
+> | files         | Boolean          | optional |
 > #### Request body example
 > ```
 > {
@@ -263,7 +267,8 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 >   "description": "",
 >   "due": null,
 >   "revision": 23,
->   "starred": true
+>   "starred": true,
+>   "files": []
 > }
 > ```
 > #### Response
@@ -279,7 +284,8 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 >   "description": "",
 >   "due": null,
 >   "revision": 24,
->   "starred": true
+>   "starred": true,
+>   "files": []
 > }
 > ```
 ### Delete a task permanently
@@ -290,7 +296,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > ```
 > #### Response
 > ```
-> Status: 204
+> Status: 200
 > 
 > json
 > {
@@ -298,5 +304,48 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > }
 > ```
 ### Get a specific file
+> - *Login Required*
+> - The user needs to have rights to access the specified list
+> ```
+> GET /api/lists/:id/tasks/:id/files/String:filename
+> ```
+> #### Response
+> - Returns the actual file
 ### Upload files
+> - *Login Required*
+> - The user needs to have rights to access the specified list
+> ```
+> POST /api/lists/:id/tasks/:id/files
+> ```
+> #### Response
+> ```
+> Status: 201
+> 
+> json
+> {
+>   "id": 41234567,
+>   "list": 1234545,
+>   "title": "Update all the tasks!!!",
+>   "status": "normal",
+>   "description": "",
+>   "due": null,
+>   "revision": 24,
+>   "starred": true,
+>   "files": ["the_uploaded_filename.png", "the_2nd_uploaded_filename.png"]
+> }
+> ```
 ### Delete a file permanently
+> - *Login Required*
+> - The user needs to have rights to access the specified list
+> ```
+> DELETE /api/lists/:id/tasks/:id/files/String:filename
+> ```
+> #### Response
+> ```
+> Status: 200
+> 
+> json
+> {
+>   "result": true
+> }
+> ```
