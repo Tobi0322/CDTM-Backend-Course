@@ -283,6 +283,20 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > }
 > ```
 ### Delete a task permanently
+> - *Login Required*
+> - The user needs to have rights to access the specified list
+> ```
+> DELETE /api/lists/:id/tasks/:id
+> ```
+> #### Response
+> ```
+> Status: 204
+> 
+> json
+> {
+>   "result": true
+> }
+> ```
 ### Get a specific file
 ### Upload files
 ### Delete a file permanently
