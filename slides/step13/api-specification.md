@@ -1,6 +1,6 @@
 # API Specification
 
-All requests that POST, PATCH, or PUT JSON must set a 'Content-Type' header with a value of 'application/json'. 
+All requests that POST, PATCH, or PUT JSON must set a `Content-Type` header with a value of `application/json`. 
 
 ## Endpoints
 1. [Version](#1-version)
@@ -19,8 +19,8 @@ All requests that POST, PATCH, or PUT JSON must set a 'Content-Type' header with
   - [update a list by overwriting properties](#update-a-list-by-overwriting-properties)
   - [delete a list permanently](#delete-a-list-permanently)
 5. [Task](#5-task)
-  - [get tasks for a list](#get tasks for a list)
-  - [get a specific task](#get a specific task
+  - [get tasks for a list](#get-tasks-for-a-list)
+  - [get a specific task](#get-a-specific-task)
   - [create a task](#create-a-task)
   - [update a task by overwriting properties](#update-a-task-by-overwriting-properties)
   - [delete a task permanently](#delete-a-task-permanently)
@@ -63,11 +63,12 @@ All requests that POST, PATCH, or PUT JSON must set a 'Content-Type' header with
 > ```
 > POST /api/register
 > ```
-> #### Params
-> | Name          | value            | required |
+> #### Data
+> | Name          | type             | required |
 > | ------------- |------------------| -------- |
-> | content-type  | application/json | true     |
-> #### Body
+> | email         | String           | true     |
+> | password      | String           | true     | 
+> #### Request body example
 > ```
 > {
 >   "email": "student.centerling@cdtm.de",
@@ -88,10 +89,11 @@ All requests that POST, PATCH, or PUT JSON must set a 'Content-Type' header with
 > ```
 > POST /api/login
 > ```
-> #### Params
-> | Name          | value            | required |
+> #### Data
+> | Name          | type             | required |
 > | ------------- |------------------| -------- |
-> | content-type  | application/json | true     |
+> | email         | String           | true     |
+> | password      | String           | true     | 
 > #### Body
 > ```
 > {
@@ -112,12 +114,8 @@ All requests that POST, PATCH, or PUT JSON must set a 'Content-Type' header with
 
 ### Perform a logout operation
 > ```
-> POST /api/logout
+> POST | GET /api/logout
 > ```
-> #### Params
-> | Name          | value            | required |
-> | ------------- |------------------| -------- |
-> | content-type  | application/json | true     |
 > #### Response
 > ```
 > Status: 200
@@ -132,7 +130,7 @@ All requests that POST, PATCH, or PUT JSON must set a 'Content-Type' header with
 ## 3 User
 
 ### Fetch the currently logged in user
-> *Login Required*
+> *@Login Required*
 > ```
 > GET /api/user
 > ```
