@@ -143,16 +143,97 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > 
 > json
 > {
+>   "id": 1234,
 >   "email": student.centerling@cdtm.de
+> }
+> ```
+
+### Fetch a specific user
+> - *Login Required*
+> ```
+> GET /api/user/:id
+> ```
+> #### Response
+> ```
+> Status: 200
+> 
+> json
+> {
+>   "id": 12345,
+>   "email": student2.centerling@cdtm.de
 > }
 > ```
 
 ## 4 List
 ### Get all lists a user has permission to
+> - *Login Required*
+> ```
+> GET /api/lists
+> ```
+> #### Response
+> ```
+> Status: 200
+> 
+> json
+> {
+>   "lists": [
+>     "id": 41234567,
+>     "owner": 1234,
+>     "title": "Groceries",
+>     "revision": 1,
+>     "collaborators": []
+>   ]
+> }
+> ```
 
 ### Get a specific list
+> - *Login Required*
+> - The user needs to have rights to access the specified list
+> ```
+> GET /api/lists/:id
+> ```
+> #### Response
+> ```
+> Status: 200
+> 
+> json
+> {
+>   "id": 41234567,
+>   "owner": 1234,
+>   "title": "Groceries",
+>   "revision": 17,
+>   "collaborators": [12345, 124211]
+> }
+> ```
 
 ### Create a list
+> - *Login Required*
+> ```
+> POST /api/lists
+> ```
+> #### Data
+> | Name          | type             | required |
+> | ------------- |------------------| -------- |
+> | title         | String           | true     |
+> #### Request body example
+> ```
+> {
+>   "title": "Christmas Presents!!!"
+> }
+> ```
+> #### Response
+> ```
+> Status: 201
+> 
+> json
+> {
+>   "id": 132456,
+>   "owner": 1234,
+>   "title": "Christmas Presents!!!",
+>   "revision": 1,
+>   "collaborators": []
+> }
+> ```
 
 ### Update a list by overwriting properties
 
