@@ -160,8 +160,9 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 
 ## 5 Task
 ### Get tasks for a list
+> *@Login Required*
 > ```
-> GET /api/list/:id/tasks
+> GET /api/lists/:id/tasks
 > ```
 > #### Response
 > ```
@@ -177,14 +178,14 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 >     "description": "I really need to do 2 more electives...",
 >     "due": "1970-01-01",
 >     "revision": 1,
->     "starred": true,
->     "title": "Hello"
+>     "starred": true
 >   ]
 > }
 > ```
 ### Get a specific task
+> *@Login Required*
 > ```
-> GET /api/list/:id/tasks/:id
+> GET /api/lists/:id/tasks/:id
 > ```
 > #### Response
 > ```
@@ -192,21 +193,48 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > 
 > json
 > {
->   "task": {
->     "id": 41234567,
->     "list": 1234545,
->     "title": "Graduate from CDTM",
->     "status": "normal",
->     "description": "I really need to do 2 more electives...",
->     "due": "1970-01-01",
->     "revision": 1,
->     "starred": true,
->     "title": "Hello"
->   }
+>   "id": 41234567,
+>   "list": 1234545,
+>   "title": "Graduate from CDTM",
+>   "status": "normal",
+>   "description": "I really need to do 2 more electives...",
+>   "due": "1970-01-01",
+>   "revision": 1,
+>   "starred": true
 > }
 > ```
 ### Create a task
-
+> *@Login Required*
+> ```
+> POST /api/lists/:id/tasks
+> ```
+> #### Data
+> | Name          | type             | required |
+> | ------------- |------------------| -------- |
+> | title         | String           | true     |
+> | password      | String           | true     | 
+> #### Request body example
+> ```
+> {
+>   "title": "Make task management great again!"
+> }
+> ```
+> #### Response
+> ```
+> Status: 201
+> 
+> json
+> {
+>   "id": 41234567,
+>   "list": 1234545,
+>   "title": "Make task management great again!",
+>   "status": "normal",
+>   "description": "",
+>   "due": null,
+>   "revision": 1,
+>   "starred": true
+> }
+> ```
 ### Update a task by overwriting properties
 ### Delete a task permanently
 ### Get a specific file
