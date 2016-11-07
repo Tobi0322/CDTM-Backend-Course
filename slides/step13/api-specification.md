@@ -1,14 +1,21 @@
 # API Specification
 
-[1.2 User](./#1.2-user)
+## Endpoints
+1. [Version](#1-version)
+  1. [retrieve the current version of the api](#retrieve-the-current-version-of-the-api)
+2. [Authentication](#2-authentication)
+3. [User](#3-user)
+  1. [Fetch the currently logged in user](#fetch-the-currently-logged-in-user)
+4. [List](#4-list)
+5. [Task](#5-task)
 
-## 1 General
-### 1.1 Version
-Retrieve the current version of the backend
+## 1 Version
+
+### Retrieve the current version of the api
 ```
 GET /api/version
 ```
-**Response**
+#### Response
 ```
 Status: 200
 
@@ -17,16 +24,16 @@ json
   "version": 13.0
 }
 ```
+## 2 Authentication
 
-### 1.2 User
-(#anchors-in-markdown)
-Fetch the currently logged in user.
+## 3 User
 
+### Fetch the currently logged in user
 *Login Required*
 ```
 GET /api/user
 ```
-**Response**
+#### Response
 ```
 Status: 200
 
@@ -36,5 +43,6 @@ json
 }
 ```
 
+## 4 List
 
-## 1 List
+## 5 Task
