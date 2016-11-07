@@ -1,5 +1,7 @@
 # API Specification
 
+All requests that POST, PATCH, or PUT JSON must set a 'Content-Type' header with a value of 'application/json'. 
+
 ## Endpoints
 1. [Version](#1-version)
   - [retrieve the current version of the api](#retrieve-the-current-version-of-the-api)
