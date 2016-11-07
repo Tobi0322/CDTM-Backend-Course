@@ -161,6 +161,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 ## 5 Task
 ### Get tasks for a list
 > - *Login Required*
+> - The user needs to have rights to access the specified list
 > ```
 > GET /api/lists/:id/tasks
 > ```
@@ -184,6 +185,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > ```
 ### Get a specific task
 > - *Login Required*
+> - The user needs to have rights to access the specified list
 > ```
 > GET /api/lists/:id/tasks/:id
 > ```
@@ -205,7 +207,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > ```
 ### Create a task
 > - *Login Required*
-> - The tasks is only be created, if the user has access to the provided list.
+> - The user needs to have rights to access the specified list
 > ```
 > POST /api/lists/:id/tasks
 > ```
@@ -236,6 +238,50 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > }
 > ```
 ### Update a task by overwriting properties
+> - *Login Required*
+> - The user needs to have rights to access the specified list
+> - Only if client's `revision` is greater or equal to the server's `revision` it is updated
+> ```
+> PUT /api/lists/:id/tasks/:id
+> ```
+> #### Data
+> | Name          | type             | required |
+> | ------------- |------------------| -------- |
+> | list          | Integer          | true     |
+> | status        | String           | true     |
+> | description   | String           | true     |
+> | due           | String           | true     |
+> | revision      | Int              | true     |
+> | starred       | Boolean          | true     |
+> #### Request body example
+> ```
+> {
+>   "id": 41234567,
+>   "list": 1234545,
+>   "title": "Update all the tasks!!!",
+>   "status": "normal",
+>   "description": "",
+>   "due": null,
+>   "revision": 23,
+>   "starred": true
+> }
+> ```
+> #### Response
+> ```
+> Status: 201
+> 
+> json
+> {
+>   "id": 41234567,
+>   "list": 1234545,
+>   "title": "Update all the tasks!!!",
+>   "status": "normal",
+>   "description": "",
+>   "due": null,
+>   "revision": 24,
+>   "starred": true
+> }
+> ```
 ### Delete a task permanently
 ### Get a specific file
 ### Upload files
