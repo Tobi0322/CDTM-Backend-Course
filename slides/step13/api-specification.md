@@ -1,6 +1,9 @@
 # API Specification
 
+#### Content-Type
 All requests that POST, PATCH, or PUT JSON must set a `Content-Type` header with a value of `application/json`. 
+#### Date and Time Format
+All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All times are provided as UTC. For example: 1970-01-01
 
 ## Endpoints
 1. [Version](#1-version)
@@ -157,6 +160,28 @@ All requests that POST, PATCH, or PUT JSON must set a `Content-Type` header with
 
 ## 5 Task
 ### Get tasks for a list
+> ```
+> GET /api/list/:id/tasks
+> ```
+> #### Response
+> ```
+> Status: 200
+> 
+> json
+> {
+>   [
+>     "id": 41234567,
+>     "list": 41234567,
+>     "title": "Graduate from CDTM",
+>     "status": "normal",
+>     "description": "I really need to do 2 more electives...",
+>     "due": "1970-01-01",
+>     "revision": 1,
+>     "starred": true,
+>     "title": "Hello"
+>   ]
+> }
+> ```
 ### Get a specific task
 ### Create a task
 ### Update a task by overwriting properties
