@@ -236,8 +236,60 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > ```
 
 ### Update a list by overwriting properties
+> - *Login Required*
+> - The user needs to have rights to access the specified list
+> - Only if client's `revision` is greater or equal to the server's `revision` it is updated
+> - The `owner` property is only updated if the request is sent by the current owner.
+> ```
+> PUT /api/lists/:id
+> ```
+> #### Data
+> | Name          | type             | required |
+> | ------------- |------------------| -------- |
+> | title         | Integer          | true     |
+> | owner         | String           | true     |
+> | description   | String           | true     |
+> | revision      | Int              | true     |
+> | collaborators | [String]         | true     |
+> #### Request body example
+> ```
+> {
+>   "id": 132456,
+>   "owner": 1234,
+>   "title": "Christmas Presents (URGENT)!!!",
+>   "revision": 1,
+>   "collaborators": []
+> }
+> ```
+> #### Response
+> ```
+> Status: 200
+> 
+> json
+> {
+>   "id": 132456,
+>   "owner": 1234,
+>   "title": "Christmas Presents (URGENT)!!!",
+>   "revision": 2,
+>   "collaborators": []
+> }
+> ```
 
 ### Delete a list permanently
+> - *Login Required*
+> - The user needs to have rights to access the specified list
+> ```
+> DELETE /api/lists/:id
+> ```
+> #### Response
+> ```
+> Status: 200
+> 
+> json
+> {
+>   "result": true
+> }
+> ```
 
 ## 5 Task
 ### Get tasks for a list
@@ -335,12 +387,12 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > | Name          | type             | required |
 > | ------------- |------------------| -------- |
 > | list          | Integer          | true     |
+> | title         | String           | true     |
 > | status        | String           | true     |
 > | description   | String           | true     |
 > | due           | String           | true     |
 > | revision      | Int              | true     |
 > | starred       | Boolean          | true     |
-> | files         | Boolean          | optional |
 > #### Request body example
 > ```
 > {
