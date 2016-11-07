@@ -171,7 +171,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > {
 >   "tasks": [
 >     "id": 41234567,
->     "list": 41234567,
+>     "list": 1234545,
 >     "title": "Graduate from CDTM",
 >     "status": "normal",
 >     "description": "I really need to do 2 more electives...",
@@ -194,7 +194,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > {
 >   "task": {
 >     "id": 41234567,
->     "list": 41234567,
+>     "list": 1234545,
 >     "title": "Graduate from CDTM",
 >     "status": "normal",
 >     "description": "I really need to do 2 more electives...",
@@ -206,6 +206,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > }
 > ```
 ### Create a task
+
 ### Update a task by overwriting properties
 ### Delete a task permanently
 ### Get a specific file
