@@ -169,7 +169,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > 
 > json
 > {
->   [
+>   "tasks": [
 >     "id": 41234567,
 >     "list": 41234567,
 >     "title": "Graduate from CDTM",
@@ -183,6 +183,28 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > }
 > ```
 ### Get a specific task
+> ```
+> GET /api/list/:id/tasks/:id
+> ```
+> #### Response
+> ```
+> Status: 200
+> 
+> json
+> {
+>   "task": {
+>     "id": 41234567,
+>     "list": 41234567,
+>     "title": "Graduate from CDTM",
+>     "status": "normal",
+>     "description": "I really need to do 2 more electives...",
+>     "due": "1970-01-01",
+>     "revision": 1,
+>     "starred": true,
+>     "title": "Hello"
+>   }
+> }
+> ```
 ### Create a task
 ### Update a task by overwriting properties
 ### Delete a task permanently
