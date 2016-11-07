@@ -11,7 +11,20 @@
 3. [User](#3-user)
   - [fetch the currently logged in user](#fetch-the-currently-logged-in-user)
 4. [List](#4-list)
+  - [get all lists a user has permission to](#get-all-lists-a-user-has-permission-to)
+  - [get a specific list](#get-a-specific-list)
+  - [create a list](#create-a-list)
+  - [update a list by overwriting properties](#update-a-list-by-overwriting-properties)
+  - [delete a list permanently](#delete-a-list-permanently)
 5. [Task](#5-task)
+  - [get tasks for a list](#get tasks for a list)
+  - [get a specific task](#get a specific task
+  - [create a task](#create-a-task)
+  - [update a task by overwriting properties](#update-a-task-by-overwriting-properties)
+  - [delete a task permanently](#delete-a-task-permanently)
+  - [get a specific file](#get-a-specific-file)
+  - [upload files](#upload-files)
+  - [delete a file permanently](#delete-a-file-permanently)
 
 ## 1 Version
 > ### Retrieve the current version of the api
@@ -132,5 +145,22 @@
 > ```
 
 ## 4 List
+### Get all lists a user has permission to
+
+### Get a specific list
+
+### Create a list
+
+### Update a list by overwriting properties
+
+### Delete a list permanently
 
 ## 5 Task
+### Get tasks for a list
+### Get a specific task
+### Create a task
+### Update a task by overwriting properties
+### Delete a task permanently
+### Get a specific file
+### Upload files
+### Delete a file permanently
