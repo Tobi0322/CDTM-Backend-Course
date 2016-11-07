@@ -205,6 +205,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > ```
 ### Create a task
 > *@Login Required*
+> The tasks is only be created, if the user has access to the provided list.
 > ```
 > POST /api/lists/:id/tasks
 > ```
@@ -212,7 +213,6 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > | Name          | type             | required |
 > | ------------- |------------------| -------- |
 > | title         | String           | true     |
-> | password      | String           | true     | 
 > #### Request body example
 > ```
 > {
