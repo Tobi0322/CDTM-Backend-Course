@@ -133,7 +133,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 ## 3 User
 
 ### Fetch the currently logged in user
-> *@Login Required*
+> - *Login Required*
 > ```
 > GET /api/user
 > ```
@@ -160,7 +160,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 
 ## 5 Task
 ### Get tasks for a list
-> *@Login Required*
+> - *Login Required*
 > ```
 > GET /api/lists/:id/tasks
 > ```
@@ -183,7 +183,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > }
 > ```
 ### Get a specific task
-> *@Login Required*
+> - *Login Required*
 > ```
 > GET /api/lists/:id/tasks/:id
 > ```
@@ -204,8 +204,8 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > }
 > ```
 ### Create a task
-> *@Login Required*
-> The tasks is only be created, if the user has access to the provided list.
+> - *Login Required*
+> - The tasks is only be created, if the user has access to the provided list.
 > ```
 > POST /api/lists/:id/tasks
 > ```
