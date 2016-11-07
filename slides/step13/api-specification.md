@@ -14,7 +14,8 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
   - [perform a login operation](#perform-a-login-operation)
   - [perform a logout operation](#perform-a-logout-operation)
 3. [User](#3-user)
-  - [fetch the currently logged in user](#fetch-the-currently-logged-in-user)
+  - [get the currently logged in user](#get-the-currently-logged-in-user)
+  - [get a specific user](#get-a-specific-user)
 4. [List](#4-list)
   - [get all lists a user has permission to](#get-all-lists-a-user-has-permission-to)
   - [get a specific list](#get-a-specific-list)
@@ -132,7 +133,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 
 ## 3 User
 
-### Fetch the currently logged in user
+### Get the currently logged in user
 > - *Login Required*
 > ```
 > GET /api/user
@@ -148,7 +149,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > }
 > ```
 
-### Fetch a specific user
+### Get a specific user
 > - *Login Required*
 > ```
 > GET /api/user/:id
@@ -248,7 +249,6 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > | ------------- |------------------| -------- |
 > | title         | Integer          | true     |
 > | owner         | String           | true     |
-> | description   | String           | true     |
 > | revision      | Int              | true     |
 > | collaborators | [String]         | true     |
 > #### Request body example
