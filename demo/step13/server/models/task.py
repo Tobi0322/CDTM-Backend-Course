@@ -1,5 +1,3 @@
-from datetime import datetime
-
 class Task:
     '''Represents one Todo-Item'''
 

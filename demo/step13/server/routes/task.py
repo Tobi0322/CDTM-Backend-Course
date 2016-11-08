@@ -36,7 +36,6 @@ def create_task():
 @app.route('/api/tasks/<string:task_id>', methods=['PUT'])
 @login_required
 def update_task(task_id):
-    print "updating task!"
     data = request.get_json(force=True)
     task = db_get_task(task_id)
     if task == None:
