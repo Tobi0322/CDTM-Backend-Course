@@ -9,9 +9,12 @@ class Task:
         try:
             task = Task(
                 dict['title'],
+                dict['list'],
                 id = dict['id'],
                 description = dict['description'],
-                due = dict['due']
+                due = dict['due'],
+                starred = dict['starred'] == 'True',
+                revision = int(dict['due'])
             )
             task.setStatus(dict['status'])
             return task
@@ -19,12 +22,15 @@ class Task:
             return None
 
 
-    def __init__(self, title, id='', status = NORMAL, description = '', due = ''):
+    def __init__(self, title, list, id='', status = NORMAL, description = '', due = '', starred=False, revision=1):
         self.id = id
+        self.list = list
         self.title =  title
         self.status = status
         self.description = description
         self.due = due
+        self.revision = revision
+        self.starred = starred
         self.files = []
 
     def setTitle(self, title):
