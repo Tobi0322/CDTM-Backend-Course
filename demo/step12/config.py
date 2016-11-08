@@ -5,8 +5,6 @@ HOST    = 'localhost'
 PORT    = 20012
 
 SECRET = 'mostly awesome'
-app.secret_key = config.SECRET
-app.config['SESSION_TYPE'] = 'memchached'
 
 # This is the path to the upload directory
 UPLOAD_FOLDER = 'uploads/'

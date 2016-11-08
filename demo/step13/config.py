@@ -1,12 +1,10 @@
 # This file contains the configuration variables that your app needs.
 
-VERSION = 12.0
+VERSION = 13.0
 HOST    = 'localhost'
-PORT    = 20012
+PORT    = 20013
 
 SECRET = 'mostly awesome'
-app.secret_key = config.SECRET
-app.config['SESSION_TYPE'] = 'memchached'
 
 # This is the path to the upload directory
 UPLOAD_FOLDER = 'uploads/'
