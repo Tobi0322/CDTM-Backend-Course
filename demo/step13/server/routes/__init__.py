@@ -1,13 +1,9 @@
 from flask import jsonify
 
-from server import app
-
 # import all the routes
 from static import *
-from task import *
+from general import *
 from auth import *
-
-# Return current version
-@app.route('/api/version', methods=['GET'])
-def get_version():
-    return jsonify({'version': app.config['VERSION']})
+from user import *
+from list import *
+from task import *
