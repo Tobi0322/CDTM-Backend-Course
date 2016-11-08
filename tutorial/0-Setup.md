@@ -9,6 +9,11 @@
 * Flask
 * Git
 
+**Select your OS: **
+* [1. Windows](#1-windows)
+* [2. MacOS](#2-macos)
+* [3. Linux (Ubuntu)](#3-linux-ubuntu)
+
 ## 1 Windows
 
 ### 1.1 Chrome
