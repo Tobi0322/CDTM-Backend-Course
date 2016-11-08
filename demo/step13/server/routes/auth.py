@@ -5,6 +5,15 @@ from server import app
 from server.database import *
 from server.utils import login_required, isEmail
 
+# return session state
+@app.route('/api/status')
+def status():
+    if session.get('logged_in'):
+        if session['logged_in']:
+            return jsonify({'result': True})
+    else:
+        return jsonify({'result': False})
+
 # register User
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -29,7 +38,7 @@ def login():
         session['logged_in'] = True
         session['userID'] = user.id
         session['userEmail'] = user.email
-        return jsonify({'result': True, 'user': user.email})
+        return jsonify({'result': True})
     return jsonify({'result': False})
 
 # logout User
@@ -39,12 +48,3 @@ def logout():
     session.pop('userID', None)
     session.pop('userEmail', None)
     return jsonify({'result': True})
-
-# return session state
-@app.route('/api/status')
-def status():
-    if session.get('logged_in'):
-        if session['logged_in']:
-            return jsonify({'result': True, 'user': session['userEmail']})
-    else:
-        return jsonify({'result': False})
