@@ -13,7 +13,7 @@ class Task:
                 id = dict['id'],
                 description = dict['description'],
                 due = dict['due'],
-                starred = dict['starred'] == 'True',
+                starred = dict['starred'] != 0,
                 revision = int(dict['revision'])
             )
             task.setStatus(dict['status'])
