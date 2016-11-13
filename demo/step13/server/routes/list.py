@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, jsonify, session
 
 from server import app
 from server.database import *
@@ -10,7 +10,7 @@ def get_lists():
     ''' return all lists a user has access to '''
     response = {}
     # TODO: return lists
-    # response['lists'] = [t.__dict__ for t in db_get_lists()]
+    response['lists'] = [t.__dict__ for t in db_get_lists(session.get('userID'))]
     return jsonify(response)
 
 @app.route('/api/lists/<string:list_id>', methods=['GET'])

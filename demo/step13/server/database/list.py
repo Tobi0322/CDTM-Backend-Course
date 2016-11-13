@@ -37,7 +37,7 @@ def db_create_list(title, owner_id, inbox=False):
     with app.app_context():
         db = get_db()
         cur = db.cursor()
-        cur.execute(query, [title, owner_id, inbox])
+        cur.execute(query, [title, owner_id, 1 if inbox else 0])
         db.commit()
         return True
     return False
@@ -46,20 +46,21 @@ def db_create_list(title, owner_id, inbox=False):
 def db_get_lists(user_id):
     ''' Queries the db for a specific lists'''
     query = '''
-        SELECT DISTINCT list.id, list.title, list.owner, list.revision, list.default
-        FROM lists, collaborators
-        WHERE owner = ?
-          OR (lists.id = collaborators.list_id
-           AND collaborators.list_id = ?);
+        SELECT DISTINCT lists.id, lists.title, lists.owner, lists.revision, lists.inbox
+        FROM lists LEFT OUTER JOIN collaborators ON lists.id = collaborators.list_id
+        WHERE lists.owner = ? OR collaborators.user_id = ?
     '''
 
     with app.app_context():
         cur = get_db().cursor()
         cur.execute(query, [user_id, user_id])
-        tasks = []
+        lists = []
         for row in cur:
+            print dict_from_row(row)
             l = List.fromDict(dict_from_row(row))
+            print l
             if isinstance(l, List):
+                print "TRUE!!!"
                 l.setCollaborators(db_get_collaborators_for_list(l.id))
                 lists.append(l)
         return lists
