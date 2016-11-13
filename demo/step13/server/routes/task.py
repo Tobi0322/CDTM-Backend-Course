@@ -5,21 +5,32 @@ import os, shutil
 
 from server import app
 from server.database import *
-from server.utils import login_required, allowed_file, list_access
-
-response = {}
+from server.utils import login_required, allowed_file, list_access, json_abort
 
 # INDEX ROUTE
 @app.route('/api/lists/<string:list_id>/tasks', methods=['GET'])
 @login_required
 @list_access
 def get_tasks(list_id):
+    ''' get all tasks for a list '''
+    response = {}
     response['tasks'] = [t.__dict__ for t in db_get_tasks_for_list(list_id)]
     return jsonify(response)
+
+@app.route('/api/lists/<string:list_id>/tasks/<string:task_id>', methods=['GET'])
+@login_required
+@list_access
+def get_task(list_id, task_id):
+    ''' get a specific task '''
+    task = db_get_task(list_id, task_id)
+    if task == None:
+        json_abort(404, "Task not found")
+    return jsonify(task.__dict__)
 
 # CREATE ROUTE
 @app.route('/api/tasks', methods=['POST'])
 @login_required
+@list_access
 def create_task():
     data = request.get_json(force=True)
     title = data.get('title')

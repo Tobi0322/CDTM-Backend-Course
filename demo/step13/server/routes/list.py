@@ -21,6 +21,8 @@ def get_lists():
 def get_list(list_id):
     ''' returns the specified list'''
     l = db_get_list(list_id)
+    if l == None:
+        json_abort(404, "List not found")
     return jsonify(l.__dict__)
 
 

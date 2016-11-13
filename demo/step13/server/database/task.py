@@ -25,17 +25,17 @@ def db_get_tasks_for_list(list_id):
                 tasks.append(task)
         return tasks
 
-def db_get_task(id):
+def db_get_task(list_id, task_id):
     ''' Queries the db for a task with the specified id'''
     query = '''
-        SELECT id, title, status, description, due
+        SELECT id, title, list, status, description, starred, due, revision
         FROM tasks
-        WHERE id = ?;
+        WHERE id = ? AND list = ?;
     '''
 
     with app.app_context():
         cur = get_db().cursor()
-        cur.execute(query, [id])
+        cur.execute(query, [task_id, list_id])
         task = Task.fromDict(dict_from_row(cur.fetchone()))
         if isinstance(task, Task):
             task.setFiles(db_get_filenames_for_task(task.id))
