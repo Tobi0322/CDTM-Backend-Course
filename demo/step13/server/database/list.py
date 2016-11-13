@@ -1,7 +1,9 @@
 from utils import *
+from user import db_get_user_by_id
 
 from server import app
 from server.models import List
+
 
 # --------------------------------------------
 # IMPORTANT! NO ACCESS CONTROL IS DONE IN HERE
@@ -88,6 +90,47 @@ def db_get_collaborators_for_list(list_id):
         cur.execute(query, [list_id])
         db.commit()
         return [dict_from_row(row)['user_id'] for row in cur]
+
+
+def db_update_list(l):
+    ''' Updates a list and returns it '''
+    query = '''
+        UPDATE lists
+        SET title = ?, revision = ?
+        WHERE id = ?;
+    '''
+
+    with app.app_context():
+        db = get_db()
+        cur = db.cursor()
+        cur.execute(query, [l.title, l.revision, l.id])
+        db.commit()
+
+    db_update_collaborators(l.id, l.collaborators)
+
+    return db_get_list(l.id)
+
+
+def db_update_collaborators(list_id, collaborators):
+    ''' Updates the collaborators of a list '''
+    queries = []
+    queries.append(('''
+        DELETE FROM collaborators WHERE list_id = ?;
+    ''', [list_id]))
+
+    # list(set()) remove duplicates
+    for collaborator in list(set(collaborators)):
+        if db_get_user_by_id(collaborator) != None:
+            queries.append(('INSERT INTO collaborators(list_id, user_id) VALUES (?,?);', [list_id, collaborator]))
+
+    with app.app_context():
+        db = get_db()
+        cur = db.cursor()
+        for query, params in queries:
+            cur.execute(query, params)
+        db.commit()
+
+
 
 def db_delete_list(id):
     ''' Deletes the list and all it's tasks with the specified id '''

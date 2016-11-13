@@ -3,7 +3,7 @@ import sqlite3
 
 from server import app
 
-# make sure to use this  only within app.app_context()
+# make sure to use this gets only called within app.app_context()
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
