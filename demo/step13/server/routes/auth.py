@@ -22,10 +22,11 @@ def register():
     if email == None or (not isEmail(email)) or password == None or len(password) < 6:
         return jsonify({'result': False, 'text': 'Invalid username and/or password'})
     if db_create_user(email, security.generate_password_hash(password)):
-        # TODO: get User here
-        #if db_create_list('Inbox', user_id, inbox=True):
-            return jsonify({'result': True, 'text': 'User successfully created'})
-        # else revert ?
+        # create default task list for user
+        user = db_get_user(email)
+        if user != None:
+            db_create_list('Inbox', user.id, inbox=True)
+        return jsonify({'result': True, 'text': 'User successfully created'})
     return jsonify({'result': False, 'text': 'User already exists'})
 
 # login User

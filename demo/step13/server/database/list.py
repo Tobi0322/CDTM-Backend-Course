@@ -4,7 +4,7 @@ from server import app
 from server.models import List
 
 # --------------------------------------------
-# IMPORTANT NO ACCESS CONTROL IS DONE IN HERE
+# IMPORTANT! NO ACCESS CONTROL IS DONE IN HERE
 # --------------------------------------------
 
 def db_has_access_to_list(list_id, user_id):
@@ -26,13 +26,14 @@ def db_has_access_to_list(list_id, user_id):
         return result.get('id') != None
     return False
 
+
 def db_create_list(title, owner_id, inbox=False):
     ''' Creates a new user, if it does not exist yet'''
     query = '''
         INSERT INTO Lists(title, owner, inbox, revision)
         VALUES (?,?,?,1);
     '''
-    
+
     with app.app_context():
         db = get_db()
         cur = db.cursor()
