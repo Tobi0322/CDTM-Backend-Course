@@ -9,8 +9,7 @@ from server.utils import login_required, isEmail
 @app.route('/api/status')
 def status():
     if session.get('logged_in'):
-        if session['logged_in']:
-            return jsonify({'result': True})
+        return jsonify({'result': True})
     else:
         return jsonify({'result': False})
 
@@ -23,7 +22,10 @@ def register():
     if email == None or (not isEmail(email)) or password == None or len(password) < 6:
         return jsonify({'result': False, 'text': 'Invalid username and/or password'})
     if db_create_user(email, security.generate_password_hash(password)):
-        return jsonify({'result': True, 'text': 'User successfully created'})
+        # TODO: get User here
+        #if db_create_list('Inbox', user_id, inbox=True):
+            return jsonify({'result': True, 'text': 'User successfully created'})
+        # else revert ?
     return jsonify({'result': False, 'text': 'User already exists'})
 
 # login User

@@ -6,11 +6,25 @@ from server import app
 from server.models import User
 
 
-def db_get_user(email):
-    ''' Queries the db for a task with the specified id'''
+def db_get_user_by_id(id):
+    ''' Queries the db for the user with the specified id'''
     query = '''
         SELECT id, email, password
-        FROM user
+        FROM users
+        WHERE id = ?;
+    '''
+
+    with app.app_context():
+        cur = get_db().cursor()
+        cur.execute(query, [id])
+        user = User.fromDict(dict_from_row(cur.fetchone()))
+        return user
+
+def db_get_user(email):
+    ''' Queries the db for a user with the specified email'''
+    query = '''
+        SELECT id, email, password
+        FROM users
         WHERE email = ?;
     '''
 
@@ -24,7 +38,7 @@ def db_get_user(email):
 def db_create_user(email, password):
     ''' Creates a new user, if it does not exist yet'''
     query = '''
-        INSERT INTO User(email, password)
+        INSERT INTO Users(email, password)
         VALUES (?,?);
     '''
 

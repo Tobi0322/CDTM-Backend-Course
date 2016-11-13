@@ -57,7 +57,7 @@ def db_update_task(task):
         UPDATE tasks
         SET title = ? , status =  ?, description = ?, due = ?
         WHERE id = ?;
-    '''.format()
+    '''
 
     with app.app_context():
         db = get_db()
@@ -87,7 +87,7 @@ def db_get_filenames_for_task(task_id):
         SELECT filename
         FROM Uploads
         WHERE task = ?;
-    '''.format()
+    '''
 
     with app.app_context():
         db = get_db()

@@ -12,6 +12,7 @@ CREATE TABLE Lists(
     owner       INTEGER      NOT NULL,
     title       TEXT         NOT NULL,
     revision    INTEGER      NOT NULL DEFAULT 1,
+    inbox       INTEGER      NOT NULL DEFAULT 0,
     created     TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(owner) REFERENCES Users(id)
 );
@@ -55,4 +56,4 @@ CREATE TABLE Uploads(
 -- INSERT INTO Tasks(title, status, description) VALUES ('Eat an apple', 'normal', 'Hey there! Don''t forget taking more notes... You know, small things are easy to forget :-)');
 -- INSERT INTO Tasks(title, status, description) VALUES ('Call grandma', 'completed', 'Hey there! Don''t forget taking more notes... You know, small things are easy to forget :-)');
 --
--- INSERT INTO User (email, password) VALUES ('m@m.at', 'pbkdf2:sha1:1000$NuLD9IyO$8e6d1fb645f84814cb892e235ea44fdf3ecd8f33');
+INSERT INTO Users (email, password) VALUES ('m@m.at', 'pbkdf2:sha1:1000$NuLD9IyO$8e6d1fb645f84814cb892e235ea44fdf3ecd8f33');
