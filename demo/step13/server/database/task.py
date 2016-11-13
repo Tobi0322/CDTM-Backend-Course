@@ -42,20 +42,20 @@ def db_get_task(list_id, task_id):
         return task
 
 
-def db_create_task(title):
+def db_create_task(title, list_id):
     ''' Inserts a new task and returns it '''
     query = '''
-        INSERT INTO Tasks(title, status)
-        Values (?, 'normal');
+        INSERT INTO Tasks(title, list, status)
+        Values (?, ?, 'normal');
     '''
 
     with app.app_context():
         db = get_db()
         cur = db.cursor()
-        cur.execute(query, [title])
+        cur.execute(query, [title, list_id])
         db.commit()
 
-    return db_get_task(cur.lastrowid)
+    return db_get_task(list_id, cur.lastrowid)
 
 def db_update_task(task):
     ''' Updates a task and returns it '''

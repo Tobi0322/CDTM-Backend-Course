@@ -24,23 +24,25 @@ def get_task(list_id, task_id):
     ''' get a specific task '''
     task = db_get_task(list_id, task_id)
     if task == None:
-        json_abort(404, "Task not found")
+        json_abort(404, 'Task not found')
     return jsonify(task.__dict__)
 
 # CREATE ROUTE
-@app.route('/api/tasks', methods=['POST'])
+@app.route('/api/lists/<string:list_id>/tasks', methods=['POST'])
 @login_required
 @list_access
-def create_task():
+def create_task(list_id):
+    ''' creates a new task for a list '''
     data = request.get_json(force=True)
     title = data.get('title')
     if title == None:
-        abort(400)
+        json_abort(400, 'Invalid request parameters')
 
-    newTask = db_create_task(title)
+    newTask = db_create_task(title, list_id)
 
     if newTask == None:
-        abort(500)
+        json_abort(400, 'Could not create task')
+        
     return jsonify(newTask.__dict__)
 
 # UPDATE ROUTE
