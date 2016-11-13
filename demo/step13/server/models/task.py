@@ -14,7 +14,7 @@ class Task:
                 description = dict['description'],
                 due = dict['due'],
                 starred = dict['starred'] == 'True',
-                revision = int(dict['due'])
+                revision = int(dict['revision'])
             )
             task.setStatus(dict['status'])
             return task

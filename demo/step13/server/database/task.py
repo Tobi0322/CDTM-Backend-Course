@@ -6,11 +6,17 @@ from server import app
 from server.models import Task
 
 
-def db_get_tasks():
-    ''' Returns all tasks from the database '''
+def db_get_tasks_for_list(list_id):
+    ''' Returns all tasks from the database for a given list'''
+    query = '''
+        SELECT *
+        FROM tasks
+        WHERE list = ?
+        ORDER BY status DESC, due ASC;
+    '''
     with app.app_context():
         cur = get_db().cursor()
-        cur.execute('select * from Tasks order by status desc, due asc')
+        cur.execute(query, [list_id])
         tasks = []
         for row in cur:
             task = Task.fromDict(dict_from_row(row))

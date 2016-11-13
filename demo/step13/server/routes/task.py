@@ -5,16 +5,16 @@ import os, shutil
 
 from server import app
 from server.database import *
-from server.utils import login_required, allowed_file
+from server.utils import login_required, allowed_file, list_access
 
 response = {}
 
 # INDEX ROUTE
-@app.route('/api/tasks', methods=['GET'])
+@app.route('/api/lists/<string:list_id>/tasks', methods=['GET'])
 @login_required
-def get_tasks():
-    response['version'] = app.config['VERSION']
-    response['data'] = [t.__dict__ for t in db_get_tasks()]
+@list_access
+def get_tasks(list_id):
+    response['tasks'] = [t.__dict__ for t in db_get_tasks_for_list(list_id)]
     return jsonify(response)
 
 # CREATE ROUTE
