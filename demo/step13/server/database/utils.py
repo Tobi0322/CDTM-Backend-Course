@@ -8,6 +8,7 @@ def get_db():
     db = getattr(g, '_database', None)
     if db is None:
         db = g._database = sqlite3.connect('task.db')
+        db.execute("PRAGMA foreign_keys = 1")
         db.row_factory = sqlite3.Row
     return db
 

@@ -91,8 +91,8 @@ def db_get_collaborators_for_list(list_id):
 
 def db_delete_list(id):
     ''' Deletes the list and all it's tasks with the specified id '''
-    query_1 = '''
-        DELETE FROM tasks WHERE list = ?;
+    query = '''
+        DELETE FROM lists WHERE id = ?;
     '''
 
     with app.app_context():
