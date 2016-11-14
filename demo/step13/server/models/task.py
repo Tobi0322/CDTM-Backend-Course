@@ -51,6 +51,22 @@ class Task:
             return
         self.description = description
 
+    def setList(self, list):
+        if list == None:
+            return
+        self.list = list
+
+    def setRevision(self, revision):
+        print revision
+        if revision == None:
+            return
+        self.revision = revision
+
+    def setStarred(self, starred):
+        if starred == None:
+            return
+        self.starred = starred
+
     def setDueDate(self, dueDate):
         if dueDate == None or dueDate == '':
             self.dueDate = ''

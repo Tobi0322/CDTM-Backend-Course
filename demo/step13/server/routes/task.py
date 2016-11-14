@@ -38,30 +38,38 @@ def create_task(list_id):
     if title == None:
         json_abort(400, 'Invalid request parameters')
 
-    newTask = db_create_task(title, list_id)
+    newTask = db_create_task(list_id, title)
 
     if newTask == None:
         json_abort(400, 'Could not create task')
-        
+
     return jsonify(newTask.__dict__)
 
 # UPDATE ROUTE
-@app.route('/api/tasks/<string:task_id>', methods=['PUT'])
+@app.route('/api/lists/<string:list_id>/tasks/<string:task_id>', methods=['PUT'])
 @login_required
-def update_task(task_id):
+@list_access
+def update_task(list_id, task_id):
     data = request.get_json(force=True)
-    task = db_get_task(task_id)
+    task = db_get_task(list_id, task_id)
     if task == None:
-        abort(404)
+        json_abort(404, 'Task not found')
 
+    # NOTE: Potential overflows are not being handled
+    if data.get('revision') != None and data.get('revision') < task.revision:
+        json_abort(409, 'Newer version of task available')
+
+    # TODO: ignoring 'list' for now. Implement moving tasks from one list to another
     task.setTitle(data.get('title'))
     task.setStatus(data.get('status'))
     task.setDescription(data.get('description'))
     task.setDueDate(data.get('due'))
+    task.setStarred(data.get('starred'))
+    task.setRevision(task.revision + 1)
 
-    task = db_update_task(task)
+    task = db_update_task(list_id, task)
     if task == None:
-        abort(500)
+        json_abort(500, 'Could not update task')
 
     return jsonify(task.__dict__)
 

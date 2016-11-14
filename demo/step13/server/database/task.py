@@ -42,7 +42,7 @@ def db_get_task(list_id, task_id):
         return task
 
 
-def db_create_task(title, list_id):
+def db_create_task(list_id, title):
     ''' Inserts a new task and returns it '''
     query = '''
         INSERT INTO Tasks(title, list, status)
@@ -57,21 +57,21 @@ def db_create_task(title, list_id):
 
     return db_get_task(list_id, cur.lastrowid)
 
-def db_update_task(task):
+def db_update_task(list_id, task):
     ''' Updates a task and returns it '''
     query = '''
         UPDATE tasks
-        SET title = ? , status =  ?, description = ?, due = ?
+        SET title = ?, list = ?, status =  ?, description = ?, due = ?, starred = ?, revision = ?
         WHERE id = ?;
     '''
 
     with app.app_context():
         db = get_db()
         cur = db.cursor()
-        cur.execute(query, [task.title, task.status, task.description, task.due, task.id])
+        cur.execute(query, [task.title, task.list, task.status, task.description, task.due, task.starred, task.revision, task.id])
         db.commit()
 
-    return db_get_task(task.id)
+    return db_get_task(list_id, task.id)
 
 def db_delete_task(id):
     ''' Deletes the task with the specified id '''

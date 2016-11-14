@@ -53,17 +53,12 @@ CREATE TABLE Uploads(
 );
 
 
-
-
--- INSERT INTO Tasks(title, status, due) VALUES ('Go for a run', 'normal', '1970-01-01');
--- INSERT INTO Tasks(title, status, description) VALUES ('Eat an apple', 'normal', 'Hey there! Don''t forget taking more notes... You know, small things are easy to forget :-)');
--- INSERT INTO Tasks(title, status, description) VALUES ('Call grandma', 'completed', 'Hey there! Don''t forget taking more notes... You know, small things are easy to forget :-)');
-
 INSERT INTO Users (email, password) VALUES ('m1@m.at', 'pbkdf2:sha1:1000$NuLD9IyO$8e6d1fb645f84814cb892e235ea44fdf3ecd8f33');
 INSERT INTO Users (email, password) VALUES ('m2@m.at', 'pbkdf2:sha1:1000$NuLD9IyO$8e6d1fb645f84814cb892e235ea44fdf3ecd8f33');
 INSERT INTO Lists (title, owner, revision, inbox) VALUES ('test', 1, 1, 0);
 INSERT INTO Lists (title, owner, revision, inbox) VALUES ('test2', 2, 1, 0);
 INSERT INTO Collaborators (list_id, user_id) VALUES (1, 2);
-INSERT INTO Tasks (title, list, status, starred, revision) VALUES ('Test Task', 1, 'NORMAL', 0, 1);
-INSERT INTO Tasks (title, list, status, starred, revision) VALUES ('Test Task2', 2, 'NORMAL', 1, 1);
+INSERT INTO Tasks(title, list, status, due, starred, revision) VALUES ('Go for a run', 1,  'normal', '1970-01-01', 0, 1);
+INSERT INTO Tasks(title, list, status, description, starred, revision) VALUES ('Eat an apple', 1, 'normal', 'Hey there! Don''t forget taking more notes... You know, small things are easy to forget :-)', 0, 1);
+INSERT INTO Tasks(title, list, status, description, starred, revision) VALUES ('Call grandma', 2, 'completed', 'Hey there! Don''t forget taking more notes... You know, small things are easy to forget :-)', 1, 1);
 INSERT INTO Uploads (task, filename) VALUES (1, 'tets.jpg');
