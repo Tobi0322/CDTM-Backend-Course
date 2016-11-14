@@ -28,6 +28,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
   - [create a task](#create-a-task)
   - [update a task by overwriting properties](#update-a-task-by-overwriting-properties)
   - [delete a task permanently](#delete-a-task-permanently)
+ 6. [Uploads](#6-upload)
   - [get a specific file](#get-a-specific-file)
   - [upload files](#upload-files)
   - [delete a file permanently](#delete-a-file-permanently)
@@ -440,6 +441,8 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 >   "result": true
 > }
 > ```
+
+## 6 Upload
 
 ### Get a specific file
 > - *Login Required*
