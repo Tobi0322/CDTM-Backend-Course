@@ -28,10 +28,13 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
   - [create a task](#create-a-task)
   - [update a task by overwriting properties](#update-a-task-by-overwriting-properties)
   - [delete a task permanently](#delete-a-task-permanently)
- 6. [Uploads](#6-upload)
+6. [Upload](#6-upload)
   - [get a specific file](#get-a-specific-file)
   - [upload files](#upload-files)
   - [delete a file permanently](#delete-a-file-permanently)
+7. [Collaborator](#6-collaborator)
+  - [add a collaborator](#upload-files)
+  - [delete a collaborator](#delete-a-file-permanently)
 
 ## 1 Version
 > ### Retrieve the current version of the api
@@ -483,6 +486,45 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > - The user needs to have rights to access the specified list
 > ```
 > DELETE /api/lists/:id/tasks/:id/files/String:filename
+> ```
+> #### Response
+> ```
+> Status: 200
+> 
+> json
+> {
+>   "result": true
+> }
+> ```
+
+## 7 Collaborator
+
+### Add a collaborator to a specific list
+> - *Login Required*
+> - The user needs to be the owner of the specified list
+> ```
+> POST /api/lists/:id/tasks/:id/collaborators/:id
+> ```
+> #### Response
+> (returns the list with updated collaborators)
+> ```
+> Status: 201
+> 
+> json
+> {
+>   "id": 132457,
+>   "owner": 1234,
+>   "title": "Clean the kitchen :-/",
+>   "revision": 2,
+>   "collaborators": [9876]
+> }
+> ```
+
+### Remove a collaborator from a specific list
+> - *Login Required*
+> - The user needs to be the owner of the specified list
+> ```
+> DELETE /api/lists/:id/tasks/:id/collaborators/:id
 > ```
 > #### Response
 > ```
