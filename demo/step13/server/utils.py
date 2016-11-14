@@ -22,6 +22,15 @@ def list_access(f):
         return f(*args, **kwargs)
     return decorated_function
 
+def list_owner(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        list_id = kwargs.get('list_id')
+        if not db_is_list_owner(list_id, session.get('userID')):
+            json_abort(404, 'List not found')
+        return f(*args, **kwargs)
+    return decorated_function
+
 def isEmail(email):
     ''' returns whether a given string is a valid email address'''
     return re.match("^[a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+.[a-zA-Z]{2,6}$", email) != None

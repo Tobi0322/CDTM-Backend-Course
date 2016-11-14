@@ -1,9 +1,9 @@
 from utils import *
 from user import db_get_user_by_id
+from collaborators import db_get_collaborators_for_list
 
 from server import app
 from server.models import List
-
 
 # --------------------------------------------
 # IMPORTANT! NO ACCESS CONTROL IS DONE IN HERE
@@ -21,6 +21,22 @@ def db_has_access_to_list(list_id, user_id):
     with app.app_context():
         cur = get_db().cursor()
         cur.execute(query, [list_id, user_id, user_id])
+        result = dict_from_row(cur.fetchone())
+        return result.get('id') != None
+    return False
+
+def db_is_list_owner(list_id, user_id):
+    ''' Returns whether a user owns a certain list'''
+    query = '''
+        SELECT id
+        FROM lists
+        WHERE lists.id = ?
+            AND lists.owner = ?
+    '''
+
+    with app.app_context():
+        cur = get_db().cursor()
+        cur.execute(query, [list_id, user_id])
         result = dict_from_row(cur.fetchone())
         return result.get('id') != None
     return False
@@ -76,21 +92,6 @@ def db_get_list(list_id):
             l.setCollaborators(db_get_collaborators_for_list(l.id))
         return l
 
-def db_get_collaborators_for_list(list_id):
-    ''' Returns a list of all collaborators for a list from the database '''
-    query = '''
-        SELECT user_id
-        FROM Collaborators
-        WHERE list_id = ?;
-    '''
-
-    with app.app_context():
-        db = get_db()
-        cur = db.cursor()
-        cur.execute(query, [list_id])
-        db.commit()
-        return [dict_from_row(row)['user_id'] for row in cur]
-
 
 def db_update_list(l):
     ''' Updates a list and returns it '''
@@ -106,31 +107,7 @@ def db_update_list(l):
         cur.execute(query, [l.title, l.revision, l.id])
         db.commit()
 
-    db_update_collaborators(l.id, l.collaborators)
-
     return db_get_list(l.id)
-
-
-def db_update_collaborators(list_id, collaborators):
-    ''' Updates the collaborators of a list '''
-    queries = []
-    queries.append(('''
-        DELETE FROM collaborators WHERE list_id = ?;
-    ''', [list_id]))
-
-    # list(set()) remove duplicates
-    for collaborator in list(set(collaborators)):
-        if db_get_user_by_id(collaborator) != None:
-            queries.append(('INSERT INTO collaborators(list_id, user_id) VALUES (?,?);', [list_id, collaborator]))
-
-    with app.app_context():
-        db = get_db()
-        cur = db.cursor()
-        for query, params in queries:
-            cur.execute(query, params)
-        db.commit()
-
-
 
 def db_delete_list(id):
     ''' Deletes the list and all it's tasks with the specified id '''

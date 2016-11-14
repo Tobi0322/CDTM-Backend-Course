@@ -54,10 +54,6 @@ def update_list(list_id):
     l.title = (data.get('title'))
     l.revision = l.revision + 1
 
-    # only the owner of a list can add or remove collaborators
-    if l.owner == session.get('userID'):
-        l.collaborators = (data.get('collaborators'))
-
     l = db_update_list(l)
     if l == None:
         json_abort(500, 'Could not update list')
