@@ -33,8 +33,8 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
   - [upload files](#upload-files)
   - [delete a file permanently](#delete-a-file-permanently)
 7. [Collaborator](#6-collaborator)
-  - [add a collaborator](#upload-files)
-  - [delete a collaborator](#delete-a-file-permanently)
+  - [add a collaborator to a specific list](#add-a-collaborator-to-a-specific-list)
+  - [remove a collaborator from a specific list](#remove-a-collaborator-from-a-specific-list)
 
 ## 1 Version
 > ### Retrieve the current version of the api
