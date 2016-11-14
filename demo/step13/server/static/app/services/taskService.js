@@ -1,11 +1,12 @@
-app.factory('TaskService', function($q, $http, ApiService) {
+app.factory('TaskService', function($q, $http, ApiService, ListService) {
 
     var TaskHandler = {};
 
     TaskHandler.tasks = [];
     TaskHandler.loading = false;
 
-    TaskHandler.loadTasks =function(shouldShowLoading) {
+    TaskHandler.loadTasks = function(shouldShowLoading) {
+      ListService.loadLists();
       var deferred = $q.defer();
       TaskHandler.loading = shouldShowLoading;
       $http.get(ApiService.hostString() + '/api/tasks')
