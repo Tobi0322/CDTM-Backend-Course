@@ -21,8 +21,14 @@ app.factory('AuthService', function ($q, $http, $location, ApiService) {
       $http.post(ApiService.hostString() + '/api/login', {email: email, password: password})
         .success(function (data, status) {
           if(status === 200 && data.result){
-            user = data.user;
-            deferred.resolve();
+            getUserStatus().then(
+              function(){
+                deferred.resolve();
+              },
+              function() {
+                deferred.reject();
+              }
+            );
           } else {
             user = null;
             deferred.reject();
@@ -71,17 +77,32 @@ app.factory('AuthService', function ($q, $http, $location, ApiService) {
     }
 
     function getUserStatus() {
-      return $http.get(ApiService.hostString() + '/api/status')
-      .success(function (data) {
-        if(data.result){
-          user = data.user;
+      var deferred = $q.defer();
+
+      $http.get(ApiService.hostString() + '/api/status')
+      .success(function(data) {
+        if(data.result) {
+          $http.get(ApiService.hostString() + '/api/user')
+          .success(function(data) {
+            user = data;
+            deferred.resolve();
+          })
+          .error(function(data) {
+            debug(data.error);
+            user = null;
+            deferred.reject();
+          })
         } else {
           user = null;
+          deferred.reject();
         }
       })
       .error(function (data) {
         user = null;
+        deferred.reject();
       });
+
+      return deferred.promise;
     }
 
     // return available functions for use in controllers

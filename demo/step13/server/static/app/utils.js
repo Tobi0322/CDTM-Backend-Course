@@ -1,3 +1,5 @@
+DEBUG = true;
+
 function shake(element) {
   try {
     element.classList.add('shake');
@@ -40,5 +42,11 @@ function initMaterializeComponents() {
     $('.parallax').parallax();
   } catch(err) {
     // ignore
+  }
+}
+
+function debug(obj) {
+  if (DEBUG) {
+    console.log(obj);
   }
 }

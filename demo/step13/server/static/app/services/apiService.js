@@ -34,7 +34,6 @@ app.factory('ApiService', function ($location, $http) {
              VERSION = response.data.version;
            },
            function(response){
-             VERSION = 'N/A';
           }
         );
     }

@@ -33,7 +33,7 @@
     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
     <ul class="right hide-on-med-and-down">
         <li hide ng-show="AuthService.isLoggedIn()" class="text-primary" style="font-size: 18px; text-transform: capitalize;">
-          <img src="assets/icons/user.svg" width="45" style="vertical-align:middle"/> {{AuthService.getUser().split('.')[0]}}
+          <img src="assets/icons/user.svg" width="45" style="vertical-align:middle"/> {{AuthService.getUser().email.split('.')[0]}}
         </li>
         <li hide ng-show="AuthService.isLoggedIn()"><a href="/logout" class="text-primary white waves-effect waves-light btn">Logout</a></li>
         <li hide ng-show="!AuthService.isLoggedIn()"><a href="/register" class="primary waves-effect waves-light btn">Register</a></li>
@@ -50,7 +50,7 @@
       <li hide ng-show="AuthService.isLoggedIn()">
         <div class="center center-align" style="width: 80%; margin: 20px auto;">
           <img src="assets/icons/user.svg" width="100" alt=""/>
-          <a href="/">{{AuthService.getUser()}}</a>
+          <a href="/">{{AuthService.getUser().email}}</a>
         </div>
       </li>
 
