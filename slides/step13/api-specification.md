@@ -519,7 +519,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > - *Login Required*
 > - The user needs to be the owner of the specified list
 > ```
-> POST /api/lists/:id/tasks/:id/collaborators/:id
+> POST /api/lists/:id/collaborators/:id
 > ```
 > #### Response
 > (returns the list with updated collaborators)
@@ -540,7 +540,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > - *Login Required*
 > - The user needs to be the owner of the specified list
 > ```
-> DELETE /api/lists/:id/tasks/:id/collaborators/:id
+> DELETE /api/lists/:id/collaborators/:id
 > ```
 > #### Response
 > ```
