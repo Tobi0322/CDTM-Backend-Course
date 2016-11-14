@@ -1,11 +1,10 @@
-from flask import request, jsonify, send_from_directory
-from werkzeug import secure_filename
+from flask import request, jsonify
 
 import os, shutil
 
 from server import app
 from server.database import *
-from server.utils import login_required, allowed_file, list_access, json_abort
+from server.utils import login_required, list_access, json_abort
 
 # INDEX ROUTE
 @app.route('/api/lists/<string:list_id>/tasks', methods=['GET'])
@@ -80,56 +79,7 @@ def update_task(list_id, task_id):
 def remove_task(list_id, task_id):
     # don't forget to delete all Uploads
     directory = os.path.join(app.config['UPLOAD_FOLDER'], list_id, task_id)
-    print directory
     shutil.rmtree(directory, ignore_errors=True)
 
     db_delete_task(task_id)
-    return jsonify({'result': True})
-
-# UPLOAD FILES
-@app.route('/api/tasks/<string:task_id>/files', methods=['POST'])
-@login_required
-def upload_file(task_id):
-    # each file is save in a folder named after the corresponding tasks id
-    directory = os.path.join(app.config['UPLOAD_FOLDER'], task_id)
-    if not os.path.exists(directory):
-        os.makedirs(directory)
-
-    # Get the name of the uploaded files
-    uploaded_files = request.files.getlist('files[]')
-    for file in uploaded_files:
-        if file and allowed_file(file.filename):
-            # sanitize the filename
-            filename = secure_filename(file.filename)
-            # save uploaded file permanently
-            file.save(os.path.join(directory, filename))
-            # save reference in database
-            db_create_file(task_id, filename)
-
-    # return the updated task
-    task = db_get_task(task_id)
-    if task == None:
-        abort(500)
-
-    return jsonify(task.__dict__)
-
-# GET FILE
-@app.route('/api/tasks/<string:task_id>/files/<string:filename>', methods=['GET'])
-@login_required
-def get_file(task_id, filename):
-    directory = os.path.join(app.config['UPLOAD_FOLDER'], task_id)
-    print directory, filename
-    print app.root_path
-    # return "Hello"
-    return send_from_directory(directory, filename)
-
-
-# REMOVE FILE
-@app.route('/api/tasks/<string:task_id>/files/<string:filename>', methods=['DELETE'])
-@login_required
-def remove_file(task_id, filename):
-    db_delete_file(task_id, filename)
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], task_id, filename)
-    if os.path.exists(filepath) and os.path.isfile(filepath):
-        os.remove(filepath)
     return jsonify({'result': True})
