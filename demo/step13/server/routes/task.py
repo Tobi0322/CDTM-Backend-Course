@@ -74,11 +74,13 @@ def update_task(list_id, task_id):
     return jsonify(task.__dict__)
 
 # DESTROY ROUTE
-@app.route('/api/tasks/<string:task_id>', methods=['DELETE'])
+@app.route('/api/lists/<string:list_id>/tasks/<string:task_id>', methods=['DELETE'])
 @login_required
-def remove_task(task_id):
+@list_access
+def remove_task(list_id, task_id):
     # don't forget to delete all Uploads
-    directory = os.path.join(app.config['UPLOAD_FOLDER'], task_id)
+    directory = os.path.join(app.config['UPLOAD_FOLDER'], list_id, task_id)
+    print directory
     shutil.rmtree(directory, ignore_errors=True)
 
     db_delete_task(task_id)
