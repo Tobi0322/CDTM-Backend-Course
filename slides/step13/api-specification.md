@@ -6,6 +6,8 @@ All requests that POST, PATCH, or PUT JSON must set a `Content-Type` header with
 All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All times are provided as UTC. For example: 1970-01-01
 
 ## Endpoints
+0. [Error](#0-error)
+- [error handling](#error-handling)
 1. [Version](#1-version)
   - [retrieve the current version of the api](#retrieve-the-current-version-of-the-api)
 2. [Authentication](#2-authentication)
@@ -37,7 +39,25 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
   - [remove a collaborator from a specific list](#remove-a-collaborator-from-a-specific-list)
 
 ## 1 Version
-> ### Retrieve the current version of the api
+
+### Error handling
+> Whenever a request could not be completed the reponse is contains a description of the error as well as the respective `<Error Code>`.
+> #### Response
+> ```
+> Status: <Error Code>
+> 
+> json
+> {
+>   "error": {
+>     "status": <Error Code>,
+>     "text": "Something unexpected happened"
+>   },
+>   "result": false
+> }
+> ```
+
+
+### Retrieve the current version of the api
 > ```
 > GET /api/version
 > ```
@@ -254,7 +274,6 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > | title         | Integer          | true     |
 > | owner         | String           | true     |
 > | revision      | Int              | true     |
-> | collaborators | [String]         | true     |
 > #### Request body example
 > ```
 > {
