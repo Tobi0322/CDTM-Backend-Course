@@ -1,6 +1,11 @@
 <div class="container row">
 
-  <h1 class="center-align">Tasks</h1>
+  <h1 class="center-align">
+    <svg viewBox="0 0 25 25">
+      <use xlink:href="{{ListService.urlForListIcon(ListService.selectedList)}}"></use>
+    </svg>
+    {{ListService.selectedList.title}}
+  </h1>
   <div class="col s0 m2"></div>
   <div class="col s12 m8">
 

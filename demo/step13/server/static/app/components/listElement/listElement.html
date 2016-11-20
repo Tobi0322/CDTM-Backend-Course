@@ -1,6 +1,9 @@
 <div ng-class="{'active': list.selected}" class="collection-item">
   <a class="clickable" ng-click="selectList()">
     <div class="list-title" >
+      <svg viewBox="0 0 25 25">
+        <use xlink:href="{{urlForListIcon()}}"></use>
+      </svg>
       {{list.title}}
     </div>
     <div class="list-notifications">

@@ -388,41 +388,57 @@ nav .nav-wrapper .brand-logo img {
   font-size: 11pt;
 }
 
-list-element .collection-item {
+h1 svg {
+  width: 60px;
+  vertical-align: middle;
+}
+
+list-view .collection-item {
   border-style: none !important;
   padding: 0 !important;
 }
 
-list-element a {
+list-view a {
   width:100% !important;
   height:100% !important;
   padding:0 !important;
 }
 
-list-element > .active a{
+list-view .active a{
   background: #153d77;
   color: white;
 }
 
-list-element > .active a:hover {
+list-view .active a:hover {
   background: rgba(23,77,124, 1);
   color: white;
 }
 
-list-element .list-title {
+list-view .list-title svg {
+  width: 25px;
+  vertical-align: middle;
+  margin-right: 5px;
+  fill: #153d77;
+}
+
+list-view .active .list-title svg {
+  fill: white;
+}
+
+list-view .list-title {
   width:80%;
   height:100%;
   float: left;
-  padding-left:10px;
+  padding-left: 10px;
   background: inherit;
   color: inherit;
 }
 
-list-element .active .list-title {
+list-view .active .list-title {
   color: white
 }
 
-list-element .list-notifications {
+list-view .list-notifications {
   width: 20%;
   height:100%;
   float: right;
@@ -430,24 +446,24 @@ list-element .list-notifications {
   color: inherit;
 }
 
-list-element .active .list-notifications {
+list-view .active .list-notifications {
   color: white
 }
 
-list-element .active .list-notifications .badge {
+list-view .active .list-notifications .badge {
   color: rgba(255, 255, 255, 0.7);
 }
 
-list-element .list-notifications .new.badge {
+list-view .list-notifications .new.badge {
   background-color: #153d77
 }
 
-list-element .active .list-notifications .new.badge {
+list-view .active .list-notifications .new.badge {
   color: #153d77;
   background-color: rgba(255, 255, 255, 1.0);
 }
 
-list-element .active .list-notifications {
+list-view .active .list-notifications {
   color: white
 }
 

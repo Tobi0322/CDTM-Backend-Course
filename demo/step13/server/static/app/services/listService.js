@@ -10,15 +10,31 @@ app.factory('ListService', function($q, $http, ApiService) {
       collaborators: null
     },
     {
-      title: "Groceries",
+      title: "University",
+      id: 123245,
+      inbox: false,
+      selected: false,
+      revision: 0,
+      collaborators: null
+    },
+    {
+      title: "Birthday Presents",
       id: 12345,
+      inbox: false,
+      selected: false,
+      revision: 0,
+      collaborators: null
+    },
+    {
+      title: "Groceries",
+      id: 123455,
       inbox: false,
       selected: false,
       revision: 0,
       collaborators: [123,1244]
     }
   ];
-  selectedList = null
+  selectedList = lists[0];
 
   function loadLists() {
     var deferred = $q.defer();
@@ -27,7 +43,6 @@ app.factory('ListService', function($q, $http, ApiService) {
          function(response){
            lists.length = 0;
            response.data.lists.forEach(function(list) {
-             debug(list);
              lists.push(list);
              if (list.inbox) selectList(list);
            });
@@ -49,6 +64,7 @@ app.factory('ListService', function($q, $http, ApiService) {
         if (selectedList) selectedList.selected = false;
         selectedList = list;
         selectedList.selected = true;
+        debug(selectedList.title)
       }
     })
   }
@@ -62,12 +78,22 @@ app.factory('ListService', function($q, $http, ApiService) {
     return null
   }
 
+  function urlForListIcon(list) {
+    if (list.inbox) {
+      return '/assets/icons/inbox.svg#icon-1'
+    } else if (list.collaborators && list.collaborators.length > 0) {
+      return '/assets/icons/group.svg#icon-1'
+    }
+    return '/assets/icons/list.svg#icon-1'
+  }
+
   // return available functions for use in controllers
   return ({
     lists: lists,
     getListById: getListById,
     selectList: selectList,
     selectedList: selectedList,
-    loadLists: loadLists
+    urlForListIcon: urlForListIcon
+    // loadLists: loadLists
   });
 });
