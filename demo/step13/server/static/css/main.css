@@ -388,6 +388,69 @@ nav .nav-wrapper .brand-logo img {
   font-size: 11pt;
 }
 
+list-element .collection-item {
+  border-style: none !important;
+  padding: 0 !important;
+}
+
+list-element a {
+  width:100% !important;
+  height:100% !important;
+  padding:0 !important;
+}
+
+list-element > .active a{
+  background: #153d77;
+  color: white;
+}
+
+list-element > .active a:hover {
+  background: rgba(23,77,124, 1);
+  color: white;
+}
+
+list-element .list-title {
+  width:80%;
+  height:100%;
+  float: left;
+  padding-left:10px;
+  background: inherit;
+  color: inherit;
+}
+
+list-element .active .list-title {
+  color: white
+}
+
+list-element .list-notifications {
+  width: 20%;
+  height:100%;
+  float: right;
+  background: inherit;
+  color: inherit;
+}
+
+list-element .active .list-notifications {
+  color: white
+}
+
+list-element .active .list-notifications .badge {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+list-element .list-notifications .new.badge {
+  background-color: #153d77
+}
+
+list-element .active .list-notifications .new.badge {
+  color: #153d77;
+  background-color: rgba(255, 255, 255, 1.0);
+}
+
+list-element .active .list-notifications {
+  color: white
+}
+
 
 /* ANIMATIONS  */
 .animated {

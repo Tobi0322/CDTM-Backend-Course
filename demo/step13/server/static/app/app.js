@@ -71,20 +71,23 @@ app.run(function ($rootScope, $timeout, $location, $route, ApiService, AuthServi
 
 });
 
-app.controller('rootCtrl', function($scope, $timeout, AuthService, TaskService) {
+app.controller('rootCtrl', function($scope, $timeout, AuthService, TaskService, ListService) {
 
   $scope.TaskService = TaskService;
-  $scope.AuthService = AuthService
+  $scope.AuthService = AuthService;
+  $scope.ListService = ListService;
 
   $scope.$watch('$viewContentLoaded', function(){
     $timeout(initMaterializeComponents,0);
 
-    // only call once
-    $('.button-collapse').sideNav({
-        menuWidth: 300, // Default is 240
-        edge: 'left', // Choose the horizontal origin
-        closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-        draggable: true // Choose whether you can drag to open on touch screens
-    });
+    $timeout(function(){
+      // only call once
+      $('.button-collapse').sideNav({
+          menuWidth: 300, // Default is 240
+          edge: 'left', // Choose the horizontal origin
+          closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+          draggable: true // Choose whether you can drag to open on touch screens
+      });
+    },0);
   });
 });
