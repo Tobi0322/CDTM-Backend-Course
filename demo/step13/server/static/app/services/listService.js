@@ -58,6 +58,7 @@ app.factory('ListService', function($q, $http, ApiService) {
   }
 
   function selectList(newList) {
+    if (newList == null || newList == undefined) return selectedList;
     // first check whether list exists then (re)set all properties
     lists.forEach(function(list) {
       if (list.id == newList.id) {
@@ -66,7 +67,8 @@ app.factory('ListService', function($q, $http, ApiService) {
         selectedList.selected = true;
         debug(selectedList.title)
       }
-    })
+    });
+    return selectedList;
   }
 
   function getListById(id){
