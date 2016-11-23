@@ -78,7 +78,7 @@ app.controller('taskCtrl', function($scope, $window, $timeout, $filter, ApiServi
   }
 
   $scope.removeFile = function(file) {
-    TaskService.removeFile($scope.task, file);
+    TaskService.removeFile($scope.task, $scope.task.list, file);
   }
 
     $scope.downloadFile = function(file) {

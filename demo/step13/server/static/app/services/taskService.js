@@ -220,9 +220,16 @@ app.factory('TaskService', function($q, $http, ApiService) {
       return deferred.promise;
     }
 
-    function removeFile(task, file) {
+    function removeFile(task, list_id, file) {
       var deferred = $q.defer();
-      $http.delete(ApiService.hostString() + '/api/tasks/' + task.id + '/files/' + file)
+
+      var list = getListById(list_id)
+      if (list == null) {
+        deferred.reject();
+        return deferred.promise;
+      }
+
+      $http.delete(ApiService.hostString() + '/api/lists/' + list.id + '/tasks/' + task.id + '/files/' + file)
        .then(
            function(response){
              // success callback
@@ -235,6 +242,7 @@ app.factory('TaskService', function($q, $http, ApiService) {
              deferred.resolve();
            },
            function(response){
+             handleErrorResponse(response);
              deferred.reject();
            }
         );
