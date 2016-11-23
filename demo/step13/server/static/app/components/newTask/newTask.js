@@ -2,6 +2,9 @@ app.directive('newTask', function() {
     return {
         templateUrl: 'app/components/newTask/newTask.html',
         controller: 'newTaskCtrl',
+        scope: {
+          list: '=' //Two-way data binding
+        },
         restrict: 'E'
     };
 });
@@ -22,7 +25,7 @@ app.controller('newTaskCtrl', function($scope, TaskService) {
   $scope.newTask = {}
 
   $scope.addTask = function () {
-      TaskService.addTask($scope.newTask)
+      TaskService.addTask($scope.newTask, $scope.list.id)
         .then(function() {
           $scope.placeholder = placeholders[Math.floor(Math.random(1337)*placeholders.length)];
           $scope.newTask = {};

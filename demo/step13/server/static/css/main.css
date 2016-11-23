@@ -103,6 +103,10 @@ svg {
   fill: currentColor;
 }
 
+.toast {
+  background-color: #ff363e;
+}
+
 .section {
   width: 100%;
 }

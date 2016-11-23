@@ -19,4 +19,14 @@ app.controller('listElementCtrl', function($scope, TaskService) {
     return TaskService.urlForListIcon($scope.list)
   }
 
+  $scope.numberOfUnfinishedTasks = function() {
+    var n = 0
+    $scope.list.tasks.forEach(function(t) {
+      if (t.status == 'normal') {
+        n = n + 1;
+      }
+    });
+    return n;
+  }
+
 });

@@ -1,58 +1,68 @@
 app.factory('TaskService', function($q, $http, ApiService) {
 
     lists = [
-      {
-        title: "Inbox",
-        id: 1234,
-        inbox: true,
-        selected: true,
-        revision: 0,
-        collaborators: null
-      },
-      {
-        title: "University",
-        id: 123245,
-        inbox: false,
-        selected: false,
-        revision: 0,
-        collaborators: null
-      },
-      {
-        title: "Birthday Presents",
-        id: 12345,
-        inbox: false,
-        selected: false,
-        revision: 0,
-        collaborators: null
-      },
-      {
-        title: "Groceries",
-        id: 123455,
-        inbox: false,
-        selected: false,
-        revision: 0,
-        collaborators: [123,1244]
-      }
+      // {
+      //   title: "Inbox",
+      //   id: 1234,
+      //   inbox: true,
+      //   selected: true,
+      //   revision: 0,
+      //   collaborators: null
+      // },
+      // {
+      //   title: "University",
+      //   id: 123245,
+      //   inbox: false,
+      //   selected: false,
+      //   revision: 0,
+      //   collaborators: null
+      // },
+      // {
+      //   title: "Birthday Presents",
+      //   id: 12345,
+      //   inbox: false,
+      //   selected: false,
+      //   revision: 0,
+      //   collaborators: null
+      // },
+      // {
+      //   title: "Groceries",
+      //   id: 123455,
+      //   inbox: false,
+      //   selected: false,
+      //   revision: 0,
+      //   collaborators: [123,1244]
+      // }
     ];
     selectedList = lists[0];
-    tasks = [];
     loading = false;
 
     // MARK: List endpoints
-    function loadLists() {
+    function loadLists(reload) {
       var deferred = $q.defer();
       $http.get(ApiService.hostString() + '/api/lists')
        .then(
            function(response){
-             lists.length = 0;
-             response.data.lists.forEach(function(list) {
-               lists.push(list);
-               if (list.inbox) selectList(list);
+             response.data.lists.forEach(function(newList) {
+               if (newList.tasks == null || newList.tasks == undefined) {
+                 newList.tasks = [];
+               }
+               var originalList = getListById(newList.id);
+               if (originalList == null) {
+                 lists.push(newList);
+               } else if (originalList.revision < newList.revision) {
+                 // replace in place
+                 replaceList(originalList, newList)
+               }
+               // select inbox on pageload
+               if(!(reload)) {
+                 if (newList.inbox) selectList(newList);
+               }
              });
              deferred.resolve();
            },
            function(response){
-             debug(response)
+             handleErrorResponse(response);
              lists = [];
              deferred.reject();
            }
@@ -68,19 +78,9 @@ app.factory('TaskService', function($q, $http, ApiService) {
           if (selectedList) selectedList.selected = false;
           selectedList = list;
           selectedList.selected = true;
-          debug(selectedList.title)
         }
       });
       return selectedList;
-    }
-
-    function getListById(id){
-      lists.forEach(function(list) {
-        if (list.id === id) {
-          return list
-        }
-      })
-      return null
     }
 
     function urlForListIcon(list) {
@@ -93,38 +93,54 @@ app.factory('TaskService', function($q, $http, ApiService) {
     }
 
     // MARK: Task Endpoints
-    function loadTasks(shouldShowLoading, list) {
+    function loadTasks(shouldShowLoading, list_id) {
         var deferred = $q.defer();
+
+        var list = getListById(list_id)
+        if (list == null) {
+          deferred.reject();
+          return deferred.promise;
+        }
         loading = shouldShowLoading;
         $http.get(ApiService.hostString() + '/api/lists/' + list.id + '/tasks')
          .then(
-             function(response){
+             function(response) {
                // success callback
-               var newTasks = response.data.data;
+               var newTasks = response.data.tasks;
                newTasks.forEach(function(newTask) {
                  // set date
                  newTask.overdue = newTask.due != null && newTask.due != '' && new Date(newTask.due) < new Date();
                  // only replace task if server side version is newer
-                 var originalTask = taskForId(list, task.id)
-                 if (originalTask == null || originalTask.revision < newTask.revision) {
+                 var originalTask = taskForId(list, newTask.id);
+                 if (originalTask == null) {
+                   list.tasks.push(newTask);
+                 } else if (originalTask.revision < newTask.revision) {
                    // replace in place
                    replaceTask(originalTask, newTask)
                  }
-               });
+              });
                loading = false;
                deferred.resolve();
              },
              function(response){
                // failure callback
-               TaskHandler.loading = false;
+               handleErrorResponse(response);
+               loading = false;
                deferred.reject();
              }
           );
         return deferred.promise;
     };
 
-    function addTask(task, list) {
+    function addTask(task, list_id) {
       var deferred = $q.defer();
+
+      var list = getListById(list_id)
+      if (list == null) {
+        deferred.reject();
+        return deferred.promise;
+      }
+
       $http.post(ApiService.hostString() + '/api/lists/' + list.id + '/tasks', JSON.stringify(task))
        .then(
            function(response){
@@ -136,6 +152,7 @@ app.factory('TaskService', function($q, $http, ApiService) {
            },
            function(response){
              // failure callback
+             handleErrorResponse(response);
              deferred.reject();
            }
         );
@@ -241,15 +258,28 @@ app.factory('TaskService', function($q, $http, ApiService) {
     }
 
     // MARK: Private functions
+    function getListById(list_id) {
+        var ret = null;
+        lists.some(function(list) {
+          if (list.id === list_id) {
+            ret = list;
+            return;
+            }
+        });
+        return ret;
+    }
+
     function taskForId(list, id) {
+      var ret = null;
       if (list.tasks != null && list.tasks != undefined) {
-        list.tasks.forEach(function(task) {
+        list.tasks.some(function(task) {
           if (task.id === id) {
-            return task;
+            ret = task;
+            return;
           }
         });
       }
-      return null;
+      return ret;
     }
 
     function replaceTask(task, newTask) {
@@ -267,12 +297,37 @@ app.factory('TaskService', function($q, $http, ApiService) {
       task.files = newTask.files;
     }
 
+    function replaceList(list, newList) {
+      // replaces all properties of list with newList
+      // list.id = newList.id;
+      // list.owner = newList.owner
+      list.title = newList.title;
+      list.collaborators = newList.collaborators;
+      list.revision = newList.revision;
+    }
+
+    function handleErrorResponse(response){
+      if (response && response.data && response.data.result == false && response.data.error) {
+        debug(response.data.error);
+        var toastContent =$(`
+        <div>
+          <h5>Error</h5>
+          <div>
+            <strong>Status: </strong>` + response.data.error.status + `
+          </div>
+          <div>
+            <strong>Text: </strong>` + response.data.error.text + `
+          </div>
+        </div>`);
+        Materialize.toast(toastContent, 5000)
+      }
+    }
+
     // return available functions for use in controllers
     return ({
       lists: lists,
       selectedList: selectedList,
       loading: loading,
-      getListById: getListById,
       selectList: selectList,
       urlForListIcon: urlForListIcon,
       loadLists: loadLists,

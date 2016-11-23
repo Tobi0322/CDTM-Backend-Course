@@ -1,12 +1,5 @@
 app.controller('mainCtrl', function($scope, $interval, $timeout, AuthService, TaskService) {
 
-  $timeout(function() {
-    if (AuthService.isLoggedIn()) {
-      // TaskService.loadLists(true)
-      // TaskService.loadTasks(true)
-    }
-  }, 0);
-
   // TODO: find a better solution to busy waiting
   // FIXME: overwrites current tasks. If the user changes single tasks this leads to reference errors
   // var loadTasks = $interval(function() {

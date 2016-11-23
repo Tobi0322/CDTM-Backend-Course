@@ -1,7 +1,7 @@
 app.directive('taskList', function() {
     return {
         scope: {
-          tasks: '=' //Two-way data binding
+          tasks: '=', //Two-way data binding
         },
         templateUrl: 'app/components/taskList/taskList.html',
         controller: 'taskListCtrl',

@@ -35,14 +35,23 @@ app.config(function($locationProvider, $routeProvider) {
     })
 });
 
-app.run(function ($rootScope, $timeout, $location, $route, ApiService, AuthService) {
+app.run(function ($rootScope, $timeout, $location, $route, ApiService, AuthService, TaskService) {
 
   var initial = true;
 
   ApiService.loadApiVersion()
   AuthService.getUserStatus()
     .then(function() {
-      initial = false;
+      if (AuthService.isLoggedIn()) {
+        TaskService.loadLists(false)
+          .then(function(){
+            // tasks loaded
+            initial = false;
+          });
+          // infinte spin on failure
+      } else {
+        initial = false;
+      }
     })
     .catch(function() {
       initial = false;
