@@ -11,11 +11,14 @@
           </h5>
         </div>
         <div class="col s12" style="margin-top:50px;">
-          <a href="/register" class="btn primary waves-effect clickable">
+          <a ng-hide="AuthService.isLoggedIn()" href="/register" class="btn primary waves-effect clickable">
             Register
           </a>
-          <a href="/login" class="btn white waves-effect clickable text-primary">
+          <a ng-hide="AuthService.isLoggedIn()" href="/login" class="btn white waves-effect clickable text-primary">
             Login
+          </a>
+          <a hide ng-show="AuthService.isLoggedIn()" href="/" class="btn primary waves-effect clickable">
+            My Tasks
           </a>
         </div>
       </div>
