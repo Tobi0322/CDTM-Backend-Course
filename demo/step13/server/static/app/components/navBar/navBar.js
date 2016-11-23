@@ -17,9 +17,6 @@ app.controller('navBarCtrl', function($scope, $timeout, AuthService, TaskService
 
   $scope.$watch('$viewContentLoaded', function(){
     $timeout(function(){
-
-      debug('sidenav: ' + ($scope.sidenav ? 'fixed' : ''));
-      debug('topnav: ' +  $scope.topnav);
       // only call once
       $('.button-collapse').sideNav({
           menuWidth: 300, // Default is 240

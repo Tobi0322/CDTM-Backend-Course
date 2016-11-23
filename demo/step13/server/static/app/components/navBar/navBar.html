@@ -31,6 +31,10 @@
       <li hide ng-show="!AuthService.isLoggedIn()"><a href="/register" class="primary waves-effect waves-light btn">Register</a></li>
       <li hide ng-show="!AuthService.isLoggedIn()"><a href="/login" class="text-primary white waves-effect waves-light btn">Login</a></li>
       <!-- if logged in -->
+      <li hide ng-show="AuthService.isLoggedIn()">
+        <img src="assets/icons/user.svg" width="30" style="vertical-align:middle; margin-left: 10px;"/>
+        {{AuthService.getUser().email.split('.')[0]}}
+      </li>
       <list-view hide ng-show="AuthService.isLoggedIn()"></list-view>
     </div>
 
