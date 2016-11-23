@@ -1,9 +1,9 @@
-app.controller('mainCtrl', function($scope, $interval, $timeout, AuthService, TaskService, ListService) {
+app.controller('mainCtrl', function($scope, $interval, $timeout, AuthService, TaskService) {
 
   $timeout(function() {
     if (AuthService.isLoggedIn()) {
-      // ListService.loadLists(true)
-      TaskService.loadTasks(true)
+      // TaskService.loadLists(true)
+      // TaskService.loadTasks(true)
     }
   }, 0);
 

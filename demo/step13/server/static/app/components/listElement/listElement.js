@@ -9,14 +9,14 @@ app.directive('listElement', function() {
     };
 });
 
-app.controller('listElementCtrl', function($scope, ListService) {
+app.controller('listElementCtrl', function($scope, TaskService) {
 
   $scope.selectList = function() {
-    ListService.selectList($scope.list)
+    TaskService.selectList($scope.list)
   }
 
   $scope.urlForListIcon = function() {
-    return ListService.urlForListIcon($scope.list)
+    return TaskService.urlForListIcon($scope.list)
   }
 
 });

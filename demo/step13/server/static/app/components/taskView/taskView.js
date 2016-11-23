@@ -8,8 +8,8 @@ app.directive('taskView', function() {
   };
 });
 
-app.controller('taskViewCtrl', function($scope, ListService) {
+app.controller('taskViewCtrl', function($scope, TaskService) {
   $scope.urlForListIcon = function() {
-    return ListService.urlForListIcon($scope.list)
+    return TaskService.urlForListIcon($scope.list)
   }
 });

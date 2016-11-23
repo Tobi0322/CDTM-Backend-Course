@@ -71,11 +71,10 @@ app.run(function ($rootScope, $timeout, $location, $route, ApiService, AuthServi
 
 });
 
-app.controller('rootCtrl', function($scope, $timeout, AuthService, TaskService, ListService) {
+app.controller('rootCtrl', function($scope, $timeout, AuthService, TaskService) {
 
   $scope.TaskService = TaskService;
   $scope.AuthService = AuthService;
-  $scope.ListService = ListService;
 
   $scope.$watch('$viewContentLoaded', function(){
     $timeout(initMaterializeComponents,0);

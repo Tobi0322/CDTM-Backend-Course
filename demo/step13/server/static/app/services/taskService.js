@@ -1,4 +1,4 @@
-app.factory('TaskService', function($q, $http, ApiService, ListService) {
+app.factory('TaskService', function($q, $http, ApiService) {
 
     lists = [
       {
