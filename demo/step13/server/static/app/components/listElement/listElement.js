@@ -9,11 +9,14 @@ app.directive('listElement', function() {
     };
 });
 
-app.controller('listElementCtrl', function($scope, $location, TaskService) {
+app.controller('listElementCtrl', function($scope, $location, $window, TaskService) {
 
   $scope.selectList = function() {
     TaskService.selectList($scope.list);
     $location.path('/');
+    if ($window.innerWidth < 993) {
+      $('.button-collapse').sideNav('hide');
+    }
   }
 
   $scope.urlForListIcon = function() {
