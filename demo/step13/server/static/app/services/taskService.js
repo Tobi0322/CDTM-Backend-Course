@@ -174,8 +174,15 @@ app.factory('TaskService', function($q, $http, ApiService) {
       return deferred.promise;
     }
 
-    function uploadFiles(task, files) {
+    function uploadFiles(task, list_id, files) {
       var deferred = $q.defer();
+
+      var list = getListById(list_id)
+      if (list == null) {
+        deferred.reject();
+        return deferred.promise;
+      }
+
       // took some time to figure out how to properly use append
       var formData = new FormData();
       for (var i = 0; i < files.length; i++) {
@@ -192,24 +199,24 @@ app.factory('TaskService', function($q, $http, ApiService) {
           task.files.unshift(file);
       }
 
-      TaskHandler.loading = true;
+      loading = true;
       $http({
           method: 'POST',
           data: formData,
-          url: ApiService.hostString() + '/api/tasks/' + task.id + '/files',
+          url: ApiService.hostString() + '/api/lists/' + list.id + '/tasks/' + task.id + '/files',
           transformRequest: angular.identity, // needed to work
           headers: {
               'Content-Type': undefined // needed to work
           }
       }).success(function(response) {
         task.files = response.files;
-        TaskHandler.loading = false;
+        loading = false;
         deferred.resolve();
       }).error(function(response) {
-          TaskHandler.loading = false;
+          loading = false;
+          handleErrorResponse(response);
           deferred.reject();
       });
-
       return deferred.promise;
     }
 

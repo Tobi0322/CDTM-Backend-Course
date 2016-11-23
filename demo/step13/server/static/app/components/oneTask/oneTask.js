@@ -71,7 +71,7 @@ app.controller('taskCtrl', function($scope, $window, $timeout, $filter, ApiServi
   }
 
   $scope.uploadFiles = function(files) {
-    TaskService.uploadFiles($scope.task, files)
+    TaskService.uploadFiles($scope.task, $scope.task.list, files)
       .catch(function () {
         shake(document.getElementById('modal' + $scope.task.id));
       });
