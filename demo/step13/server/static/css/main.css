@@ -430,7 +430,7 @@ list-view .active .list-title svg {
 }
 
 list-view .list-title {
-  width:80%;
+  width:100%;
   height:100%;
   float: left;
   padding-left: 10px;

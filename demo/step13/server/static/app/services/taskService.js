@@ -1,5 +1,7 @@
 app.factory('TaskService', function($q, $http, ApiService) {
 
+// TODO: Refactor this monster service 
+
     lists = [];
     selectedList = lists[0];
     todayList = {

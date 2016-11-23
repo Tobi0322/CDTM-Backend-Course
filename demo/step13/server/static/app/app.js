@@ -45,8 +45,12 @@ app.run(function ($rootScope, $timeout, $location, $route, ApiService, AuthServi
       if (AuthService.isLoggedIn()) {
         TaskService.loadLists(false)
           .then(function(){
-            // tasks loaded
+            // lists loaded
             initial = false;
+            // initially load tasks
+            TaskService.lists.forEach(function(list) {
+              TaskService.loadTasks(false, list.id);
+            });
           });
           // infinte spin on failure
       } else {
@@ -87,15 +91,5 @@ app.controller('rootCtrl', function($scope, $timeout, AuthService, TaskService) 
 
   $scope.$watch('$viewContentLoaded', function(){
     $timeout(initMaterializeComponents,0);
-
-    $timeout(function(){
-      // only call once
-      $('.button-collapse').sideNav({
-          menuWidth: 300, // Default is 240
-          edge: 'left', // Choose the horizontal origin
-          closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-          draggable: true // Choose whether you can drag to open on touch screens
-      });
-    },0);
   });
 });

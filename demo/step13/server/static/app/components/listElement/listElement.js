@@ -9,10 +9,11 @@ app.directive('listElement', function() {
     };
 });
 
-app.controller('listElementCtrl', function($scope, TaskService) {
+app.controller('listElementCtrl', function($scope, $location, TaskService) {
 
   $scope.selectList = function() {
-    TaskService.selectList($scope.list)
+    TaskService.selectList($scope.list);
+    $location.path('/');
   }
 
   $scope.urlForListIcon = function() {
