@@ -272,7 +272,7 @@ app.factory('TaskService', function($q, $http, ApiService) {
       task.status = newTask.status;
       task.description = newTask.description;
       task.due = newTask.due;
-      task.overdue = newTask.overdue;
+      task.overdue = newTask.due != null && newTask.due != '' && new Date(newTask.due) < new Date();
       task.revision = newTask.revision;
       task.starred = newTask.starred;
       task.files = newTask.files;
