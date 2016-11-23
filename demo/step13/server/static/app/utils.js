@@ -47,3 +47,14 @@ function debug(obj) {
     console.log(obj);
   }
 }
+
+
+// Date utils
+function startOfNextWeek() {
+  var now = new Date();
+  now.setDate(now.getDate() + (0+(7-now.getDay())) % 7);
+  now.setHours(23);
+  now.setMinutes(59);
+  now.setSeconds(59);
+  return now;
+}

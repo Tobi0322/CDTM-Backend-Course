@@ -2,6 +2,14 @@ app.factory('TaskService', function($q, $http, ApiService) {
 
     lists = [];
     selectedList = lists[0];
+    todayList = {
+      title: 'Today',
+      tasks: []
+    };
+    weekList = {
+      title: 'Week',
+      tasks: []
+    };
     loading = false;
 
     // MARK: List endpoints
@@ -40,13 +48,9 @@ app.factory('TaskService', function($q, $http, ApiService) {
     function selectList(newList) {
       if (newList == null || newList == undefined) return selectedList;
       // first check whether list exists then (re)set all properties
-      lists.forEach(function(list) {
-        if (list.id == newList.id) {
-          if (selectedList) selectedList.selected = false;
-          selectedList = list;
-          selectedList.selected = true;
-        }
-      });
+      if (selectedList) selectedList.selected = false;
+      selectedList = newList;
+      newList.selected = true;
       return selectedList;
     }
 
@@ -81,9 +85,11 @@ app.factory('TaskService', function($q, $http, ApiService) {
                  var originalTask = taskForId(list, newTask.id);
                  if (originalTask == null) {
                    list.tasks.push(newTask);
+                   updateDynamicLists(newTask);
                  } else if (originalTask.revision < newTask.revision) {
                    // replace in place
-                   replaceTask(originalTask, newTask)
+                   replaceTask(originalTask, newTask);
+                   updateDynamicLists(originalTask);
                  }
               });
                loading = false;
@@ -112,7 +118,9 @@ app.factory('TaskService', function($q, $http, ApiService) {
        .then(
            function(response){
              // success callback
-             list.tasks.push(response.data);
+             var task = response.data;
+             list.tasks.push(task);
+             updateDynamicLists(task);
              deferred.resolve();
            },
            function(response){
@@ -138,6 +146,7 @@ app.factory('TaskService', function($q, $http, ApiService) {
            function(response){
              // success callback
              replaceTask(task, response.data);
+             updateDynamicLists(task);
              deferred.resolve();
            },
            function(response){
@@ -163,6 +172,7 @@ app.factory('TaskService', function($q, $http, ApiService) {
            function(response){
              // success callback
              list.tasks.splice(list.tasks.indexOf(task),1);
+             removeFromDynamicLists(task);
              deferred.resolve();
            },
            function(response){
@@ -292,6 +302,38 @@ app.factory('TaskService', function($q, $http, ApiService) {
       return ret;
     }
 
+    function updateDynamicLists(task) {
+      if (task.status == 'completed' || task.due == null) return;
+
+      var due = new Date(task.due);
+      var today = new Date();
+
+      if( due.toDateString() == today.toDateString()) {
+        addTaskToTodayList(task);
+      }
+      if (due < startOfNextWeek()) {
+        addTaskToWeekList(task);
+      }
+    }
+
+    function addTaskToTodayList(task) {
+      if (todayList.tasks.indexOf(task) == -1)
+        todayList.tasks.push(task);
+    }
+
+    function addTaskToWeekList(task) {
+      if (weekList.tasks.indexOf(task) == -1)
+        weekList.tasks.push(task);
+    }
+
+    function removeFromDynamicLists(task) {
+      var t = todayList.tasks.indexOf(task);
+      if (t > -1) todayList.tasks.splice(t,1);
+
+      var w = weekList.tasks.indexOf(task);
+      if (w > -1) weekList.tasks.splice(w,1);
+    }
+
     function replaceTask(task, newTask) {
       // replaces all properties of task with newTask
       // task.id = newTask.id;
@@ -314,6 +356,7 @@ app.factory('TaskService', function($q, $http, ApiService) {
       list.title = newList.title;
       list.collaborators = newList.collaborators;
       list.revision = newList.revision;
+      list.inbox = newList.inbox;
     }
 
     function handleErrorResponse(response){
@@ -337,6 +380,8 @@ app.factory('TaskService', function($q, $http, ApiService) {
     return ({
       lists: lists,
       selectedList: selectedList,
+      todayList: todayList,
+      weekList: weekList,
       loading: loading,
       selectList: selectList,
       urlForListIcon: urlForListIcon,

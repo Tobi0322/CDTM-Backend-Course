@@ -28,5 +28,4 @@ app.controller('listElementCtrl', function($scope, TaskService) {
     });
     return n;
   }
-
 });

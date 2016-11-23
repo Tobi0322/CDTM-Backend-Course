@@ -9,6 +9,6 @@ app.controller('mainCtrl', function($scope, $interval, $timeout, AuthService, Ta
     } else {
       $interval.cancel(reloadTasks);
     }
-  }, 10000);
+  }, 1000);
 
 });
