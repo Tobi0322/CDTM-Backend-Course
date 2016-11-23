@@ -43,12 +43,12 @@ app.controller('taskCtrl', function($scope, $window, $timeout, $filter, ApiServi
 
   $scope.deleteTaskModally = function() {
     $('#modal' + $scope.task.id).closeModal();
-    $scope.deleteTask($scope.task);
+    $scope.deleteTask();
   }
 
   $scope.updateTask = function() {
     $('#modal' + $scope.task.id).closeModal();
-    TaskService.updateTask($scope.task)
+    TaskService.updateTask($scope.task, $scope.task.list)
       .catch(function () {
         shake(document.getElementById(task.id));
       });

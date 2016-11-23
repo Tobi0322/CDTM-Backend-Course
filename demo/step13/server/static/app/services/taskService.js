@@ -316,8 +316,8 @@ app.factory('TaskService', function($q, $http, ApiService) {
       loadTasks: loadTasks,
       addTask: addTask,
       updateTask: updateTask,
-      // TODO
       removeTask: removeTask,
+      // TODO
       uploadFiles: uploadFiles,
       removeFile: removeFile,
       fileLocation: fileLocation
