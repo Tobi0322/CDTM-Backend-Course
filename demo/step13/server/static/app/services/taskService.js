@@ -3,10 +3,12 @@ app.factory('TaskService', function($q, $http, ApiService) {
     lists = [];
     selectedList = lists[0];
     todayList = {
+      id: -1,
       title: 'Today',
       tasks: []
     };
     weekList = {
+      id: -2,
       title: 'Week',
       tasks: []
     };
@@ -56,11 +58,15 @@ app.factory('TaskService', function($q, $http, ApiService) {
 
     function urlForListIcon(list) {
       if (list.inbox) {
-        return '/assets/icons/inbox.svg#icon-1'
+        return '/assets/icons/inbox.svg#icon-1';
       } else if (list.collaborators && list.collaborators.length > 0) {
-        return '/assets/icons/group.svg#icon-1'
+        return '/assets/icons/group.svg#icon-1';
+      } else if (list === todayList) {
+        return '/assets/icons/calendar.svg#icon-1';
+      } else if (list === weekList) {
+        return '/assets/icons/calendar-week.svg#icon-1';
       }
-      return '/assets/icons/list.svg#icon-1'
+      return '/assets/icons/list.svg#icon-1';
     }
 
     // MARK: Task Endpoints
@@ -108,6 +114,18 @@ app.factory('TaskService', function($q, $http, ApiService) {
     function addTask(task, list_id) {
       var deferred = $q.defer();
 
+      // for dynamic lists (today/week) set list_id to inbox
+      updateDateFlag = null;
+      if (list_id < 0) {
+        updateDateFlag = list_id;
+        lists.some(function(list){
+          if (list.inbox) {
+            list_id = list.id;
+            return;
+          }
+        })
+      }
+
       var list = getListById(list_id)
       if (list == null) {
         deferred.reject();
@@ -120,8 +138,19 @@ app.factory('TaskService', function($q, $http, ApiService) {
              // success callback
              var task = response.data;
              list.tasks.push(task);
-             updateDynamicLists(task);
-             deferred.resolve();
+             if (updateDateFlag) {
+               if (updateDateFlag == -1) task.due = new Date();
+               if (updateDateFlag == -2) task.due = endOfWeek();
+               updateTask(task, task.list)
+                .then(function(response) {
+                  deferred.resolve();
+              })
+              .then(function(response) {
+                deferred.reject();
+              });
+             } else {
+               deferred.resolve();
+             }
            },
            function(response){
              // failure callback
@@ -311,7 +340,7 @@ app.factory('TaskService', function($q, $http, ApiService) {
       if( due.toDateString() == today.toDateString()) {
         addTaskToTodayList(task);
       }
-      if (due < startOfNextWeek()) {
+      if (due <= endOfWeek()) {
         addTaskToWeekList(task);
       }
     }
@@ -393,7 +422,6 @@ app.factory('TaskService', function($q, $http, ApiService) {
       removeTask: removeTask,
       uploadFiles: uploadFiles,
       removeFile: removeFile,
-      // TODO
       fileLocation: fileLocation
     });
 });

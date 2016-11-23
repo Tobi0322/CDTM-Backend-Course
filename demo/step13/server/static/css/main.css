@@ -450,6 +450,10 @@ list-view .list-notifications {
   color: inherit;
 }
 
+list-view .list-notifications .badge {
+  font-weight: 300;
+}
+
 list-view .active .list-notifications {
   color: white
 }

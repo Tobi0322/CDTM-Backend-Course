@@ -50,7 +50,7 @@ function debug(obj) {
 
 
 // Date utils
-function startOfNextWeek() {
+function endOfWeek() {
   var now = new Date();
   now.setDate(now.getDate() + (0+(7-now.getDay())) % 7);
   now.setHours(23);
