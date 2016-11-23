@@ -1,39 +1,6 @@
 app.factory('TaskService', function($q, $http, ApiService) {
 
-    lists = [
-      // {
-      //   title: "Inbox",
-      //   id: 1234,
-      //   inbox: true,
-      //   selected: true,
-      //   revision: 0,
-      //   collaborators: null
-      // },
-      // {
-      //   title: "University",
-      //   id: 123245,
-      //   inbox: false,
-      //   selected: false,
-      //   revision: 0,
-      //   collaborators: null
-      // },
-      // {
-      //   title: "Birthday Presents",
-      //   id: 12345,
-      //   inbox: false,
-      //   selected: false,
-      //   revision: 0,
-      //   collaborators: null
-      // },
-      // {
-      //   title: "Groceries",
-      //   id: 123455,
-      //   inbox: false,
-      //   selected: false,
-      //   revision: 0,
-      //   collaborators: [123,1244]
-      // }
-    ];
+    lists = [];
     selectedList = lists[0];
     loading = false;
 
@@ -145,8 +112,6 @@ app.factory('TaskService', function($q, $http, ApiService) {
        .then(
            function(response){
              // success callback
-             debug("AddingTask")
-             debug(response.data)
              list.tasks.push(response.data);
              deferred.resolve();
            },
@@ -159,9 +124,16 @@ app.factory('TaskService', function($q, $http, ApiService) {
       return deferred.promise;
     }
 
-    function updateTask(task) {
+    function updateTask(task, list_id) {
       var deferred = $q.defer();
-      $http.put(ApiService.hostString() + '/api/tasks/' + task.id, JSON.stringify(task))
+
+      var list = getListById(list_id)
+      if (list == null) {
+        deferred.reject();
+        return deferred.promise;
+      }
+
+      $http.put(ApiService.hostString() + '/api/lists/' + list.id + '/tasks/' + task.id, JSON.stringify(task))
        .then(
            function(response){
              // success callback
@@ -170,6 +142,7 @@ app.factory('TaskService', function($q, $http, ApiService) {
            },
            function(response){
              // failure callback
+             handleErrorResponse(response);
              deferred.reject();
            }
         );

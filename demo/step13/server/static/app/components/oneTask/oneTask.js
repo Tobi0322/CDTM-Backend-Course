@@ -21,15 +21,15 @@ app.controller('taskCtrl', function($scope, $window, $timeout, $filter, ApiServi
             $scope.task.status = 'completed';
             element.classList.remove('fadeOutUp');
             element.classList.remove('animated');
-            TaskService.updateTask($scope.task)
+            TaskService.updateTask($scope.task, $scope.task.list)
           }, 500);
         } catch (e) {
           $scope.task.status = 'completed';
-          TaskService.updateTask($scope.task)
+          TaskService.updateTask($scope.task, $scope.task.list)
         }
     } else {
       $scope.task.status = 'normal';
-      TaskService.updateTask($scope.task)
+      TaskService.updateTask($scope.task, $scope.task.list)
     }
 
   }
