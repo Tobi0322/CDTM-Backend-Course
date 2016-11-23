@@ -249,8 +249,22 @@ app.factory('TaskService', function($q, $http, ApiService) {
         return deferred.promise;
     }
 
-    function fileLocation(task, file) {
-      return ApiService.hostString() + '/api/tasks/' + task.id + '/files/' + file;
+    function fileLocation(task, list_id, file) {
+      var list = getListById(list_id)
+      if (list == null) {
+        handleErrorResponse({
+          data: {
+            result: false,
+            error: {
+              status: 404,
+              text: 'File not found'
+            }
+          }
+        });
+        return null;
+      }
+
+      return ApiService.hostString() + '/api/lists/' + list.id + '/tasks/' + task.id + '/files/' + file;
     }
 
     // MARK: Private functions
@@ -332,9 +346,9 @@ app.factory('TaskService', function($q, $http, ApiService) {
       addTask: addTask,
       updateTask: updateTask,
       removeTask: removeTask,
-      // TODO
       uploadFiles: uploadFiles,
       removeFile: removeFile,
+      // TODO
       fileLocation: fileLocation
     });
 });

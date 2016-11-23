@@ -82,6 +82,9 @@ app.controller('taskCtrl', function($scope, $window, $timeout, $filter, ApiServi
   }
 
     $scope.downloadFile = function(file) {
-      $window.open(TaskService.fileLocation($scope.task, file));
+      var location = TaskService.fileLocation($scope.task, $scope.task.list, file);
+      if (location) {
+        $window.open(location);
+      }
     }
 });
