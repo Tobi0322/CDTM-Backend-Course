@@ -35,7 +35,7 @@ app.controller('taskCtrl', function($scope, $window, $timeout, $filter, ApiServi
   }
 
   $scope.deleteTask = function() {
-    TaskService.removeTask($scope.task)
+    TaskService.removeTask($scope.task, $scope.task.list)
       .catch(function () {
         shake(document.getElementById($scope.task.id));
       });
