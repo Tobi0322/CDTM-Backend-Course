@@ -137,7 +137,7 @@ app.factory('TaskService', function($q, $http, ApiService) {
        .then(
            function(response){
              // success callback
-             task = response.data;
+             replaceTask(task, response.data);
              deferred.resolve();
            },
            function(response){
