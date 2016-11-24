@@ -6,7 +6,7 @@ app.directive('listView', function() {
     };
 });
 
-app.controller('listViewCtrl', function($scope, $http) {
+app.controller('listViewCtrl', function($scope, $http, ApiService) {
 
   $scope.showCreateListModal = function () {
     $scope.newList = {};
@@ -16,7 +16,7 @@ app.controller('listViewCtrl', function($scope, $http) {
 
   $scope.createList = function (list) {
     $('#createListModal').closeModal();
-    $http.post('/api/lists/', list);
+    $http.post(ApiService.hostString() + '/api/lists/', list);
   };
 
 });

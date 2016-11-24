@@ -9,15 +9,7 @@ app.directive('listElement', function() {
     };
 });
 
-app.controller('listElementCtrl', function($scope, $rootScope, $resource, $location, $window, TaskService) {
-
-  var List = $resource('/api/lists/:id', {
-      'id': '@id'
-    },
-    {
-      'save': {method: 'PUT'}
-    }
-  );
+app.controller('listElementCtrl', function($scope, $http, $location, $window, ApiService, TaskService) {
 
   $scope.selectList = function() {
     TaskService.selectList($scope.list);
@@ -48,12 +40,12 @@ app.controller('listElementCtrl', function($scope, $rootScope, $resource, $locat
 
   $scope.updateList = function () {
     $('#listModal' + $scope.list.id).closeModal();
-    List.save($scope.list);
+    $http.put(ApiService.hostString() + '/api/lists/' + $scope.list.id, $scope.list);
   };
 
   $scope.deleteList = function () {
     $('#listModal' + $scope.list.id).closeModal();
-    List.delete($scope.list).$promise.then(function () {
+    $http.delete(ApiService.hostString() + '/api/lists/' + $scope.list.id).then(function () {
       // todo: make the list disappear
       TaskService.loadLists();
     });
