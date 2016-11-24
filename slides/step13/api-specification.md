@@ -519,7 +519,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 > - *Login Required*
 > - The user needs to be the owner of the specified list
 > ```
-> POST /api/lists/:id/collaborators/:id
+> POST /api/lists/:id/collaborators/:email
 > ```
 > #### Response
 > (returns the list with updated collaborators)
