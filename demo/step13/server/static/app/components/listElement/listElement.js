@@ -9,7 +9,7 @@ app.directive('listElement', function() {
     };
 });
 
-app.controller('listElementCtrl', function($scope, $resource, $location, $window, TaskService) {
+app.controller('listElementCtrl', function($scope, $rootScope, $resource, $location, $window, TaskService) {
 
   var List = $resource('/api/lists/:id', {
       'id': '@id'
@@ -47,12 +47,15 @@ app.controller('listElementCtrl', function($scope, $resource, $location, $window
   };
 
   $scope.updateList = function () {
-
     $('#listModal' + $scope.list.id).closeModal();
-    List.save($scope.list).$promise
-    //ListService.updateList($scope.list)
-      .catch(function () {
-        shake(document.getElementById($scope.list.id));
-      });
+    List.save($scope.list);
+  };
+
+  $scope.deleteList = function () {
+    $('#listModal' + $scope.list.id).closeModal();
+    List.delete($scope.list).$promise.then(function () {
+      // todo: make the list disappear
+      TaskService.loadLists();
+    });
   };
 });
