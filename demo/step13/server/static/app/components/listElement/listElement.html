@@ -1,4 +1,4 @@
-<div ng-class="{'active': list.selected}" class="collection-item">
+<div ng-class="{'active': list.selected}" class="collection-item" ng-dblclick="showDetails()">
   <a class="clickable" ng-click="selectList()">
     <div class="list-title" >
       <svg viewBox="0 0 25 25">
@@ -11,3 +11,24 @@
     </div>
   </a>
 </div>
+
+<form id="listModal{{list.id}}"  ng-submit="updateList()" class="modal modal-fixed-footer">
+
+    <div class="row task-card">
+      <div class="task-header valign-wrapper col s12 row">
+        <input class="subtle card-title col nonselectable" type="text" autocomplete="off" ng-model="list.title">
+        <a class="col delete nonselectable" href ng-click="deleteTaskModally()"></a>
+      </div>
+      <hr>
+
+      <div class="row task-body">
+        <div class="input-field col s12">
+          <h5>Example</h5>
+          <input id="dueDate{{task.id}}" type="text" placeholder="Remind me :-)" value="asdf" >
+        </div>
+      </div>
+    </div>
+  <div class="modal-footer">
+    <a class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="updateList()">Fertig</a>
+  </div >
+</form>

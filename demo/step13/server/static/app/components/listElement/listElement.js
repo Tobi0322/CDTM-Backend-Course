@@ -9,7 +9,15 @@ app.directive('listElement', function() {
     };
 });
 
-app.controller('listElementCtrl', function($scope, $location, $window, TaskService) {
+app.controller('listElementCtrl', function($scope, $resource, $location, $window, TaskService) {
+
+  var List = $resource('/api/lists/:id', {
+      'id': '@id'
+    },
+    {
+      'save': {method: 'PUT'}
+    }
+  );
 
   $scope.selectList = function() {
     TaskService.selectList($scope.list);
@@ -32,4 +40,19 @@ app.controller('listElementCtrl', function($scope, $location, $window, TaskServi
     });
     return n;
   }
+
+  $scope.showDetails = function() {
+    $('body').append($('#listModal' + $scope.list.id));
+    $('#listModal' + $scope.list.id).openModal();
+  };
+
+  $scope.updateList = function () {
+
+    $('#listModal' + $scope.list.id).closeModal();
+    List.save($scope.list).$promise
+    //ListService.updateList($scope.list)
+      .catch(function () {
+        shake(document.getElementById($scope.list.id));
+      });
+  };
 });

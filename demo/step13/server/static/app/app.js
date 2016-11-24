@@ -1,4 +1,4 @@
-var app = angular.module('taskApp', ['ngRoute']);
+var app = angular.module('taskApp', ['ngRoute', 'ngResource']);
 
 
 app.config(function($locationProvider, $routeProvider) {
