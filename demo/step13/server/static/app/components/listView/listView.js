@@ -6,10 +6,17 @@ app.directive('listView', function() {
     };
 });
 
-app.controller('listViewCtrl', function($scope, $timeout) {
+app.controller('listViewCtrl', function($scope, $http) {
 
-  $scope.createList = function() {
-    // TODO: create list
-  }
+  $scope.showCreateListModal = function () {
+    $scope.newList = {};
+    $('body').append($('#createListModal'));
+    $('#createListModal').openModal();
+  };
+
+  $scope.createList = function (list) {
+    $('#createListModal').closeModal();
+    $http.post('/api/lists/', list);
+  };
 
 });
