@@ -22,7 +22,7 @@ def add_collaborator(list_id, task_id, collaborator_email):
     if l == None:
         json_abort(404, "List not found")
 
-    return jsonify(l.__dict__)
+    return jsonify(l.__dict__), 201
 
 
 # REMOVE collaborator
