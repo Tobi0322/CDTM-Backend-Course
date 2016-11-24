@@ -1,6 +1,6 @@
 app.factory('TaskService', function($q, $http, ApiService) {
 
-// TODO: Refactor this monster service 
+// TODO: Refactor this monster service
 
     lists = [];
     selectedList = lists[0];
@@ -139,7 +139,7 @@ app.factory('TaskService', function($q, $http, ApiService) {
            function(response){
              // success callback
              var task = response.data;
-             list.tasks.push(task);
+             list.tasks.unshift(task);
              if (updateDateFlag) {
                if (updateDateFlag == -1) task.due = new Date();
                if (updateDateFlag == -2) task.due = endOfWeek();
@@ -393,17 +393,19 @@ app.factory('TaskService', function($q, $http, ApiService) {
     function handleErrorResponse(response){
       if (response && response.data && response.data.result == false && response.data.error) {
         debug(response.data.error);
-        var toastContent =$(`
-        <div>
-          <h5>Error</h5>
+        if (DEBUG) {
+          var toastContent =$(`
           <div>
-            <strong>Status: </strong>` + response.data.error.status + `
-          </div>
-          <div>
-            <strong>Text: </strong>` + response.data.error.text + `
-          </div>
-        </div>`);
-        Materialize.toast(toastContent, 5000)
+            <h5>Error</h5>
+            <div>
+              <strong>Status: </strong>` + response.data.error.status + `
+            </div>
+            <div>
+              <strong>Text: </strong>` + response.data.error.text + `
+            </div>
+          </div>`);
+          Materialize.toast(toastContent, 5000)
+        }
       }
     }
 
