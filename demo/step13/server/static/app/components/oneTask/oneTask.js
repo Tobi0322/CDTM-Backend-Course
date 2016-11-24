@@ -34,7 +34,10 @@ app.controller('taskCtrl', function($scope, $window, $timeout, $filter, ApiServi
 
   }
 
+  var isDeleting = false;
+
   $scope.deleteTask = function() {
+    isDeleting = true;
     TaskService.removeTask($scope.task, $scope.task.list)
       .catch(function () {
         shake(document.getElementById($scope.task.id));
@@ -55,19 +58,21 @@ app.controller('taskCtrl', function($scope, $window, $timeout, $filter, ApiServi
   }
 
   $scope.showDetails = function() {
-     clearSelection()
-     $('#modal' + $scope.task.id).openModal();
-     $('#dueDate' + $scope.task.id).pickadate({
-       selectMonths: true, // Creates a dropdown to control month
-       selectYears: 15, // Creates a dropdown of 15 years to control year
-       format: 'mmmm dd, yyyy',
-       firstDay: 1,
-       onSet: function(context) {
-         var date = new Date($('#dueDate' + $scope.task.id)[0].value);
-         $scope.task.due = $filter('date')(date, 'yyyy-MM-dd');
-         $scope.task.overdue = $scope.task.due != null && $scope.task.due != '' && new Date($scope.task.due) < new Date();
-       }
-     });
+    if (!isDeleting) {
+      clearSelection()
+      $('#modal' + $scope.task.id).openModal();
+      $('#dueDate' + $scope.task.id).pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15, // Creates a dropdown of 15 years to control year
+        format: 'mmmm dd, yyyy',
+        firstDay: 1,
+        onSet: function(context) {
+          var date = new Date($('#dueDate' + $scope.task.id)[0].value);
+          $scope.task.due = $filter('date')(date, 'yyyy-MM-dd');
+          $scope.task.overdue = $scope.task.due != null && $scope.task.due != '' && new Date($scope.task.due) < new Date();
+        }
+      });
+    }
   }
 
   $scope.uploadFiles = function(files) {
