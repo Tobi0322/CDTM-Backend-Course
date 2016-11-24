@@ -18,9 +18,13 @@ app.config(function($locationProvider, $routeProvider) {
     })
     .when('/logout', {
         resolve: {
-            logout: ['AuthService', function (AuthService) {
+            logout: function ($window, AuthService) {
                 AuthService.logout(true)
-            }]
+                                // close sidenav on mobile
+                if ($window.innerWidth < 993) {
+                  $('.button-collapse').sideNav('hide');
+                }
+            }
         }
     })
     .when('/login', {
