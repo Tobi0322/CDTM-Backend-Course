@@ -25,6 +25,7 @@ app.controller('newTaskCtrl', function($scope, TaskService) {
   $scope.newTask = {}
 
   $scope.addTask = function () {
+    if (!$scope.newTask.title) return;
       TaskService.addTask($scope.newTask, $scope.list.id)
         .then(function() {
           $scope.placeholder = placeholders[Math.floor(Math.random(1337)*placeholders.length)];
