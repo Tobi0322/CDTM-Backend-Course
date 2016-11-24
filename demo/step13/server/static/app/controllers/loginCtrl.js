@@ -1,4 +1,4 @@
-app.controller('loginCtrl', function($scope, $location, AuthService) {
+app.controller('loginCtrl', function($scope, $location, AuthService, TaskService) {
 
   if (AuthService.isLoggedIn()) {
     $location.path('/');
@@ -13,9 +13,17 @@ app.controller('loginCtrl', function($scope, $location, AuthService) {
     AuthService.login($scope.loginForm.email, $scope.loginForm.password)
       // handle success
       .then(function () {
-        $location.path('/');
-        $scope.disabled = false;
-        $scope.loginForm = {};
+
+        TaskService.loadLists(false)
+          .then(function(){
+            // initially load tasks
+            TaskService.lists.forEach(function(list) {
+              TaskService.loadTasks(false, list.id);
+            });
+            $location.path('/');
+            $scope.disabled = false;
+            $scope.loginForm = {};
+          });
       })
       // handle error
       .catch(function () {
