@@ -14,6 +14,9 @@ app.controller('listElementCtrl', function($scope, $http, $location, $window, $t
   var loadingIcon = '<img src="assets/icons/loading2.svg"></img>';
   var verifiedIcon = '<img src="assets/icons/check.svg"></img>';
   var failIcon = '<img src="assets/icons/fail.svg"></img>';
+
+  var doubleClick = false;
+
   $scope.errorMsg = '';
   init();
 
@@ -87,10 +90,15 @@ app.controller('listElementCtrl', function($scope, $http, $location, $window, $t
   }
 
   $scope.selectList = function() {
+    doubleClick = false;
     TaskService.selectList($scope.list);
     $location.path('/');
     if ($window.innerWidth < 993) {
-      $('.button-collapse').sideNav('hide');
+      $timeout(function() {
+        if (!doubleClick) {
+          $('.button-collapse').sideNav('hide');
+        }
+      }, 200)
     }
   }
 
@@ -109,6 +117,7 @@ app.controller('listElementCtrl', function($scope, $http, $location, $window, $t
   }
 
   $scope.showDetails = function() {
+    doubleClick = true;
     if ($scope.list.inbox || TaskService.lists.indexOf($scope.list) == -1)
       return;
     $('body').append($('#listModal' + $scope.list.id));

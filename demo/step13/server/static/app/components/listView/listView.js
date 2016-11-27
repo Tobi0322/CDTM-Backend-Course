@@ -13,7 +13,6 @@ app.controller('listViewCtrl', function($scope, $http, TaskService) {
     $('body').append($('#createListModal'));
     $('#createListModal').modal();
     $('#createListModal').modal('open');
-
   };
 
   $scope.createList = function () {
