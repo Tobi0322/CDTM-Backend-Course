@@ -9,6 +9,7 @@ app.directive('oneTask', function() {
 });
 
 app.controller('taskCtrl', function($scope, $window, $timeout, $filter, ApiService, TaskService) {
+
   $scope.toggleTask = function() {
     if ($scope.task.status == 'normal') {
         try {
@@ -34,10 +35,8 @@ app.controller('taskCtrl', function($scope, $window, $timeout, $filter, ApiServi
 
   }
 
-  var isDeleting = false;
-
   $scope.deleteTask = function() {
-    isDeleting = true;
+    $scope.task.isDeleting = true;
     TaskService.removeTask($scope.task, $scope.task.list)
       .catch(function () {
         shake(document.getElementById($scope.task.id));
@@ -58,9 +57,17 @@ app.controller('taskCtrl', function($scope, $window, $timeout, $filter, ApiServi
   }
 
   $scope.showDetails = function() {
-    if (!isDeleting) {
+    if (!$scope.task.isDeleting) {
+
       clearSelection()
-      $('#modal' + $scope.task.id).openModal();
+      $('#modal' + $scope.task.id).openModal({
+        ready: function() {
+          $scope.task.isEditing = true;
+        },
+        complete: function() {
+          $scope.task.isEditing = false;
+        }
+      });
       $('#dueDate' + $scope.task.id).pickadate({
         selectMonths: true, // Creates a dropdown to control month
         selectYears: 15, // Creates a dropdown of 15 years to control year

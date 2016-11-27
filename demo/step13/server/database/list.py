@@ -10,7 +10,6 @@ from server.models import List
 # --------------------------------------------
 
 def db_has_access_to_list(list_id, user_id):
-    print (list_id, user_id)
     ''' Returns whether a user has access to a certain list'''
     query = '''
         SELECT DISTINCT lists.id AS id

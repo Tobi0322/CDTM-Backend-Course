@@ -140,6 +140,24 @@ app.factory('TaskService', function($q, $http, ApiService) {
              function(response) {
                // success callback
                var newTasks = response.data.tasks;
+
+               // delete old tasks
+               list.tasks.forEach(function(oldTask) {
+                 var remove = true;
+                 newTasks.some(function(newTask) {
+                   if (oldTask.id === newTask.id) {
+                     remove = false;
+                     return
+                   }
+                 });
+                 if (remove && !oldTask.isEditing) {
+                   debug("deleting")
+                   debug(oldTask)
+                   list.tasks.splice(list.tasks.indexOf(oldTask),1)
+                 };
+               });
+
+               // add new tasks or update old ones
                newTasks.forEach(function(newTask) {
                  // set date
                  newTask.overdue = newTask.due != null && newTask.due != '' && new Date(newTask.due) < new Date();
