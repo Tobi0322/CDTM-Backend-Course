@@ -517,7 +517,7 @@ app.factory('TaskService', function($q, $http, ApiService) {
       var due = new Date(task.due);
       var today = new Date();
 
-      if( due.toDateString() == today.toDateString()) {
+      if (due <= today) {
         addTaskToTodayList(task);
       }
       if (due <= endOfWeek()) {
