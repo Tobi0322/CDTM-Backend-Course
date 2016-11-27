@@ -259,7 +259,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 
 ### Update a list by overwriting properties
 > - *Login Required*
-> - The user needs to have rights to access the specified list
+> - The user needs to be the owner of the specified list
 > - Only if client's `revision` is greater or equal to the server's `revision` it is updated
 > - The `owner` property is only updated if the request is sent by the current owner.
 > ```
@@ -297,7 +297,7 @@ All dates and times in the API are formatted as `'yyyy-MM-dd'` strings. All time
 
 ### Delete a list permanently
 > - *Login Required*
-> - The user needs to have rights to access the specified list
+> - The user needs to be the owner of the specified list
 > ```
 > DELETE /api/lists/:id
 > ```
