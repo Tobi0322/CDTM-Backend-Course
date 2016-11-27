@@ -1,12 +1,15 @@
-app.factory('ApiService', function ($location, $http) {
+app.factory('ApiService', function ($location, $http, $window) {
 
     var HOST = $location.host();
     var PORT = $location.port();
     var VERSION = 'N/A';
 
+    restoreAPISettingsLocally()
+
     function setPort(new_port) {
       if(new_port && new_port != null && new_port != undefined && new_port != '') {
         PORT = new_port;
+        storeAPISettingsLocally()
       }
     }
 
@@ -36,6 +39,28 @@ app.factory('ApiService', function ($location, $http) {
            function(response){
           }
         );
+    }
+
+    // private functions
+    function storeAPISettingsLocally() {
+      debug("Storing Settings")
+      $window.localStorage.apiSettings = angular.toJson({
+        PORT: PORT,
+        HOST: HOST
+      });
+    }
+
+    function restoreAPISettingsLocally() {
+      debug("Restoring Settings")
+      var settings = angular.fromJson($window.localStorage.apiSettings)
+      if (settings && settings.PORT && settings.HOST) {
+        debug("From Local Storage")
+        HOST = settings.HOST;
+        PORT = settings.PORT;
+      } else {
+        HOST = $location.host();
+        PORT = $location.port();
+      }
     }
 
     // return available functions for use in controllers
