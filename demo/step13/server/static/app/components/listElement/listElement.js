@@ -34,6 +34,8 @@ app.controller('listElementCtrl', function($scope, $http, $location, $window, Ap
   }
 
   $scope.showDetails = function() {
+    if ($scope.list.inbox || TaskService.lists.indexOf($scope.list) == -1)
+      return;
     $('body').append($('#listModal' + $scope.list.id));
     $('#listModal' + $scope.list.id).openModal();
   };
@@ -44,10 +46,12 @@ app.controller('listElementCtrl', function($scope, $http, $location, $window, Ap
   };
 
   $scope.deleteList = function () {
-    $('#listModal' + $scope.list.id).closeModal();
-    $http.delete(ApiService.hostString() + '/api/lists/' + $scope.list.id).then(function () {
-      // todo: make the list disappear
-      TaskService.loadLists();
-    });
+    TaskService.removeList($scope.list)
+      .then(function() {
+        $('#listModal' + $scope.list.id).closeModal();;
+      })
+      .catch(function () {
+        shake(document.getElementById('listModal'));
+      });
   };
 });

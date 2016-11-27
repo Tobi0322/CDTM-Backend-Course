@@ -97,7 +97,31 @@ app.factory('TaskService', function($q, $http, ApiService) {
            }
         );
         return deferred.promise;
-      }
+    }
+
+    function removeList(list) {
+      var deferred = $q.defer();
+
+      $http.delete(ApiService.hostString() + '/api/lists/' + list.id)
+       .then(
+           function(response){
+             // success callback
+             if (lists.indexOf(list) != -1) {
+               list.tasks.forEach(function(task) {
+                 removeFromDynamicLists(task);
+               });
+               lists.splice(lists.indexOf(list),1);
+             }
+             deferred.resolve();
+           },
+           function(response){
+             // failure callback
+             handleErrorResponse(response);
+             deferred.reject();
+           }
+        );
+      return deferred.promise;
+    }
 
     // MARK: Task Endpoints
     function loadTasks(shouldShowLoading, list_id) {
@@ -448,6 +472,7 @@ app.factory('TaskService', function($q, $http, ApiService) {
       urlForListIcon: urlForListIcon,
       loadLists: loadLists,
       addList: addList,
+      removeList: removeList,
       // tasks
       loadTasks: loadTasks,
       addTask: addTask,

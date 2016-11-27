@@ -396,6 +396,17 @@ nav .nav-wrapper .brand-logo img {
   height: 400px;
 }
 
+.modal.list .edit-list-wrapper {
+  width: 90%;
+  margin: 15px 5% 0 5%;
+}
+
+.modal.list .task-card .card-title {
+  width: calc(100% - 3.0rem);
+  width: -webkit-calc(100% - 3.0rem);
+  width: -mozt-calc(100% - 3.0rem);
+}
+
 .modal.list.create {
   margin-top: 100px;
   height: 200px;

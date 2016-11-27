@@ -1,11 +1,11 @@
 <div ng-class="{'active': list.selected}" class="collection-item" ng-dblclick="showDetails()">
   <a class="clickable" ng-click="selectList()">
-    <div class="list-title" >
+    <div class="list-title" class="nonselectable">
       <svg viewBox="0 0 25 25">
         <use xlink:href="{{urlForListIcon()}}"></use>
       </svg>
-      {{list.title}}
-      <div class="list-notifications">
+      <span class="nonselectable">{{list.title}}</span>
+      <div class="list-notifications nonselectable">
           <span class="badge">{{numberOfUnfinishedTasks()}}</span>
       </div>
     </div>
@@ -14,21 +14,25 @@
 
 <form id="listModal{{list.id}}"  ng-submit="updateList()" class="list modal modal-fixed-footer">
 
+  <div class="edit-list-wrapper">
     <div class="row task-card">
       <div class="task-header valign-wrapper col s12 row">
         <input class="subtle card-title col nonselectable" type="text" autocomplete="off" ng-model="list.title">
-        <a class="col delete nonselectable" href ng-click="deleteList()"></a>
+        <a class="col delete nonselectable clickable" ng-click="deleteList()"></a>
       </div>
       <hr>
 
       <div class="row task-body">
-        <div class="input-field col s12">
+        <div class="collaborators chips"></div>
+        <!-- <div class="input-field col s12">
           <h5>Example</h5>
-          <input id="dueDate{{task.id}}" type="text" placeholder="Remind me :-)" value="" >
-        </div>
+          <input id="dueDate{{task.id}}" type="text" placeholder="Remind me :-)" value="asdf" >
+        </div> -->
       </div>
     </div>
+  </div>
   <div class="modal-footer">
-    <a class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="updateList()">Fertig</a>
+    <a class="modal-action waves-effect waves-green btn-flat" ng-click="updateList()">Save</a>
+    <a class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
   </div >
 </form>
