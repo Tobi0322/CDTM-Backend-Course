@@ -9,37 +9,81 @@ app.directive('listElement', function() {
     };
 });
 
-app.controller('listElementCtrl', function($scope, $http, $location, $window, ApiService, TaskService) {
+app.controller('listElementCtrl', function($scope, $http, $location, $window, $timeout, AuthService, ApiService, TaskService) {
 
+  var loadingIcon = '<img src="assets/icons/loading2.svg"></img>';
+  var verifiedIcon = '<img src="assets/icons/check.svg"></img>';
+  var failIcon = '<img src="assets/icons/fail.svg"></img>';
+  $scope.errorMsg = '';
   init();
 
   function init() {
     $scope.collaborators = [];
-    // $scope.chipData = [];
-    // $scope.list.collaborators = [1];
-    // if($scope.list.collaborators) {
-    //   $scope.list.collaborators.forEach(function(collaborator) {
-    //     TaskService.getUser(collaborator)
-    //       .then(function (user) {
-    //         addCollaborator(user);
-    //       });
-    //   })
-    // }
+    if($scope.list.collaborators) {
+      reloadCollaborators()
+    }
+  }
+
+  function reloadCollaborators() {
+    $scope.collaborators = [];
+    $scope.list.collaborators.forEach(function(collaborator) {
+      TaskService.getUser(collaborator)
+        .then(function (user) {
+          user.verified = true;
+          addCollaborator(user);
+        });
+    });
   }
 
   function addCollaborator(user) {
-    var newCol = true;
-    $scope.collaborators.some(function(oldCollaborator) {
-      if (user.id === oldCollaborator.id) {
-        newCol = false;
-        oldCollaborator.email = user.email;
+    var icon = user.verified ? verifiedIcon : loadingIcon;
+    user.tag = icon + user.email;
+    var originalCollaborator = getCollaboratorByEmail(user.email);
+    if (originalCollaborator) {
+      // ignore
+    } else {
+      $scope.collaborators.push(user);
+    }
+    updateChips();
+  }
+
+  function getCollaboratorById(id) {
+    if (!id) return null;
+    var ret = null;
+    $scope.collaborators.some(function(col){
+      if (col.id == id) {
+        ret = col;
         return;
       }
-    })
-    if (newCol) {
-      $scope.collaborators.push(user);
-      $scope.chipData.push(user.email)
+    });
+    return ret
+  }
+
+  function getCollaboratorByEmail(email) {
+    if (!email) return null;
+    var ret = null;
+    $scope.collaborators.some(function(col){
+      if (col.email == email) {
+        ret = col;
+        return;
+      }
+    });
+    return ret
+  }
+
+  function removeChip(email) {
+    var collaborator = getCollaboratorByEmail(email);
+    index = $scope.collaborators.indexOf(collaborator);
+    if (index > -1) {
+      $scope.collaborators.splice(index, 1);
     }
+    updateChips();
+  }
+
+  function updateChips(withUserInput) {
+    $('.chips').material_chip({
+        'data': $scope.collaborators
+    });
   }
 
   $scope.selectList = function() {
@@ -78,39 +122,89 @@ app.controller('listElementCtrl', function($scope, $http, $location, $window, Ap
     });
     $('#listModal' + $scope.list.id).modal('open')
 
+    // init chips
     $('.chips').material_chip({
       secondaryPlaceholder: 'Add Collaborators'
     });
+    updateChips();
 
+    // register event listener
     $('.chips').on('chip.add', function(e, chip){
-      debug(chip);
-      $('.chips').material_chip({
-          'data': [
-            { tag: "m "}
-          ]
-      });
+      if (getCollaboratorByEmail(chip.tag)) updateChips();
+      var user = {
+        id: null,
+        tag: chip.tag,
+        email: chip.tag,
+        verified: false
+      }
+      addCollaborator(user);
 
+      TaskService.addCollaborator($scope.list.id, user.email)
+        .then(function() {
+          user.verified = true,
+          user.tag = verifiedIcon + user.email;
+          $scope.errorMsg = '';
+          updateChips();
+        },
+        function() {
+          user.verified = false,
+          user.tag = failIcon + user.email;
+          $scope.errorMsg = 'Could not add user <' + user.email + '>';
+          updateChips();
+          $timeout(function() {
+            removeChip(user.email);
+          }, 2500);
+        }
+      );
 
-      // you have the added chip here
     });
 
-    $('.chips').on('chip.delete', function(e, chip){
-      // you have the deleted chip here
+    $('.chips').on('chip.delete', function(e, chip) {
+      if (chip.verified) {
+        TaskService.removeCollaborator($scope.list.id, chip.id)
+          .then(function() {
+            removeChip(chip.email);
+          },function() {
+            reloadCollaborators();
+          });
+      } else {
+        removeChip(chip.email);
+      }
     });
   };
 
+  $scope.isOwner = function() {
+    var user = AuthService.getUser();
+    if (user && user.id === $scope.list.owner)
+      return true;
+    return false;
+  }
+
   $scope.updateList = function () {
-    $('#listModal' + $scope.list.id).closeModal();
+    $('#listModal' + $scope.list.id).modal('close');
     $http.put(ApiService.hostString() + '/api/lists/' + $scope.list.id, $scope.list);
   };
 
   $scope.deleteList = function () {
     TaskService.removeList($scope.list)
       .then(function() {
-        $('#listModal' + $scope.list.id).closeModal();;
+        $('#listModal' + $scope.list.id).modal('close');;
       })
       .catch(function () {
-        shake(document.getElementById('listModal'));
+        shake(document.getElementById('listModal' + $scope.list.id));
       });
   };
+
+  $scope.leaveList = function () {
+    if ($scope.isOwner()) return shake(document.getElementById('listModal' + $scope.list.id));
+
+    TaskService.leaveList($scope.list.id, AuthService.getUser().id)
+      .then(function() {
+        $('#listModal' + $scope.list.id).modal('close');;
+      })
+      .catch(function () {
+        shake(document.getElementById('listModal' + $scope.list.id));
+      });
+  };
+
 });

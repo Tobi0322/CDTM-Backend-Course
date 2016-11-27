@@ -421,6 +421,10 @@ nav .nav-wrapper .brand-logo img {
   margin: 0;
 }
 
+.chip img {
+  padding: 4px 4px 4px 0;
+}
+
 h1 svg {
   width: 60px;
   vertical-align: middle;

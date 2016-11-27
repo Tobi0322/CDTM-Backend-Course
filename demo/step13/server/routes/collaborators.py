@@ -1,15 +1,15 @@
-from flask import request, jsonify
+from flask import request, jsonify, session
 import os, shutil
 
 from server import app
 from server.database import *
-from server.utils import login_required, list_owner, json_abort
+from server.utils import login_required, list_owner, list_access, json_abort
 
 @app.route('/api/lists/<string:list_id>/collaborators/<string:collaborator_email>', methods=['POST'])
 @login_required
 @list_owner
-def add_collaborator(list_id, task_id, collaborator_email):
-    user = db_get_user(collaborator_email) == None:
+def add_collaborator(list_id, collaborator_email):
+    user = db_get_user(collaborator_email)
     if user == None:
         json_abort(404, 'User not found')
 
@@ -29,7 +29,11 @@ def add_collaborator(list_id, task_id, collaborator_email):
 @app.route('/api/lists/<string:list_id>/collaborators/<string:collaborator_id>', methods=['DELETE'])
 @login_required
 @list_access
-def remove_file(list_id, collaborator_id):
+def remove_collaborator(list_id, collaborator_id):
+    if collaborator_id != str(session.get('userID')):
+        if not db_is_list_owner(list_id, session.get('userID')):
+            json_abort(404, 'List not found1')
+
     if db_get_user_by_id(collaborator_id) == None:
         json_abort(400, 'Invalid request parameters')
 

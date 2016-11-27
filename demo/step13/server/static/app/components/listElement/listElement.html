@@ -17,19 +17,24 @@
   <div class="edit-list-wrapper">
     <div class="row task-card">
       <div class="task-header valign-wrapper col s12 row">
-        <input class="subtle card-title col nonselectable" type="text" autocomplete="off" ng-model="list.title">
-        <a class="col delete nonselectable clickable" ng-click="deleteList()"></a>
+        <input class="subtle card-title col nonselectable {{isOwner() ? '' : 'no-event'}}" type="text" autocomplete="off" ng-model="list.title">
+        <a hide ng-show="isOwner()" class="col delete nonselectable clickable" ng-click="deleteList()"></a>
       </div>
       <hr>
+      <div style="font-size: 10pt; margin: 0 5%; color: rgba(0,0,0,0.6);"><em>{{isOwner() ? 'You are the owner of this list.' : 'Info: Only the owner of a list can edit it.'}}</em></div>
 
       <div class="row task-body">
         <h5>Collaborators</h5>
-        <div class="collaborators chips"></div>
+        <div class="collaborators chips {{isOwner() ? '' : 'no-event'}}"></div>
+        </div>
+        <div class="error" style="font-size: 10pt;">{{errorMsg}}</div>
       </div>
     </div>
   </div>
   <div class="modal-footer">
-    <a class="modal-action waves-effect waves-green btn-flat" ng-click="updateList()">Save</a>
-    <a class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+    <a hide ng-show="isOwner()" class="modal-action waves-effect waves-blue btn-flat" ng-click="updateList()">Save</a>
+    <a hide ng-show="isOwner()" class="modal-action modal-close waves-effect waves-blue btn-flat">Cancel</a>
+    <a hide ng-show="!isOwner()" class="modal-action modal-close waves-effect waves-blue btn-flat">Done</a>
+    <a hide ng-show="!isOwner()" class="modal-action waves-effect waves-blue btn-flat" ng-click="leaveList()">Leave List</a>
   </div >
 </form>

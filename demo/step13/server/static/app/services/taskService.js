@@ -394,6 +394,92 @@ app.factory('TaskService', function($q, $http, ApiService) {
       return ApiService.hostString() + '/api/lists/' + list.id + '/tasks/' + task.id + '/files/' + file;
     }
 
+    // MARK: Collaborators Endpoints
+    function addCollaborator(list_id, email) {
+      var deferred = $q.defer();
+
+      var list = getListById(list_id)
+      if (list == null) {
+        deferred.reject();
+        return deferred.promise;
+      }
+
+      $http.post(ApiService.hostString() + '/api/lists/' + list.id + '/collaborators/' + email)
+       .then(
+           function(response){
+             // success callback
+             debug(response.data);
+             replaceList(list, response.data);
+             deferred.resolve();
+           },
+           function(response){
+             // failure callback
+             deferred.reject();
+           }
+        );
+      return deferred.promise;
+    }
+
+    function removeCollaborator(list_id, id) {
+      var deferred = $q.defer();
+
+      var list = getListById(list_id)
+      if (list == null) {
+        deferred.reject();
+        return deferred.promise;
+      }
+
+      $http.delete(ApiService.hostString() + '/api/lists/' + list.id + '/collaborators/' + id)
+       .then(
+           function(response){
+             // success callback
+             if (response.data.result == true) {
+               var index = list.collaborators.indexOf(id);
+               if (index > -1) {
+                  list.collaborators.splice(index, 1);
+              }
+             }
+             deferred.resolve();
+           },
+           function(response){
+             handleErrorResponse(response);
+             deferred.reject();
+           }
+        );
+        return deferred.promise;
+    }
+
+    function leaveList(list_id, id) {
+      var deferred = $q.defer();
+
+      var list = getListById(list_id)
+      if (list == null) {
+        deferred.reject();
+        return deferred.promise;
+      }
+
+      $http.delete(ApiService.hostString() + '/api/lists/' + list.id + '/collaborators/' + id)
+       .then(
+           function(response){
+             // success callback
+             if (lists.indexOf(list) != -1) {
+               list.tasks.forEach(function(task) {
+                 removeFromDynamicLists(task);
+               });
+               lists.splice(lists.indexOf(list),1);
+
+               if (selectedList === list) selectInbox();
+            }
+            deferred.resolve();
+           },
+           function(response){
+             handleErrorResponse(response);
+             deferred.reject();
+           }
+        );
+        return deferred.promise;
+    }
+
     // MARK: Private functions
     function getListById(list_id) {
         var ret = null;
@@ -521,6 +607,10 @@ app.factory('TaskService', function($q, $http, ApiService) {
       removeTask: removeTask,
       uploadFiles: uploadFiles,
       removeFile: removeFile,
-      fileLocation: fileLocation
+      fileLocation: fileLocation,
+      // collaborators
+      addCollaborator: addCollaborator,
+      removeCollaborator: removeCollaborator,
+      leaveList: leaveList
     });
 });
