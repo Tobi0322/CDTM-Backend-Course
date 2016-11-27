@@ -111,6 +111,8 @@ app.factory('TaskService', function($q, $http, ApiService) {
                  removeFromDynamicLists(task);
                });
                lists.splice(lists.indexOf(list),1);
+
+               if (selectedList === list) selectInbox();
              }
              deferred.resolve();
            },
@@ -383,6 +385,12 @@ app.factory('TaskService', function($q, $http, ApiService) {
         });
       }
       return ret;
+    }
+
+    function selectInbox() {
+      lists.some(function(list) {
+        if (list.inbox) return selectList(list);
+      });
     }
 
     function updateDynamicLists(task) {
