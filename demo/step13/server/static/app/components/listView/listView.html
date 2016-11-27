@@ -24,20 +24,23 @@
       </a>
   </div>
 
-  <form id="createListModal"  ng-submit="createList(newList)" class="modal modal-fixed-footer">
+  <form id="createListModal"  ng-submit="createList()" class="modal list create modal-fixed-footer">
 
-      <div class="row task-card">
+    <div class="create-list-wrapper">
+      <div class="row">
           <div class="task-header valign-wrapper col s12 row">
-              <div class="card-title">Create a new List</div>
+              <div class="card-title">Create New List</div>
           </div>
       </div>
       <div class="row modal-body">
           <div class="input-field col s12">
-              <h5>Title</h5>
-              <input type="text" autocomplete="off" ng-model="newList.title" >
+              <input type="text" autocomplete="off" placeholder="Title" ng-model="newList.title" >
           </div>
       </div>
-      <div class="modal-footer">
-          <a class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="createList(newList)">Fertig</a>
-      </div >
+    </div>
+    <div class="modal-footer">
+      <a class="modal-action waves-effect waves-blue btn-flat" ng-click="createList()">Save</a>
+      <a class="modal-action modal-close waves-effect waves-blue btn-flat">Cancel</a>
+    </div >
+
   </form>

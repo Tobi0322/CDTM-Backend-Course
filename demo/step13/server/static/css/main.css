@@ -392,6 +392,24 @@ nav .nav-wrapper .brand-logo img {
   font-size: 11pt;
 }
 
+.modal.list {
+  height: 400px;
+}
+
+.modal.list.create {
+  margin-top: 100px;
+  height: 200px;
+}
+
+.modal.list.create .create-list-wrapper {
+  width: 90%;
+  margin: 15px 5% 0 5%;
+}
+
+.modal.list.create .create-list-wrapper .row {
+  margin: 0;
+}
+
 h1 svg {
   width: 60px;
   vertical-align: middle;

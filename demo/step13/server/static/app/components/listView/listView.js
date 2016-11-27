@@ -6,7 +6,7 @@ app.directive('listView', function() {
     };
 });
 
-app.controller('listViewCtrl', function($scope, $http, ApiService) {
+app.controller('listViewCtrl', function($scope, $http, TaskService) {
 
   $scope.showCreateListModal = function () {
     $scope.newList = {};
@@ -14,9 +14,16 @@ app.controller('listViewCtrl', function($scope, $http, ApiService) {
     $('#createListModal').openModal();
   };
 
-  $scope.createList = function (list) {
-    $('#createListModal').closeModal();
-    $http.post(ApiService.hostString() + '/api/lists/', list);
+  $scope.createList = function () {
+    TaskService.addList($scope.newList)
+      .then(function() {
+        $('#createListModal').closeModal();
+        $scope.newList = {};
+      })
+      .catch(function () {
+        $scope.newList = {};
+        shake(document.getElementById('createListModal'));
+      });
   };
 
 });

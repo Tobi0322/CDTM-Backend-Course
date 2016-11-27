@@ -72,6 +72,33 @@ app.factory('TaskService', function($q, $http, ApiService) {
       return '/assets/icons/list.svg#icon-1';
     }
 
+
+    function addList(list) {
+      var deferred = $q.defer();
+
+      if (!list || !list.title) {
+        deferred.reject();
+        return deferred.promise;
+      }
+
+      $http.post(ApiService.hostString() + '/api/lists/', JSON.stringify(list))
+       .then(
+           function(response){
+             // success callback
+             var list = response.data;
+             list.tasks = [];
+             lists.push(list);
+             deferred.resolve();
+           },
+           function(response){
+             // failure callback
+             handleErrorResponse(response);
+             deferred.reject();
+           }
+        );
+        return deferred.promise;
+      }
+
     // MARK: Task Endpoints
     function loadTasks(shouldShowLoading, list_id) {
         var deferred = $q.defer();
@@ -420,6 +447,7 @@ app.factory('TaskService', function($q, $http, ApiService) {
       selectList: selectList,
       urlForListIcon: urlForListIcon,
       loadLists: loadLists,
+      addList: addList,
       // tasks
       loadTasks: loadTasks,
       addTask: addTask,
