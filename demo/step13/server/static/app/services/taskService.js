@@ -125,6 +125,22 @@ app.factory('TaskService', function($q, $http, ApiService) {
       return deferred.promise;
     }
 
+    function getUser(id) {
+      var deferred = $q.defer();
+      $http.get(ApiService.hostString() + '/api/users/' + id)
+       .then(
+           function(response){
+             deferred.resolve(response.data);
+           },
+           function(response){
+             // failure callback
+             handleErrorResponse(response);
+             deferred.reject();
+           }
+        );
+      return deferred.promise;
+    }
+
     // MARK: Task Endpoints
     function loadTasks(shouldShowLoading, list_id) {
         var deferred = $q.defer();
@@ -151,8 +167,6 @@ app.factory('TaskService', function($q, $http, ApiService) {
                    }
                  });
                  if (remove && !oldTask.isEditing) {
-                   debug("deleting")
-                   debug(oldTask)
                    list.tasks.splice(list.tasks.indexOf(oldTask),1)
                  };
                });
@@ -499,6 +513,7 @@ app.factory('TaskService', function($q, $http, ApiService) {
       loadLists: loadLists,
       addList: addList,
       removeList: removeList,
+      getUser: getUser,
       // tasks
       loadTasks: loadTasks,
       addTask: addTask,

@@ -44,12 +44,12 @@ app.controller('taskCtrl', function($scope, $window, $timeout, $filter, ApiServi
   }
 
   $scope.deleteTaskModally = function() {
-    $('#modal' + $scope.task.id).closeModal();
+    $('#modal' + $scope.task.id).modal('close');
     $scope.deleteTask();
   }
 
   $scope.updateTask = function() {
-    $('#modal' + $scope.task.id).closeModal();
+    $('#modal' + $scope.task.id).modal('close');
     TaskService.updateTask($scope.task, $scope.task.list)
       .catch(function () {
         shake(document.getElementById(task.id));
@@ -60,7 +60,7 @@ app.controller('taskCtrl', function($scope, $window, $timeout, $filter, ApiServi
     if (!$scope.task.isDeleting) {
 
       clearSelection()
-      $('#modal' + $scope.task.id).openModal({
+      $('#modal' + $scope.task.id).modal({
         ready: function() {
           $scope.task.isEditing = true;
         },
@@ -68,6 +68,7 @@ app.controller('taskCtrl', function($scope, $window, $timeout, $filter, ApiServi
           $scope.task.isEditing = false;
         }
       });
+      $('#modal' + $scope.task.id).modal('open');
       $('#dueDate' + $scope.task.id).pickadate({
         selectMonths: true, // Creates a dropdown to control month
         selectYears: 15, // Creates a dropdown of 15 years to control year

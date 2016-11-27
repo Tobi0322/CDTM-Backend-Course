@@ -11,13 +11,15 @@ app.controller('listViewCtrl', function($scope, $http, TaskService) {
   $scope.showCreateListModal = function () {
     $scope.newList = {};
     $('body').append($('#createListModal'));
-    $('#createListModal').openModal();
+    $('#createListModal').modal();
+    $('#createListModal').modal('open');
+
   };
 
   $scope.createList = function () {
     TaskService.addList($scope.newList)
       .then(function() {
-        $('#createListModal').closeModal();
+        $('#createListModal').modal('close');
         $scope.newList = {};
       })
       .catch(function () {

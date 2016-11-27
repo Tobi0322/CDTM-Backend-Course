@@ -504,6 +504,15 @@ list-view .active .list-notifications {
   color: white
 }
 
+/* BUG FIXES Materialize*/
+.modal-overlay {
+  width: 100vw !important;
+  height: 100vh !important;
+  background: black !important;
+  position: absolute !important;
+  top: 0 !important;
+}
+
 
 /* ANIMATIONS  */
 .animated {
