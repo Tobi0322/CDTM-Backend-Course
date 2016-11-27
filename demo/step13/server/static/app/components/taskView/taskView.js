@@ -11,7 +11,7 @@ app.directive('taskView', function() {
 app.controller('taskViewCtrl', function($scope, TaskService) {
 
   $scope.urlForListIcon = function() {
-    return TaskService.urlForListIcon($scope.list)
+    if ($scope.list) return TaskService.urlForListIcon($scope.list);
   }
 
   $scope.loadTasksForList = function() {

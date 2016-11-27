@@ -24,9 +24,10 @@ def register():
     if db_create_user(email, security.generate_password_hash(password)):
         # create default task list for user
         user = db_get_user(email)
-        if user != None:
-            db_create_list('Inbox', user.id, inbox=True)
-        return jsonify({'result': True, 'text': 'User successfully created'})
+        if user != None and db_create_list('Inbox', user.id, inbox=True) != None:
+            return jsonify({'result': True, 'text': 'User successfully created'})
+        else:
+            return jsonify({'result': True, 'text': 'User successfully created'})
     return jsonify({'result': False, 'text': 'User already exists'})
 
 # login User

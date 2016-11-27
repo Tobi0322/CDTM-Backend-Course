@@ -19,8 +19,9 @@ app.config(function($locationProvider, $routeProvider) {
     .when('/logout', {
         resolve: {
             logout: function ($window, AuthService) {
-                AuthService.logout(true)
-                                // close sidenav on mobile
+                AuthService.logout(true);
+
+                // close sidenav on mobile
                 if ($window.innerWidth < 993) {
                   $('.button-collapse').sideNav('hide');
                 }

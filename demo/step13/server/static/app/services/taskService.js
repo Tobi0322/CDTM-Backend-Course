@@ -19,6 +19,7 @@ app.factory('TaskService', function($q, $http, ApiService) {
     // MARK: List endpoints
     function loadLists(reload) {
       var deferred = $q.defer();
+
       $http.get(ApiService.hostString() + '/api/lists')
        .then(
            function(response){

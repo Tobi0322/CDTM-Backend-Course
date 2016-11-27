@@ -1,4 +1,4 @@
-app.factory('AuthService', function ($q, $http, $location, ApiService) {
+app.factory('AuthService', function ($q, $http, $location, $route, ApiService) {
 
     // create user variable
     var user = null;
@@ -47,7 +47,8 @@ app.factory('AuthService', function ($q, $http, $location, ApiService) {
       $http.get(ApiService.hostString() + '/api/logout')
         .success(function (data) {
           if (redirect) {
-            $location.path('/');
+            $location.path('/home');
+            window.location.reload(true); 
           }
           deferred.resolve();
         })

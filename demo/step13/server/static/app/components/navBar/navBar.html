@@ -39,7 +39,7 @@
     </div>
 
     <div class="" style="width: 100%; min-height:10%; margin: 0; overflow: auto; ">
-      <a href="/logout" class="text-primary white waves-effect waves-light btn">Logout</a>
+      <a hide ng-show="AuthService.isLoggedIn()" href="/logout" class="text-primary white waves-effect waves-light btn">Logout</a>
     </div>
   </div>
 </ul>
