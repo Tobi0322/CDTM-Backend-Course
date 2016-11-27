@@ -4,7 +4,7 @@ import os, shutil
 
 from server import app
 from server.database import *
-from server.utils import login_required, list_access, json_abort
+from server.utils import login_required, list_access, list_owner, json_abort
 
 @app.route('/api/lists', methods=['GET'])
 @login_required
@@ -41,7 +41,7 @@ def create_list():
 
 @app.route('/api/lists/<string:list_id>', methods=['PUT'])
 @login_required
-@list_access
+@list_owner
 def update_list(list_id):
     data = request.get_json(force=True)
     l = db_get_list(list_id)
@@ -62,7 +62,7 @@ def update_list(list_id):
 
 @app.route('/api/lists/<string:list_id>', methods=['DELETE'])
 @login_required
-@list_access
+@list_owner
 def remove_list(list_id):
     # delete respective file directory
     directory = os.path.join(app.config['UPLOAD_FOLDER'], list_id)
