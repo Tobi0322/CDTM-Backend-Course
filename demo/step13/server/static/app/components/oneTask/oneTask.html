@@ -38,6 +38,10 @@
           <h5>Description</h5>
           <textarea id="description{{task.id}}" class="materialize-textarea description" placeholder="Your description ..." ng-model="task.description"></textarea>
         </div>
+        <div class="input-field col s12">
+          <h5>Attachments</h5>
+          <div class="hint">To add files simply drag and drop them here.</div>
+        </div>
         <div class="row attachment-field" ng-repeat="file in task.files">
           <div class="col s12">
             <span class="clickable" ng-click="downloadFile(file)">

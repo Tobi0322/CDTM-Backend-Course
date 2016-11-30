@@ -414,6 +414,20 @@ nav .nav-wrapper .brand-logo img {
   font-size: 11pt;
 }
 
+.modal .hint {
+  font-size: 11pt;
+  font-style: italic;
+  color: lightgray;
+}
+
+.modal .input-field {
+  margin-top: 0;
+}
+
+.modal .input-field h5 {
+  margin-top: 0;
+}
+
 .modal.list {
   height: 400px;
 }
