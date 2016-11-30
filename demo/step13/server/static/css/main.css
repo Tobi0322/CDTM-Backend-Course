@@ -111,7 +111,18 @@ svg {
   width: 100%;
 }
 
-input:focus:not([readonly]) {
+.picker__date-display {
+  background-color: #153d77;
+}
+.picker__weekday-display {
+  background-color: #0e346b;
+}
+
+.picker__day.picker__day--today, .picker__close, .picker__today {
+  color: #153d77;
+}
+
+input:focus:not([readonly]), textarea:focus:not([readonly]), .chips.focus {
   border-bottom: 1px solid #153d77 !important;
   -webkit-box-shadow: 0 1px 0 0 #153d77 !important;
   -moz-box-shadow: 0 1px 0 0 #153d77 !important;
@@ -389,10 +400,6 @@ nav .nav-wrapper .brand-logo img {
 
 .modal .valign-wrapper {
   margin: 0;
-}
-
-.modal .task-body textarea:focus:not([readonly]) {
-  background: rgba(0, 0, 0, 0.05);
 }
 
 .modal hr {
