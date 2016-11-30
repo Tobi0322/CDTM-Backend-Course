@@ -52,7 +52,6 @@ app.factory('ApiService', function ($location, $http, $window) {
     function restoreAPISettingsLocally() {
       var settings = angular.fromJson($window.localStorage.apiSettings)
       if (settings && settings.PORT && settings.HOST) {
-        debug("From Local Storage")
         HOST = settings.HOST;
         PORT = settings.PORT;
       } else {
