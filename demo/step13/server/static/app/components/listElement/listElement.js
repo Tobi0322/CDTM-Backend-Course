@@ -85,6 +85,8 @@ app.controller('listElementCtrl', function($scope, $http, $location, $window, $t
 
   function updateChips(withUserInput) {
     $('.chips').material_chip({
+        placeholder: 'add collaborator',
+        secondaryPlaceholder: 'add collaborator',
         'data': $scope.collaborators
     });
   }
@@ -133,7 +135,8 @@ app.controller('listElementCtrl', function($scope, $http, $location, $window, $t
 
     // init chips
     $('.chips').material_chip({
-      secondaryPlaceholder: 'Add Collaborators'
+      placeholder: 'add collaborator',
+      secondaryPlaceholder: 'add collaborator'
     });
     updateChips();
 

@@ -415,9 +415,9 @@ nav .nav-wrapper .brand-logo img {
 }
 
 .modal .hint {
-  font-size: 11pt;
+  font-size: 10pt;
   font-style: italic;
-  color: lightgray;
+  color: grey;
 }
 
 .modal .input-field {
