@@ -9,6 +9,7 @@ app.directive('devBar', function() {
 app.controller('devBarCtrl', function($scope, $route, ApiService) {
 
   $scope.appVersion = 13.0;
+  $scope.show = DEBUG;
 
   $scope.changePort = function(e) {
     ApiService.setPort(e.originalEvent.target.value);

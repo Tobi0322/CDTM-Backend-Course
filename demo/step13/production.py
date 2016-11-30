@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from waitress import serve
 from run import *
 
