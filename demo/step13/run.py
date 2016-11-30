@@ -15,4 +15,5 @@ def init_app():
     app.config['ALLOWED_EXTENSIONS'] = set(config.ALLOWED_EXTENSIONS)
 
 if __name__ == '__main__':
+    init_app()
     app.run(host=config.HOST, port=int(config.PORT), debug=True)
