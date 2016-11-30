@@ -43,7 +43,6 @@ app.factory('ApiService', function ($location, $http, $window) {
 
     // private functions
     function storeAPISettingsLocally() {
-      debug("Storing Settings")
       $window.localStorage.apiSettings = angular.toJson({
         PORT: PORT,
         HOST: HOST
@@ -51,7 +50,6 @@ app.factory('ApiService', function ($location, $http, $window) {
     }
 
     function restoreAPISettingsLocally() {
-      debug("Restoring Settings")
       var settings = angular.fromJson($window.localStorage.apiSettings)
       if (settings && settings.PORT && settings.HOST) {
         debug("From Local Storage")
