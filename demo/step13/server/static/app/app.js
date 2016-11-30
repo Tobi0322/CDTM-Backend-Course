@@ -66,6 +66,17 @@ app.run(function ($rootScope, $timeout, $location, $route, ApiService, AuthServi
       initial = false;
     });
 
+    // ignore files which are not dropped into the dropzone
+    $('body').on('drop', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    });
+
+    $('body').on('dragover', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    });
+
   $timeout(function(){
     // give it some time (looks better visually)
     document.querySelector('.loading').remove();

@@ -12,6 +12,7 @@ app.directive('dropZone', function() {
 
 
 app.controller('fileCtrl', function($scope, $element) {
+
   $element.on('dragover', function(e) {
     this.classList.add('over');
     e.preventDefault();
@@ -26,7 +27,6 @@ app.controller('fileCtrl', function($scope, $element) {
 
   $element.on('dragleave', function(e) {
       this.classList.remove('over');
-      this.classList.add('over');
       e.preventDefault();
       e.stopPropagation();
     });
