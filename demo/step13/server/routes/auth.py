@@ -48,7 +48,6 @@ def login():
 # logout User
 @app.route('/api/logout')
 def logout():
-    print "logging out"
     session.pop('logged_in', None)
     session.pop('userID', None)
     session.pop('userEmail', None)
