@@ -3,8 +3,7 @@ import os
 from server import *
 import config
 
-if __name__ == '__main__':
-
+def init_app():
     if config.DB_SEED:
         init_db()
 
@@ -15,4 +14,5 @@ if __name__ == '__main__':
     app.config['UPLOAD_FOLDER'] =  os.path.join(app.root_path, '..', config.UPLOAD_FOLDER)
     app.config['ALLOWED_EXTENSIONS'] = set(config.ALLOWED_EXTENSIONS)
 
+if __name__ == '__main__':
     app.run(host=config.HOST, port=int(config.PORT), debug=True)
