@@ -189,6 +189,10 @@ app.controller('listElementCtrl', function($scope, $http, $location, $window, $t
     return false;
   }
 
+  $scope.isEditable = function() {
+    return $scope.list && !$scope.list.inbox && $scope.list.id >= 0
+  }
+
   $scope.updateList = function () {
     $('#listModal' + $scope.list.id).modal('close');
     $http.put(ApiService.hostString() + '/api/lists/' + $scope.list.id, $scope.list);

@@ -5,8 +5,13 @@
         <use xlink:href="{{urlForListIcon()}}"></use>
       </svg>
       <span class="nonselectable">{{list.title}}</span>
-      <div class="list-notifications nonselectable">
-          <span class="badge">{{numberOfUnfinishedTasks()}}</span>
+      <div class="list-actions">
+        <div class="list-notifications nonselectable">
+            <span class="badge">{{numberOfUnfinishedTasks()}}</span>
+        </div>
+        <div class="list-edit nonselectable">
+          <div hide ng-show="isEditable()" class="edit nonselectable clickable" ng-click="showDetails()"></div>
+        </div>
       </div>
     </div>
   </a>

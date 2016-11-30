@@ -8,6 +8,8 @@
   <div class="col duedate" ng-class="{due: task.overdue && task.status!='completed'}">
     {{task.due | date:'MMMM dd, yyyy'}}
   </div>
+  <a class="col edit nonselectable" href ng-click="showDetails()">
+  </a>
   <a class="col delete nonselectable" href ng-click="deleteTask()"></a>
 </div>
 
