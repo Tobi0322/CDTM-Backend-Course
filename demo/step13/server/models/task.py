@@ -57,7 +57,6 @@ class Task:
         self.list = list
 
     def setRevision(self, revision):
-        print revision
         if revision == None:
             return
         self.revision = revision
