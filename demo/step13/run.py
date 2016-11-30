@@ -6,6 +6,8 @@ import config
 def init_app():
     if config.DB_SEED:
         init_db()
+    elif not os.path.isfile('task.db'):
+        init_db()
 
     app.config['VERSION'] = config.VERSION
     app.secret_key = config.SECRET

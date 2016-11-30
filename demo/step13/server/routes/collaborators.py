@@ -18,7 +18,7 @@ def add_collaborator(list_id, collaborator_email):
         json_abort(404, 'List not found')
 
     db_add_collaborator(l.id, user.id)
-    l = db_get_list(list_id)
+    l = db_get_list(l.id)
     if l == None:
         json_abort(404, "List not found")
 
