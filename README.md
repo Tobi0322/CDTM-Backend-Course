@@ -8,16 +8,13 @@
    * Duplicate
         1. Mirror the repository according to [Mirroring a repository](https://help.github.com/articles/duplicating-a-repository/#mirroring-a-repository)
         2. Duplicate the wiki
-            1. Create a wiki page for your new repository
-            2. Clone this repository's wiki repository: 
-            ```git clone https://github.com/FroeMic/CDTM-Backend-Course.wiki.git```
-            3. Force push the wiki repository to your new repository's wiki repository: 
-            ```
-            cd CDTM-Backend-Course.wiki
-            git push --https://github.com/YOURUSERNAME/YOURNEWREPOSITORYNAME.wiki.git
-            ```
+          1. Create a wiki page for your new repository
+          2. Clone this repository's wiki repository: `git clone https://github.com/FroeMic/CDTM-Backend-Course.wiki.git
+          3. Force push the wiki repository to your new repository's wiki repository: 
+            `cd CDTM-Backend-Course.wiki` and
+            `git push --https://github.com/YOURUSERNAME/YOURNEWREPOSITORYNAME.wiki.git`
  2. Prepare repository for students
-    1.Checkout both the 'master' and 'solution' branch on your local machine
+    1. Checkout both the 'master' and 'solution' branch on your local machine
     2. Force delete the remote 'solution' branch (still keep it offline)
  3. Let students fork your new repository. The will only see the 'master' branch
  4. Let the students add your repository's master branch as 'upstream' 
